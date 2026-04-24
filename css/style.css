@@ -472,7 +472,7 @@ body::before {
     0 10px 40px rgba(0, 0, 0, 0.5),
     0 0 80px rgba(212, 175, 55, 0.4),
     0 0 120px rgba(212, 175, 55, 0.2);
-  animation: coinSlow 8s linear infinite;
+  animation: coinSlow 8s linear 2;
   position: relative;
   transform-style: preserve-3d;
 }
@@ -490,7 +490,7 @@ body::before {
   inset: 20%;
   border-radius: 50%;
   background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
-  animation: coinShine 4s ease-in-out infinite;
+  animation: coinShine 4s ease-in-out 4;
   filter: blur(8px);
 }
 
