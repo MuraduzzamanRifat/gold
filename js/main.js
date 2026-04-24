@@ -306,7 +306,6 @@ function aboutParallax() {
 async function boot() {
   initCursor();
   initSmoothScroll();
-  await runPreloader();
 
   const heroCanvas = document.getElementById('hero-canvas');
   initHero({ canvas: heroCanvas, imageUrl: heroImage }).catch(() => {
