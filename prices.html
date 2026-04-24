@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta property="og:title" content="Live Gold &amp; Silver Prices — Gold Kings Georgia">
+  <meta property="og:description" content="Real-time gold and silver spot prices. See exactly how we calculate your offer. Transparent pricing at Gold Kings, Snellville &amp; Commerce, GA.">
+  <meta property="og:type" content="website">
+  <meta name="description" content="Live gold and silver spot prices. Understand how Gold Kings calculates your offer — based on live market rates, karat purity, and certified weight.">
+  <meta name="theme-color" content="#0A0804">
+  <meta name="color-scheme" content="dark">
+
+  <title>Live Gold &amp; Silver Prices — Gold Kings Georgia</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./css/style.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%91%91%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <span>✦ Licensed Georgia Gold Buyer · Fair Prices · Same-Day Payment</span>
+    <span class="topbar__phones">
+      <a href="tel:+17707714650" class="topbar__phone-link">Snellville: 770-771-4650</a>
+      <span aria-hidden="true">·</span>
+      <a href="tel:+17063360043" class="topbar__phone-link">Commerce: (706) 336-0043</a>
+    </span>
+  </div>
+
+  <!-- NAVIGATION -->
+  <header class="nav" id="nav" role="banner">
+    <a href="index.html" class="nav__brand" aria-label="Gold Kings Home">
+      <div class="logo">
+        <span class="logo__crown">👑</span>
+        <span class="logo__text"><span class="logo__gold">Gold</span><span class="logo__kings">Kings</span></span>
+      </div>
+      <span class="nav__tagline">ONLINE</span>
+    </a>
+    <nav class="nav__links" aria-label="Main navigation">
+      <a href="what-we-buy.html">What We Buy</a>
+      <a href="prices.html" aria-current="page">Gold &amp; Silver Prices</a>
+      <a href="jewelry.html">Jewelry by Weight</a>
+      <a href="faqs.html">FAQs</a>
+      <a href="index.html#contact">Get a Quote</a>
+    </nav>
+    <div class="nav__actions">
+      <a href="tel:+17707714650" class="nav__phone" aria-label="Call Snellville">📞</a>
+      <a href="index.html#contact" class="hero__cta">Sell Gold</a>
+    </div>
+  </header>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero">
+    <div class="page-hero__content">
+      <p class="page-hero__eyebrow">◆ Gold &amp; Silver Prices</p>
+      <h1 class="page-hero__title">Transparent Pricing.<br><em>Live Market Rates.</em></h1>
+      <p class="page-hero__sub">We don't guess. We don't use outdated charts. We use the live spot price at the moment you walk in — and we show you every step of the calculation.</p>
+    </div>
+  </section>
+
+  <!-- LIVE GOLD PRICE WIDGET -->
+  <section class="price-widget-wrap" aria-label="Live gold price chart">
+    <div class="price-widget-wrap__inner">
+      <div class="tradingview-widget-container">
+        <div id="tradingview-gold"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+        <script type="text/javascript">
+        new TradingView.widget({
+          "width": "100%",
+          "height": 400,
+          "symbol": "TVC:GOLD",
+          "interval": "D",
+          "timezone": "America/New_York",
+          "theme": "dark",
+          "style": "1",
+          "locale": "en",
+          "toolbar_bg": "#110E09",
+          "enable_publishing": false,
+          "hide_top_toolbar": false,
+          "save_image": false,
+          "container_id": "tradingview-gold",
+          "backgroundColor": "#0A0804",
+          "gridColor": "rgba(200,164,90,0.1)"
+        });
+        </script>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW PRICING WORKS -->
+  <section class="prices-how-section">
+    <div class="prices-how-section__inner">
+      <p class="prices-how-section__eyebrow">◆ HOW PRICING WORKS</p>
+      <h2 class="prices-how-section__title">Three Factors.<br><em>One Honest Number.</em></h2>
+      <div class="price-factors">
+        <div class="price-factor">
+          <div class="price-factor__icon">◆</div>
+          <h3 class="price-factor__title">Spot Price</h3>
+          <p class="price-factor__body">The global market price of gold or silver per troy ounce, updated in real time. This is the same number you can look up on any financial site while standing at our counter. We use no proprietary or adjusted rates.</p>
+        </div>
+        <div class="price-factor">
+          <div class="price-factor__icon">◆</div>
+          <h3 class="price-factor__title">Purity (Karat)</h3>
+          <p class="price-factor__body">Your offer is based on the actual gold content of your item — not the total weight including alloy metals.</p>
+          <table class="karat-table" aria-label="Gold karat purity reference">
+            <tbody>
+              <tr><td>10K</td><td>41.7% pure gold</td></tr>
+              <tr><td>14K</td><td>58.3% pure gold</td></tr>
+              <tr><td>18K</td><td>75.0% pure gold</td></tr>
+              <tr><td>22K</td><td>91.7% pure gold</td></tr>
+              <tr><td>24K</td><td>99.9% pure gold</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="price-factor">
+          <div class="price-factor__icon">◆</div>
+          <h3 class="price-factor__title">Weight</h3>
+          <p class="price-factor__body">Measured on certified digital scales in grams or troy ounces — you watch every step. We do not use estimated or "trade" weights. The scale reading is the weight we calculate from.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT TO EXPECT -->
+  <section class="prices-expect-section">
+    <div class="prices-expect-section__inner">
+      <p class="prices-expect-section__eyebrow">◆ WHAT YOU CAN EXPECT</p>
+      <h2 class="prices-expect-section__title">70–90% of Spot Price.<br><em>Always Stated Upfront.</em></h2>
+      <p class="prices-expect-section__body">We typically pay 70–90% of the current spot price. Higher purity and larger quantities generally receive higher percentages. The exact figure is presented to you before you make any decision — no pressure, no countdown, no expiry on the offer while you consider it.</p>
+      <div class="prices-expect-section__actions">
+        <a href="snellville.html" class="btn-gold">SNELLVILLE STORE</a>
+        <a href="commerce.html" class="btn-outline">COMMERCE STORE</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIVE SILVER PRICE WIDGET -->
+  <section class="price-widget-wrap price-silver-section" aria-label="Live silver price chart">
+    <div class="price-widget-wrap__inner">
+      <p class="price-silver-section__eyebrow">◆ LIVE SILVER SPOT PRICE</p>
+      <div class="tradingview-widget-container">
+        <div id="tradingview-silver"></div>
+        <script type="text/javascript">
+        new TradingView.widget({
+          "width": "100%",
+          "height": 300,
+          "symbol": "TVC:SILVER",
+          "interval": "D",
+          "timezone": "America/New_York",
+          "theme": "dark",
+          "style": "1",
+          "locale": "en",
+          "toolbar_bg": "#110E09",
+          "enable_publishing": false,
+          "hide_top_toolbar": false,
+          "save_image": false,
+          "container_id": "tradingview-silver",
+          "backgroundColor": "#0A0804",
+          "gridColor": "rgba(200,164,90,0.1)"
+        });
+        </script>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE CTA -->
+  <section class="page-cta">
+    <p class="page-cta__eyebrow">◆ READY TO SELL</p>
+    <h2 class="page-cta__title">Bring Your Gold.<br><em>Walk Out with Cash.</em></h2>
+    <p class="page-cta__sub">Both locations open Mon–Sat, 10AM–6PM. No appointment needed.</p>
+    <div class="page-cta__locs">
+      <div class="page-cta__loc">
+        <span class="page-cta__loc-name">Snellville, GA</span>
+        <a href="tel:+17707714650" class="page-cta__loc-phone">770-771-4650</a>
+        <span class="page-cta__loc-addr">3635 Stone Mountain Hwy, Snellville GA 30039</span>
+      </div>
+      <div class="page-cta__divider" aria-hidden="true"></div>
+      <div class="page-cta__loc">
+        <span class="page-cta__loc-name">Commerce, GA</span>
+        <a href="tel:+17063360043" class="page-cta__loc-phone">(706) 336-0043</a>
+        <span class="page-cta__loc-addr">480 Banks Crossing Dr, Commerce GA 30529</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <div class="logo logo--footer">
+          <span class="logo__crown">👑</span>
+          <span class="logo__text"><span class="logo__gold">Gold</span><span class="logo__kings">Kings</span></span>
+        </div>
+        <span class="footer__sub">ONLINE</span>
+      </div>
+      <p class="footer__desc">Licensed Georgia precious-metals dealer. We buy gold, silver, jewelry, coins, and valuables. Transparent pricing, same-day payment, no pressure.</p>
+    </div>
+    <div class="footer__cols">
+      <div class="footer__col">
+        <h4>What We Buy</h4>
+        <a href="what-we-buy.html">Gold Jewelry (10K–24K)</a>
+        <a href="what-we-buy.html">Gold &amp; Silver Coins</a>
+        <a href="what-we-buy.html">Sterling Silver</a>
+        <a href="what-we-buy.html">Scrap &amp; Dental Gold</a>
+      </div>
+      <div class="footer__col">
+        <h4>Services</h4>
+        <a href="index.html#contact">Get a Free Quote</a>
+        <a href="jewelry.html">Jewelry by Weight</a>
+        <a href="prices.html">Live Gold Prices</a>
+        <a href="faqs.html">FAQs</a>
+      </div>
+      <div class="footer__col">
+        <h4>Locations</h4>
+        <a href="snellville.html">Snellville: 770-771-4650</a>
+        <a href="commerce.html">Commerce: (706) 336-0043</a>
+        <a href="index.html#locations">All Locations</a>
+      </div>
+      <div class="footer__col">
+        <h4>Contact</h4>
+        <a href="tel:+17707714650">Call Snellville</a>
+        <a href="tel:+17063360043">Call Commerce</a>
+        <a href="mailto:Dan@goldntreasures.co">Email Us</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+      <span>© 2026 Gold Kings. All Rights Reserved.</span>
+      <span>Privacy Policy · Terms &amp; Conditions</span>
+    </div>
+  </footer>
+
+</body>
+</html>
