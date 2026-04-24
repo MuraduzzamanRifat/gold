@@ -1876,20 +1876,26 @@ body::before {
 }
 
 .footer__sub {
-  font-family: var(--sans);
-  font-size: 8px;
-  letter-spacing: 0.35em;
+  font-family: var(--mono);
+  font-size: 7px;
+  letter-spacing: 0.45em;
   text-transform: uppercase;
   color: var(--gold);
   font-weight: 400;
+  /* override global a[href] min-height */
+  min-height: unset;
+  min-width: unset;
+  display: block;
 }
 
 .footer__desc {
   font-family: var(--sans);
-  font-size: 14px;
+  font-size: 13px;
+  font-weight: 300;
   line-height: 1.85;
-  color: var(--fg-2);
+  color: var(--fg-3);
   letter-spacing: 0.01em;
+  max-width: 420px;
 }
 
 .footer__cols {
@@ -1915,28 +1921,39 @@ body::before {
 .footer__col {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .footer__col h4 {
-  font-family: var(--serif);
-  font-size: 14px;
+  font-family: var(--mono);
+  font-size: 9px;
   font-weight: 400;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
   color: var(--gold);
-  letter-spacing: 0.1em;
+  margin-bottom: 8px;
 }
 
 .footer__col a,
 .footer__col span {
   font-family: var(--sans);
-  font-size: 12px;
-  color: var(--fg-2);
+  font-size: 13px;
+  font-weight: 300;
+  color: var(--fg-3);
   text-decoration: none;
-  transition: color 0.3s;
+  transition: color var(--duration-hover);
+  /* override global a[href] touch-target centering */
+  display: block;
+  min-height: unset;
+  min-width: unset;
+  justify-content: unset;
+  align-items: unset;
+  line-height: 1.5;
 }
 
 .footer__col a:hover {
   color: var(--gold-light);
+  text-decoration: none;
 }
 
 .footer__bottom {
