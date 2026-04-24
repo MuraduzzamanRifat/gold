@@ -6,7 +6,7 @@
     "phone": "770-771-4650",
     "address": "Snellville, Georgia",
     "mapUrl": "https://maps.google.com/?q=Snellville,GA",
-    "mapEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3325.123456789!2d-84.05!3d33.86!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sSnellville%20GA!5e0!3m2!1sen!2sus!4v1234567890",
+    "mapEmbed": "https://maps.google.com/maps?q=Snellville%2C%20GA&t=m&z=13&output=embed&iwloc=near",
     "hours": [
       { "day": "Monday – Friday", "time": "10:00 AM – 6:00 PM" },
       { "day": "Saturday", "time": "11:00 AM – 5:00 PM" },
@@ -26,7 +26,7 @@
     "phone": "(706) 336-0043",
     "address": "Commerce, Georgia",
     "mapUrl": "https://maps.google.com/?q=Commerce,GA",
-    "mapEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3327.987654321!2d-83.47!3d34.18!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sCommerce%20GA!5e0!3m2!1sen!2sus!4v1234567890",
+    "mapEmbed": "https://maps.google.com/maps?q=Commerce%2C%20GA&t=m&z=13&output=embed&iwloc=near",
     "hours": [
       { "day": "Monday – Friday", "time": "10:00 AM – 6:00 PM" },
       { "day": "Saturday", "time": "11:00 AM – 5:00 PM" },

@@ -14,7 +14,7 @@
     <a href="#contact">Contact</a>
   </nav>
   <div class="nav__actions">
-    <button type="button" aria-label="Call us: {{ location.phone }}">📞</button>
+    <a href="tel:{{ location.phone | replace(' ', '') | replace('-', '') | replace('(', '') | replace(')', '') }}" class="nav__phone" aria-label="Call us: {{ location.phone }}">📞</a>
     <a href="#contact" class="hero__cta" aria-label="Contact {{ location.city }} store">Visit Store</a>
   </div>
 </header>

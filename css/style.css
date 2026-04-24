@@ -494,6 +494,28 @@ body::before {
   filter: blur(8px);
 }
 
+.nav__phone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--rule);
+  color: var(--gold);
+  font-size: 18px;
+  text-decoration: none;
+  transition: background var(--duration-base) var(--ease), border-color var(--duration-base) var(--ease);
+}
+
+.nav__phone:hover,
+.nav__phone:focus-visible {
+  background: rgba(200, 164, 90, 0.1);
+  border-color: var(--gold);
+  outline: none;
+}
+
 /* ============================================================================
    PRELOADER
    ============================================================================ */

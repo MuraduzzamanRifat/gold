@@ -93,12 +93,30 @@ function runPreloader() {
       return;
     }
 
-    const neural = createNeuralField({
-      canvas: canvasEl,
-      nodeCount: 60,
-      linkThreshold: 2.0,
-      palette: { point: 0xC8A45A, line: 0xE2C06B }
-    });
+    let settled = false;
+    const finish = () => {
+      if (settled) return;
+      settled = true;
+      preloaderEl.style.display = 'none';
+      resolve();
+    };
+
+    const failsafe = setTimeout(() => {
+      console.warn('Preloader failsafe triggered');
+      finish();
+    }, 2500);
+
+    let neural;
+    try {
+      neural = createNeuralField({
+        canvas: canvasEl,
+        nodeCount: 60,
+        linkThreshold: 2.0,
+        palette: { point: 0xC8A45A, line: 0xE2C06B }
+      });
+    } catch (e) {
+      neural = { state: {}, destroy: () => {} };
+    }
 
     const counter = { val: 0 };
     gsap.to(counter, {
@@ -107,19 +125,19 @@ function runPreloader() {
       ease: 'power2.inOut',
       onUpdate() {
         const n = Math.floor(counter.val);
-        counterEl.textContent = String(n).padStart(2, '0');
-        barEl.style.width = n + '%';
+        if (counterEl) counterEl.textContent = String(n).padStart(2, '0');
+        if (barEl) barEl.style.width = n + '%';
       },
       onComplete() {
-        neural.state.opacity = 0;
+        if (neural.state) neural.state.opacity = 0;
         gsap.to(preloaderEl, {
           yPercent: -100,
           duration: 0.6,
           ease: 'expo.inOut',
           onComplete() {
-            preloaderEl.style.display = 'none';
-            neural.destroy();
-            resolve();
+            clearTimeout(failsafe);
+            if (neural.destroy) neural.destroy();
+            finish();
           }
         });
       }

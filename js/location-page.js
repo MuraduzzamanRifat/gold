@@ -1,6 +1,48 @@
-import { initCursor } from './main.js';
+/* Location Page - self-contained (no main.js import) */
 
-/* Initialize cursor for location pages */
+function initCursor() {
+  const cursor = document.querySelector('.cursor');
+  if (!cursor || window.matchMedia('(max-width: 900px)').matches) {
+    if (cursor) cursor.style.display = 'none';
+    return;
+  }
+
+  let tx = window.innerWidth / 2, ty = window.innerHeight / 2;
+  let rx = tx, ry = ty;
+  let dx = tx, dy = ty;
+
+  window.addEventListener('pointermove', e => {
+    tx = e.clientX;
+    ty = e.clientY;
+  });
+
+  window.addEventListener('pointerleave', () => cursor.classList.add('is-hidden'));
+  window.addEventListener('pointerenter', () => cursor.classList.remove('is-hidden'));
+
+  let rafId = null;
+  function tick() {
+    if (document.hidden) {
+      rafId = requestAnimationFrame(tick);
+      return;
+    }
+    dx += (tx - dx) * 0.35;
+    dy += (ty - dy) * 0.35;
+    rx += (tx - rx) * 0.15;
+    ry += (ty - ry) * 0.15;
+
+    const dot = cursor.querySelector('.cursor__dot');
+    const ring = cursor.querySelector('.cursor__ring');
+    const lab = cursor.querySelector('.cursor__label');
+
+    if (dot) dot.style.transform = `translate(${dx}px, ${dy}px) translate(-50%,-50%)`;
+    if (ring) ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
+    if (lab) lab.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
+
+    rafId = requestAnimationFrame(tick);
+  }
+  tick();
+}
+
 initCursor();
 
 /* Smooth scroll enhancement */
@@ -12,15 +54,10 @@ if (typeof Lenis !== 'undefined') {
     smoothTouch: false
   });
 
-  lenis.on('scroll', () => {
-    /* Update animations on scroll */
-  });
-
   if (typeof gsap !== 'undefined') {
     gsap.ticker.add(time => lenis.raf(time * 1000));
     gsap.ticker.lagSmoothing(0);
   } else {
-    let lastTime = 0;
     const raf = time => {
       lenis.raf(time);
       requestAnimationFrame(raf);
