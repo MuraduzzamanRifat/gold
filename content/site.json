@@ -1,0 +1,101 @@
+{
+  "topbar": {
+    "message": "✦ Licensed Georgia Gold Buyer · Fair Prices · Same-Day Payment",
+    "phoneSnellville": "770-771-4650",
+    "phoneCommerce": "(706) 336-0043"
+  },
+  "hero": {
+    "eyebrow": "Trusted Since 2008",
+    "headline1": "WE BUY GOLD",
+    "headline2": "Fast Cash, Fair Prices",
+    "ctaText": "Get a Quote Now",
+    "backgroundImage": "https://images.pexels.com/photos/5632390/pexels-photo-5632390.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"
+  },
+  "cta": {
+    "eyebrow": "◆ Ready to Sell?",
+    "title": "Get Your Free Evaluation Today",
+    "subtitle": "Walk in during store hours — no appointment needed. We'll test your gold on the spot and give you a fair offer based on today's live market price."
+  },
+  "locations": [
+    {
+      "id": "snellville",
+      "city": "Snellville",
+      "state": "GA",
+      "address": "3635 Stone Mountain Hwy, Snellville GA 30039",
+      "phone": "770-771-4650",
+      "phoneRaw": "+17707714650",
+      "hours": "Mon–Sat 10AM–6PM · Sunday Closed"
+    },
+    {
+      "id": "commerce",
+      "city": "Commerce",
+      "state": "GA",
+      "address": "480 Banks Crossing Dr, Commerce GA 30529",
+      "phone": "(706) 336-0043",
+      "phoneRaw": "+17063360043",
+      "hours": "Mon–Sat 10AM–6PM · Sunday Closed"
+    }
+  ],
+  "testimonials": [
+    {
+      "id": "t01",
+      "name": "Jerry Vaughan",
+      "quote": "Awsome salesman to work with. He's extremely fast and holds a conversation while checking coins. He made sure to keep everything organized and separated also!. If silver was not so low he had it.",
+      "category": "Service"
+    },
+    {
+      "id": "t02",
+      "name": "Jaime Lee",
+      "quote": "Super professional, knowledgeable, and fair. Would definitely recommend. If for whatever reason you don't like the owner (which I don't see how you wouldnt) his dog Champ will steal your heart!",
+      "category": "Professional"
+    },
+    {
+      "id": "t03",
+      "name": "Brandon Coots",
+      "quote": "Not only did I have a great experience I was going to be there after they closed. I have a quick call and not only did he start his process over the phone he also waited on me and stayed open almost an hour after his advertised close time to wait on me. Then made the best deal I've been offered out of 30 different places I went too. Very friendly professional and knowledgeable. Blew all competitors out of the water by a long shot. All it took was a simple call letting him know I was on the way. Will go here for all of my future needs and will recommend to everyone. Great customer service skills. A+++",
+      "category": "Premium"
+    },
+    {
+      "id": "t04",
+      "name": "Luis Elias",
+      "quote": "Bery please to do business here everything straight forward. Precious Metals and jewelry.",
+      "category": "Professional"
+    },
+    {
+      "id": "t05",
+      "name": "Taylor Dodson",
+      "quote": "Had a fantastic time – fair prices, incredibly helpful and knowledgeable. This was my second visit and I'm definitely planning to return. I highly recommend checking this store out.",
+      "category": "Premium"
+    },
+    {
+      "id": "t06",
+      "name": "Chad Usher",
+      "quote": "I've been to this store numerous times and they are always helpful! Adam is more than willing to share his knowledge about gold and jewelry prices and what the market is doing. I've been more than happy with everything I've purchased from them!",
+      "category": "Service"
+    },
+    {
+      "id": "t07",
+      "name": "Debbie Meadow",
+      "quote": "This was a great experience. I'm happy, their happy, in and out and that day they even could pay in cash. Thanks",
+      "category": "Professional"
+    },
+    {
+      "id": "t08",
+      "name": "Herb James",
+      "quote": "Bought some 20 Franc Gold coins here last week. Very personable owner and great value, nice looking coins. Very satisfied with my purchase, wish I could have bought them all. : )",
+      "category": "Premium"
+    }
+  ],
+  "locationsSection": {
+    "eyebrow": "◆ Our Locations",
+    "title": "Find Your Nearest Store",
+    "body": "Two Georgia locations. Licensed precious-metals dealers. We buy gold, silver, jewelry, coins, and valuables — with transparent pricing, same-day payment, and no pressure. We also serve church gold fundraising programs. Walk in anytime, Mon–Sat 10AM–6PM.",
+    "image": "https://images.pexels.com/photos/3945683/pexels-photo-3945683.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop",
+    "imageCaption": "Professional Gold Buying Service"
+  },
+  "footer": {
+    "desc": "Licensed Georgia precious-metals dealer. We buy gold, silver, jewelry, coins, and valuables. Transparent pricing, same-day payment, no pressure.",
+    "email": "Dan@goldntreasures.co",
+    "copyright": "© 2026 Gold Kings. All Rights Reserved."
+  }
+}

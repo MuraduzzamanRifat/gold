@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="./css/style.css?v=20260425d">
+  <link rel="stylesheet" href="./css/style.css?v=20260425e">
 
   <link rel="canonical" href="https://muraduzzamanrifat.github.io/gold/">
   <meta property="og:url" content="https://muraduzzamanrifat.github.io/gold/">
@@ -64,7 +64,8 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
 
-  <script type="module" src="./js/main.js?v=20260425c"></script>
+  <script src="./js/cms.js?v=20260425e" defer></script>
+  <script type="module" src="./js/main.js?v=20260425e"></script>
 </head>
 <body>
   <!-- CURSOR -->
@@ -76,11 +77,11 @@
 
   <!-- TOPBAR -->
   <div class="topbar">
-    <span>✦ Licensed Georgia Gold Buyer · Fair Prices · Same-Day Payment</span>
+    <span data-cms="topbar.message">✦ Licensed Georgia Gold Buyer · Fair Prices · Same-Day Payment</span>
     <span class="topbar__phones">
-      <a href="tel:+17707714650" class="topbar__phone-link">Snellville: 770-771-4650</a>
+      <a href="tel:+17707714650" class="topbar__phone-link" data-cms="topbar.phoneSnellville">Snellville: 770-771-4650</a>
       <span aria-hidden="true">·</span>
-      <a href="tel:+17063360043" class="topbar__phone-link">Commerce: (706) 336-0043</a>
+      <a href="tel:+17063360043" class="topbar__phone-link" data-cms="topbar.phoneCommerce">Commerce: (706) 336-0043</a>
     </span>
   </div>
 
@@ -113,12 +114,12 @@
     <div class="hero__overlay">
       <div class="hero__eyebrow">
         <span class="hero__dot"></span>
-        <span>Trusted Since 2008</span>
+        <span data-cms="hero.eyebrow">Trusted Since 2008</span>
       </div>
 
       <h1 class="hero__title t-display">
-        <span class="line">WE BUY <em>GOLD</em></span>
-        <span class="line">Fast Cash, Fair <em>Prices</em></span>
+        <span class="line" data-cms="hero.headline1">WE BUY <em>GOLD</em></span>
+        <span class="line" data-cms="hero.headline2">Fast Cash, Fair <em>Prices</em></span>
       </h1>
 
       <div class="hero__foot">
@@ -127,7 +128,7 @@
           <span class="v">Instant Evaluation</span>
         </div>
         <div class="hero__cap hero__cap--mid">
-          <a href="#contact" class="hero__cta">Get a Quote Now</a>
+          <a href="#contact" class="hero__cta" data-cms="hero.ctaText">Get a Quote Now</a>
         </div>
         <div class="hero__cap hero__cap--end">
           <span class="k">Turn</span>
@@ -355,22 +356,22 @@
   <!-- CONTACT / GET QUOTE SECTION — right after hero for max conversion -->
   <section class="cta-section" id="contact" aria-labelledby="contact-heading">
     <div class="cta-content">
-      <span class="t-eyebrow">◆ Ready to Sell?</span>
-      <h2 class="cta-title" id="contact-heading">Get Your <em>Free Evaluation</em> Today</h2>
-      <p class="cta-subtitle">Walk in during store hours — no appointment needed. We'll test your gold on the spot and give you a fair offer based on today's live market price.</p>
+      <span class="t-eyebrow" data-cms="cta.eyebrow">◆ Ready to Sell?</span>
+      <h2 class="cta-title" id="contact-heading" data-cms="cta.title">Get Your <em>Free Evaluation</em> Today</h2>
+      <p class="cta-subtitle" data-cms="cta.subtitle">Walk in during store hours — no appointment needed. We'll test your gold on the spot and give you a fair offer based on today's live market price.</p>
       <div class="cta-locations">
         <div class="cta-location">
-          <strong>Snellville, GA</strong>
-          <span>3635 Stone Mountain Hwy, Snellville GA 30039</span>
-          <span>Mon–Sat 10AM–6PM · Sunday Closed</span>
-          <a href="tel:+17707714650" class="btn btn-primary">Call 770-771-4650</a>
+          <strong data-cms="loc.0.city">Snellville, GA</strong>
+          <span data-cms="loc.0.address">3635 Stone Mountain Hwy, Snellville GA 30039</span>
+          <span data-cms="loc.0.hours">Mon–Sat 10AM–6PM · Sunday Closed</span>
+          <a href="tel:+17707714650" class="btn btn-primary" data-cms="loc.0.callBtn">Call 770-771-4650</a>
           <a href="snellville.html" class="btn btn-secondary">Store Details</a>
         </div>
         <div class="cta-location">
-          <strong>Commerce, GA</strong>
-          <span>480 Banks Crossing Dr, Commerce GA 30529</span>
-          <span>Mon–Sat 10AM–6PM · Sunday Closed</span>
-          <a href="tel:+17063360043" class="btn btn-primary">Call (706) 336-0043</a>
+          <strong data-cms="loc.1.city">Commerce, GA</strong>
+          <span data-cms="loc.1.address">480 Banks Crossing Dr, Commerce GA 30529</span>
+          <span data-cms="loc.1.hours">Mon–Sat 10AM–6PM · Sunday Closed</span>
+          <a href="tel:+17063360043" class="btn btn-primary" data-cms="loc.1.callBtn">Call (706) 336-0043</a>
           <a href="commerce.html" class="btn btn-secondary">Store Details</a>
         </div>
       </div>
@@ -415,30 +416,30 @@
   <section class="about" id="locations">
     <div class="about__grid">
       <div class="about__visual" data-reveal>
-        <img src="https://images.pexels.com/photos/3945683/pexels-photo-3945683.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop" alt="Gold Kings professional gold buying service" loading="lazy">
-        <span class="about__caption">Professional Gold Buying Service</span>
+        <img src="https://images.pexels.com/photos/3945683/pexels-photo-3945683.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop" alt="Gold Kings professional gold buying service" loading="lazy" data-cms="ls.image">
+        <span class="about__caption" data-cms="ls.imageCaption">Professional Gold Buying Service</span>
       </div>
 
       <div class="about__text">
-        <span class="t-eyebrow">◆ Our Locations</span>
-        <h2 class="about__title">Find Your Nearest <em>Store</em></h2>
-        <p class="about__body">
+        <span class="t-eyebrow" data-cms="ls.eyebrow">◆ Our Locations</span>
+        <h2 class="about__title" data-cms="ls.title">Find Your Nearest <em>Store</em></h2>
+        <p class="about__body" data-cms="ls.body">
           Two Georgia locations. Licensed precious-metals dealers. We buy gold, silver, jewelry, coins, and valuables — with transparent pricing, same-day payment, and no pressure. We also serve church gold fundraising programs. Walk in anytime, Mon–Sat 10AM–6PM.
         </p>
         <div class="locations-list" role="list">
           <div class="location-item" role="listitem">
-            <h3 class="location-city">Snellville, GA</h3>
-            <p class="location-addr">3635 Stone Mountain Hwy, Snellville GA 30039</p>
-            <a href="tel:+17707714650" class="location-phone">770-771-4650</a>
+            <h3 class="location-city" data-cms="loc.0.city">Snellville, GA</h3>
+            <p class="location-addr" data-cms="loc.0.address">3635 Stone Mountain Hwy, Snellville GA 30039</p>
+            <a href="tel:+17707714650" class="location-phone" data-cms="loc.0.phone">770-771-4650</a>
             <div class="location-actions">
               <a href="snellville.html" class="location-call" aria-label="Visit Snellville store">Visit Store</a>
               <a href="tel:+17707714650" class="location-call" aria-label="Call Snellville store">Call Store</a>
             </div>
           </div>
           <div class="location-item" role="listitem">
-            <h3 class="location-city">Commerce, GA</h3>
-            <p class="location-addr">480 Banks Crossing Dr, Commerce GA 30529</p>
-            <a href="tel:+17063360043" class="location-phone">(706) 336-0043</a>
+            <h3 class="location-city" data-cms="loc.1.city">Commerce, GA</h3>
+            <p class="location-addr" data-cms="loc.1.address">480 Banks Crossing Dr, Commerce GA 30529</p>
+            <a href="tel:+17063360043" class="location-phone" data-cms="loc.1.phone">(706) 336-0043</a>
             <div class="location-actions">
               <a href="commerce.html" class="location-call" aria-label="Visit Commerce store">Visit Store</a>
               <a href="tel:+17063360043" class="location-call" aria-label="Call Commerce store">Call Store</a>
@@ -456,7 +457,7 @@
         <img src="./img/logo.png" alt="Gold Kings" class="footer__logo-img">
         <span class="footer__sub">ONLINE</span>
       </div>
-      <p class="footer__desc">Licensed Georgia precious-metals dealer. We buy gold, silver, jewelry, coins, and valuables. Transparent pricing, same-day payment, no pressure.</p>
+      <p class="footer__desc" data-cms="footer.desc">Licensed Georgia precious-metals dealer. We buy gold, silver, jewelry, coins, and valuables. Transparent pricing, same-day payment, no pressure.</p>
     </div>
     <div class="footer__cols">
       <div class="footer__col">
@@ -487,7 +488,7 @@
       </div>
     </div>
     <div class="footer__bottom">
-      <span>© 2026 Gold Kings. All Rights Reserved.</span>
+      <span data-cms="footer.copyright">© 2026 Gold Kings. All Rights Reserved.</span>
       <span>Privacy Policy · Terms &amp; Conditions</span>
     </div>
   </footer>

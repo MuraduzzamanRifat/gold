@@ -1,0 +1,2637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Gold Kings CMS</title>
+<style>
+/* ============================================================
+   DESIGN TOKENS
+   ============================================================ */
+:root {
+  --bg:          #0A0804;
+  --bg2:         #110E09;
+  --bg3:         #1A1510;
+  --bg4:         #221D14;
+  --gold:        #C8A45A;
+  --gold-light:  #E2C06B;
+  --gold-dim:    rgba(200,164,90,0.18);
+  --gold-glow:   rgba(200,164,90,0.08);
+  --fg:          #FDFAF5;
+  --fg2:         rgba(253,250,245,0.70);
+  --fg3:         rgba(253,250,245,0.45);
+  --fg4:         rgba(253,250,245,0.25);
+  --border:      rgba(200,164,90,0.15);
+  --border2:     rgba(200,164,90,0.08);
+  --radius:      8px;
+  --radius-lg:   12px;
+  --success:     #2D9B6F;
+  --success-bg:  rgba(45,155,111,0.12);
+  --error:       #C0392B;
+  --error-bg:    rgba(192,57,43,0.12);
+  --warn:        #D4890A;
+  --warn-bg:     rgba(212,137,10,0.12);
+  --sidebar-w:   220px;
+  --header-h:    60px;
+  --ease:        cubic-bezier(0.4, 0, 0.2, 1);
+  --fast:        150ms;
+  --base:        250ms;
+}
+
+/* ============================================================
+   RESET + BASE
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { height: 100%; font-size: 14px; }
+
+body {
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--gold); text-decoration: none; }
+a:hover { color: var(--gold-light); }
+
+button, input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* ============================================================
+   SCROLLBAR
+   ============================================================ */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: var(--bg2); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-dim); }
+
+/* ============================================================
+   LOGIN SCREEN
+   ============================================================ */
+#login-screen {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+#login-screen.active { display: flex; }
+
+.login-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem;
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  overflow: hidden;
+}
+.login-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.login-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.75rem;
+}
+.login-brand .crown { font-size: 1.6rem; }
+.login-brand .brand-text {
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+.login-brand .brand-text em {
+  color: var(--gold);
+  font-style: normal;
+}
+.login-brand .cms-badge {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  color: var(--fg3);
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2px 6px;
+  margin-left: 4px;
+  text-transform: uppercase;
+  align-self: flex-start;
+  margin-top: 2px;
+}
+
+.login-heading {
+  font-size: 1rem;
+  color: var(--fg2);
+  margin-bottom: 0.35rem;
+}
+.login-subtext {
+  font-size: 0.8rem;
+  color: var(--fg3);
+  margin-bottom: 1.75rem;
+}
+
+.field-wrap { margin-bottom: 1.2rem; }
+.field-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--fg3);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.45rem;
+}
+
+.field-input {
+  display: block;
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--fg);
+  padding: 0.65rem 0.85rem;
+  outline: none;
+  transition: border-color var(--fast) var(--ease), box-shadow var(--fast) var(--ease);
+  letter-spacing: 0.03em;
+}
+.field-input::placeholder { color: var(--fg4); }
+.field-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px var(--gold-glow);
+}
+.field-input.error { border-color: var(--error); }
+.field-input.warn { border-color: var(--warn); }
+
+textarea.field-input {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius);
+  border: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--fast) var(--ease);
+  white-space: nowrap;
+  position: relative;
+  overflow: hidden;
+}
+.btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold), var(--gold-light));
+  color: #0A0804;
+}
+.btn-gold:hover:not(:disabled) {
+  background: linear-gradient(135deg, var(--gold-light), var(--gold));
+  box-shadow: 0 4px 20px rgba(200,164,90,0.3);
+  transform: translateY(-1px);
+}
+.btn-gold:active:not(:disabled) { transform: translateY(0); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--fg2);
+  border: 1px solid var(--border);
+}
+.btn-ghost:hover:not(:disabled) {
+  background: var(--bg3);
+  color: var(--fg);
+  border-color: var(--gold-dim);
+}
+
+.btn-danger {
+  background: var(--error-bg);
+  color: #ff6b6b;
+  border: 1px solid rgba(192,57,43,0.25);
+}
+.btn-danger:hover:not(:disabled) {
+  background: rgba(192,57,43,0.22);
+}
+
+.btn-sm { padding: 0.4rem 0.75rem; font-size: 0.775rem; }
+
+.btn-full { width: 100%; }
+
+.login-hint {
+  margin-top: 1.2rem;
+  font-size: 0.775rem;
+  color: var(--fg3);
+  text-align: center;
+}
+.login-hint a { font-size: 0.775rem; }
+
+.login-error {
+  background: var(--error-bg);
+  border: 1px solid rgba(192,57,43,0.3);
+  color: #ff6b6b;
+  border-radius: var(--radius);
+  padding: 0.65rem 0.85rem;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+  display: none;
+}
+.login-error.visible { display: block; }
+
+/* ============================================================
+   APP SHELL (after login)
+   ============================================================ */
+#app-shell {
+  display: none;
+  min-height: 100vh;
+}
+#app-shell.active { display: flex; flex-direction: column; }
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.app-header {
+  height: var(--header-h);
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 1.25rem;
+  gap: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  flex-shrink: 0;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  flex-shrink: 0;
+}
+.header-brand .crown { font-size: 1.15rem; }
+.header-brand em { color: var(--gold); font-style: normal; }
+.header-brand .cms-tag {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--fg3);
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1px 5px;
+  text-transform: uppercase;
+}
+
+.header-status {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.75rem;
+  color: var(--fg3);
+  flex-shrink: 0;
+}
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2D9B6F;
+  animation: pulse-dot 2s ease-in-out infinite;
+  flex-shrink: 0;
+}
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.header-user {
+  font-size: 0.75rem;
+  color: var(--fg3);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.header-avatar {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.header-spacer { flex: 1; }
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-shrink: 0;
+}
+
+.sidebar-toggle {
+  display: none;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--fg2);
+  padding: 0.4rem 0.6rem;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+}
+.sidebar-toggle:hover { background: var(--bg3); color: var(--fg); }
+
+/* ============================================================
+   CONTENT AREA (sidebar + main)
+   ============================================================ */
+.app-body {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  height: calc(100vh - var(--header-h));
+}
+
+/* ============================================================
+   SIDEBAR
+   ============================================================ */
+.sidebar {
+  width: var(--sidebar-w);
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--base) var(--ease);
+}
+
+.sidebar-nav {
+  padding: 0.75rem 0;
+  flex: 1;
+}
+
+.sidebar-section-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--fg4);
+  padding: 1rem 1.1rem 0.35rem;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.6rem 1.1rem;
+  color: var(--fg2);
+  font-size: 0.85rem;
+  cursor: pointer;
+  border-radius: 0;
+  transition: all var(--fast) var(--ease);
+  border-left: 2px solid transparent;
+  user-select: none;
+}
+.nav-item:hover {
+  background: var(--bg3);
+  color: var(--fg);
+}
+.nav-item.active {
+  background: var(--gold-glow);
+  color: var(--gold-light);
+  border-left-color: var(--gold);
+}
+.nav-item .nav-icon {
+  font-size: 1rem;
+  width: 1.2rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+.nav-item .nav-label { flex: 1; }
+.nav-item .nav-count {
+  font-size: 0.65rem;
+  background: var(--bg4);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 1px 6px;
+  color: var(--fg3);
+}
+.nav-item.active .nav-count {
+  background: var(--gold-dim);
+  border-color: var(--gold);
+  color: var(--gold-light);
+}
+
+.sidebar-footer {
+  padding: 0.75rem 1.1rem;
+  border-top: 1px solid var(--border2);
+  font-size: 0.725rem;
+  color: var(--fg4);
+}
+.sidebar-footer a { font-size: 0.725rem; color: var(--fg3); }
+.sidebar-footer a:hover { color: var(--gold); }
+
+/* ============================================================
+   MAIN CONTENT
+   ============================================================ */
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--bg);
+  position: relative;
+}
+
+.section-panel {
+  display: none;
+  padding: 2rem;
+  max-width: 860px;
+  animation: fade-in var(--base) var(--ease);
+}
+.section-panel.active { display: block; }
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.panel-header {
+  margin-bottom: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border2);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.panel-header-text {}
+.panel-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--fg);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.panel-title .icon { font-size: 1.15rem; }
+.panel-subtitle {
+  font-size: 0.8rem;
+  color: var(--fg3);
+  margin-top: 0.25rem;
+}
+
+/* ============================================================
+   FORM ELEMENTS
+   ============================================================ */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+.form-grid.single { grid-template-columns: 1fr; }
+.form-grid.two { grid-template-columns: 1fr 1fr; }
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+.form-group.full { grid-column: 1 / -1; }
+
+.form-label {
+  font-size: 0.725rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--fg3);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.char-count {
+  font-size: 0.7rem;
+  color: var(--fg4);
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  font-variant-numeric: tabular-nums;
+}
+.char-count.warn { color: var(--warn); }
+.char-count.over { color: var(--error); }
+
+.field-hint {
+  font-size: 0.7rem;
+  color: var(--fg4);
+  margin-top: -0.1rem;
+}
+.field-hint.warn { color: var(--warn); }
+.field-hint.error { color: #ff6b6b; }
+
+/* ============================================================
+   CARD CONTAINERS
+   ============================================================ */
+.content-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.content-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+.card-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.card-title .icon { font-size: 0.9rem; }
+.card-divider {
+  height: 1px;
+  background: var(--border2);
+  margin: 1.25rem 0;
+}
+
+/* ============================================================
+   LOCATION CARDS
+   ============================================================ */
+.location-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+.location-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.25rem;
+}
+.location-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: var(--gold-dim);
+  border: 1px solid var(--gold);
+  border-radius: 4px;
+  padding: 2px 8px;
+}
+.location-card-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--fg);
+}
+
+/* ============================================================
+   TESTIMONIAL CARDS
+   ============================================================ */
+.testimonials-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.testimonial-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.testimonial-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.1rem;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border2);
+}
+.testimonial-number {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.06em;
+}
+.testimonial-header-right { display: flex; align-items: center; gap: 0.5rem; }
+.testimonial-body { padding: 1.1rem; }
+.testimonial-body .form-grid { gap: 1rem; }
+
+/* ============================================================
+   IMAGE SECTION
+   ============================================================ */
+.image-group {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.image-group-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--fg);
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.image-preview-wrap {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  margin-top: 0.75rem;
+  aspect-ratio: 16/9;
+  max-height: 220px;
+}
+.image-preview-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity var(--base);
+}
+.image-preview-wrap .no-image {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: var(--fg4);
+  font-size: 0.8rem;
+}
+.image-preview-wrap .no-image .icon { font-size: 2rem; }
+
+.upload-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+.upload-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0.9rem;
+  background: var(--bg3);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  color: var(--fg2);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all var(--fast) var(--ease);
+}
+.upload-label:hover {
+  border-color: var(--gold);
+  color: var(--gold-light);
+  background: var(--gold-glow);
+}
+.upload-label input[type="file"] { display: none; }
+.upload-status {
+  font-size: 0.775rem;
+  color: var(--fg3);
+}
+.upload-status.uploading { color: var(--warn); }
+.upload-status.done { color: var(--success); }
+.upload-status.error { color: #ff6b6b; }
+
+/* ============================================================
+   ADD BUTTON ROW
+   ============================================================ */
+.add-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1.1rem;
+  background: var(--bg2);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  color: var(--fg3);
+  font-size: 0.82rem;
+  font-weight: 500;
+  transition: all var(--fast) var(--ease);
+  margin-top: 0.5rem;
+}
+.add-row:hover {
+  background: var(--gold-glow);
+  border-color: var(--gold);
+  color: var(--gold-light);
+}
+.add-row .add-icon {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  color: var(--gold);
+  flex-shrink: 0;
+  transition: all var(--fast) var(--ease);
+}
+.add-row:hover .add-icon {
+  background: var(--gold);
+  color: #0A0804;
+  border-color: var(--gold);
+}
+
+/* ============================================================
+   SELECT
+   ============================================================ */
+select.field-input {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23C8A45A' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2.25rem;
+  cursor: pointer;
+}
+
+/* ============================================================
+   TOASTS
+   ============================================================ */
+#toast-container {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9998;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.75rem 1rem;
+  font-size: 0.82rem;
+  color: var(--fg);
+  max-width: 360px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  pointer-events: all;
+  animation: toast-in var(--base) var(--ease);
+  border-left-width: 3px;
+}
+.toast.success { border-left-color: var(--success); }
+.toast.error   { border-left-color: var(--error); }
+.toast.info    { border-left-color: var(--gold); }
+.toast.warn    { border-left-color: var(--warn); }
+
+.toast-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+.toast-content { flex: 1; }
+.toast-title {
+  font-weight: 600;
+  margin-bottom: 0.1rem;
+}
+.toast-message { color: var(--fg2); font-size: 0.775rem; }
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes toast-out {
+  from { opacity: 1; transform: translateX(0); }
+  to   { opacity: 0; transform: translateX(16px); }
+}
+
+/* ============================================================
+   SAVE BUTTON STATES
+   ============================================================ */
+.btn-save {
+  min-width: 140px;
+}
+.btn-save .btn-text { }
+.btn-save .btn-spinner { display: none; }
+.btn-save.loading .btn-text { display: none; }
+.btn-save.loading .btn-spinner { display: inline-flex; align-items: center; gap: 0.4rem; }
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(10,8,4,0.3);
+  border-top-color: #0A0804;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ============================================================
+   SAVED INDICATOR (header)
+   ============================================================ */
+.save-state {
+  font-size: 0.72rem;
+  color: var(--fg4);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.save-state.saved { color: var(--success); }
+.save-state.saving { color: var(--warn); }
+
+/* ============================================================
+   MOBILE OVERLAY
+   ============================================================ */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 90;
+  backdrop-filter: blur(2px);
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 700px) {
+  .sidebar-toggle { display: flex; }
+
+  .sidebar {
+    position: fixed;
+    top: var(--header-h);
+    left: 0;
+    bottom: 0;
+    z-index: 95;
+    transform: translateX(-100%);
+    width: 240px;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar-overlay { display: none; }
+  .sidebar-overlay.open { display: block; }
+
+  .section-panel { padding: 1.25rem; }
+  .form-grid.two { grid-template-columns: 1fr; }
+
+  .header-status,
+  .header-user { display: none; }
+}
+
+@media (max-width: 500px) {
+  .login-card { padding: 1.75rem 1.25rem; }
+  .header-brand .brand-text { font-size: 0.9rem; }
+}
+
+/* ============================================================
+   UTILITY
+   ============================================================ */
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.gap-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.divider {
+  height: 1px;
+  background: var(--border2);
+  margin: 1.5rem 0;
+}
+
+/* Highlight blink on section switch */
+@keyframes highlight-blink {
+  0%, 100% { background: transparent; }
+  30% { background: var(--gold-glow); }
+}
+</style>
+</head>
+<body>
+
+<!-- ================================================================
+     TOAST CONTAINER
+     ================================================================ -->
+<div id="toast-container" role="status" aria-live="polite" aria-atomic="false"></div>
+
+<!-- ================================================================
+     LOGIN SCREEN
+     ================================================================ -->
+<div id="login-screen" class="active" role="main" aria-label="CMS Login">
+  <div class="login-card">
+    <div class="login-brand">
+      <span class="crown" aria-hidden="true">&#128081;</span>
+      <span class="brand-text"><em>Gold</em> Kings</span>
+      <span class="cms-badge">CMS</span>
+    </div>
+
+    <p class="login-heading">Welcome back</p>
+    <p class="login-subtext">Enter your GitHub Personal Access Token to manage site content.</p>
+
+    <div id="login-error" class="login-error" role="alert"></div>
+
+    <div class="field-wrap">
+      <label class="field-label" for="token-input">Personal Access Token</label>
+      <input
+        type="password"
+        id="token-input"
+        class="field-input"
+        placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
+        autocomplete="current-password"
+        spellcheck="false"
+      >
+    </div>
+
+    <button class="btn btn-gold btn-full" id="login-btn" type="button">
+      <span class="btn-text">Login &rarr;</span>
+      <span class="btn-spinner" style="display:none;">
+        <span class="spinner" style="border-top-color:#0A0804;"></span>
+        Verifying&hellip;
+      </span>
+    </button>
+
+    <p class="login-hint">
+      Need a token?
+      <a href="https://github.com/settings/tokens/new?scopes=repo&description=GoldKingsCMS" target="_blank" rel="noopener">
+        Create one on GitHub &#8599;
+      </a>
+      <br>
+      <span style="margin-top:0.4rem;display:inline-block;font-size:0.7rem;color:var(--fg4);">
+        Requires <code style="color:var(--gold);font-size:0.7rem;">repo</code> scope &bull; Stored in sessionStorage only
+      </span>
+    </p>
+  </div>
+</div>
+
+<!-- ================================================================
+     APP SHELL
+     ================================================================ -->
+<div id="app-shell" role="application">
+
+  <!-- HEADER -->
+  <header class="app-header" role="banner">
+    <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar" aria-expanded="false">
+      &#9776;
+    </button>
+
+    <div class="header-brand">
+      <span class="crown" aria-hidden="true">&#128081;</span>
+      <span class="brand-text"><em>Gold</em> Kings</span>
+      <span class="cms-tag">CMS</span>
+    </div>
+
+    <div class="header-status" aria-label="Connection status">
+      <span class="status-dot" aria-hidden="true"></span>
+      <span id="status-label">Connected</span>
+    </div>
+
+    <div class="header-user" id="header-user" aria-label="Logged in user">
+      <img class="header-avatar" id="user-avatar" src="" alt="" aria-hidden="true">
+      <span id="user-login"></span>
+    </div>
+
+    <div class="header-spacer"></div>
+
+    <div class="save-state" id="save-state" aria-live="polite"></div>
+
+    <div class="header-actions">
+      <button class="btn btn-gold btn-save" id="save-btn" type="button" aria-label="Save changes and deploy">
+        <span class="btn-text">&#x1F4BE;&nbsp; Save &amp; Deploy</span>
+        <span class="btn-spinner">
+          <span class="spinner"></span>
+          Saving&hellip;
+        </span>
+      </button>
+      <button class="btn btn-ghost btn-sm" id="logout-btn" type="button" aria-label="Logout">
+        Logout
+      </button>
+    </div>
+  </header>
+
+  <!-- BODY: SIDEBAR + MAIN -->
+  <div class="app-body">
+
+    <!-- SIDEBAR OVERLAY (mobile) -->
+    <div class="sidebar-overlay" id="sidebar-overlay" aria-hidden="true"></div>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar" role="navigation" aria-label="Content sections">
+      <nav class="sidebar-nav" aria-label="Section navigation">
+        <div class="sidebar-section-label">Content</div>
+
+        <div class="nav-item active" data-section="general" role="button" tabindex="0" aria-current="true" aria-label="General Settings">
+          <span class="nav-icon" aria-hidden="true">&#9881;&#65039;</span>
+          <span class="nav-label">General</span>
+        </div>
+
+        <div class="nav-item" data-section="hero" role="button" tabindex="0" aria-label="Hero Section">
+          <span class="nav-icon" aria-hidden="true">&#129464;</span>
+          <span class="nav-label">Hero</span>
+        </div>
+
+        <div class="nav-item" data-section="cta" role="button" tabindex="0" aria-label="CTA Section">
+          <span class="nav-icon" aria-hidden="true">&#128226;</span>
+          <span class="nav-label">CTA / Quote</span>
+        </div>
+
+        <div class="nav-item" data-section="locations" role="button" tabindex="0" aria-label="Locations">
+          <span class="nav-icon" aria-hidden="true">&#128205;</span>
+          <span class="nav-label">Locations</span>
+        </div>
+
+        <div class="nav-item" data-section="reviews" role="button" tabindex="0" aria-label="Customer Reviews">
+          <span class="nav-icon" aria-hidden="true">&#11088;</span>
+          <span class="nav-label">Reviews</span>
+          <span class="nav-count" id="review-count">8</span>
+        </div>
+
+        <div class="nav-item" data-section="images" role="button" tabindex="0" aria-label="Images">
+          <span class="nav-icon" aria-hidden="true">&#128444;&#65039;</span>
+          <span class="nav-label">Images</span>
+        </div>
+      </nav>
+
+      <div class="sidebar-footer">
+        Repo: <a href="https://github.com/MuraduzzamanRifat/gold" target="_blank" rel="noopener">MuraduzzamanRifat/gold &#8599;</a>
+        <br>Branch: <code style="color:var(--gold);font-size:0.7rem;">main</code>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content" id="main-content" role="main">
+
+      <!-- ========================================================
+           SECTION: GENERAL
+           ======================================================== -->
+      <section class="section-panel active" id="panel-general" aria-label="General Settings">
+        <div class="panel-header">
+          <div class="panel-header-text">
+            <h1 class="panel-title"><span class="icon" aria-hidden="true">&#9881;&#65039;</span> General Settings</h1>
+            <p class="panel-subtitle">Top bar message, phone numbers, and footer information.</p>
+          </div>
+        </div>
+
+        <!-- Topbar -->
+        <div class="content-card">
+          <div class="card-title"><span class="icon" aria-hidden="true">&#128286;</span> Top Bar</div>
+          <div class="form-grid single">
+            <div class="form-group">
+              <label class="form-label" for="topbar-message">
+                Announcement Message
+                <span class="char-count" id="cc-topbar-message"></span>
+              </label>
+              <input type="text" id="topbar-message" class="field-input" maxlength="160"
+                data-field="topbar.message"
+                placeholder="Your topbar announcement text">
+            </div>
+          </div>
+          <div class="card-divider"></div>
+          <div class="form-grid two">
+            <div class="form-group">
+              <label class="form-label" for="topbar-phone-snellville">Snellville Phone</label>
+              <input type="text" id="topbar-phone-snellville" class="field-input"
+                data-field="topbar.phoneSnellville" data-validate="phone"
+                placeholder="770-771-4650">
+              <span class="field-hint" id="hint-topbar-phone-snellville"></span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="topbar-phone-commerce">Commerce Phone</label>
+              <input type="text" id="topbar-phone-commerce" class="field-input"
+                data-field="topbar.phoneCommerce" data-validate="phone"
+                placeholder="(706) 336-0043">
+              <span class="field-hint" id="hint-topbar-phone-commerce"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="content-card">
+          <div class="card-title"><span class="icon" aria-hidden="true">&#128196;</span> Footer</div>
+          <div class="form-grid single">
+            <div class="form-group">
+              <label class="form-label" for="footer-desc">
+                Footer Description
+                <span class="char-count" id="cc-footer-desc"></span>
+              </label>
+              <textarea id="footer-desc" class="field-input" rows="3" maxlength="320"
+                data-field="footer.desc"
+                placeholder="About your business..."></textarea>
+            </div>
+          </div>
+          <div class="card-divider"></div>
+          <div class="form-grid two">
+            <div class="form-group">
+              <label class="form-label" for="footer-email">Contact Email</label>
+              <input type="email" id="footer-email" class="field-input"
+                data-field="footer.email" data-validate="email"
+                placeholder="email@domain.com">
+              <span class="field-hint" id="hint-footer-email"></span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="footer-copyright">
+                Copyright Text
+                <span class="char-count" id="cc-footer-copyright"></span>
+              </label>
+              <input type="text" id="footer-copyright" class="field-input" maxlength="100"
+                data-field="footer.copyright"
+                placeholder="&copy; 2026 Gold Kings...">
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           SECTION: HERO
+           ======================================================== -->
+      <section class="section-panel" id="panel-hero" aria-label="Hero Section">
+        <div class="panel-header">
+          <div class="panel-header-text">
+            <h1 class="panel-title"><span class="icon" aria-hidden="true">&#129464;</span> Hero Section</h1>
+            <p class="panel-subtitle">The main banner visitors see first — make it count.</p>
+          </div>
+        </div>
+
+        <div class="content-card">
+          <div class="card-title"><span class="icon" aria-hidden="true">&#9998;&#65039;</span> Copy</div>
+          <div class="form-grid single">
+            <div class="form-group">
+              <label class="form-label" for="hero-eyebrow">
+                Eyebrow Text
+                <span class="char-count" id="cc-hero-eyebrow"></span>
+              </label>
+              <input type="text" id="hero-eyebrow" class="field-input" maxlength="60"
+                data-field="hero.eyebrow"
+                placeholder="Trusted Since 2008">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="hero-headline1">
+                Headline Line 1
+                <span class="char-count" id="cc-hero-headline1"></span>
+              </label>
+              <input type="text" id="hero-headline1" class="field-input" maxlength="60"
+                data-field="hero.headline1"
+                placeholder="WE BUY GOLD">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="hero-headline2">
+                Headline Line 2
+                <span class="char-count" id="cc-hero-headline2"></span>
+              </label>
+              <input type="text" id="hero-headline2" class="field-input" maxlength="60"
+                data-field="hero.headline2"
+                placeholder="Fast Cash, Fair Prices">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="hero-cta-text">
+                CTA Button Text
+                <span class="char-count" id="cc-hero-cta-text"></span>
+              </label>
+              <input type="text" id="hero-cta-text" class="field-input" maxlength="40"
+                data-field="hero.ctaText"
+                placeholder="Get a Quote Now">
+            </div>
+          </div>
+        </div>
+
+        <div class="content-card">
+          <div class="card-title"><span class="icon" aria-hidden="true">&#128247;</span> Background Image</div>
+          <div class="form-group">
+            <label class="form-label" for="hero-bg-url">Image URL</label>
+            <input type="url" id="hero-bg-url" class="field-input"
+              data-field="hero.backgroundImage"
+              placeholder="https://...">
+          </div>
+          <div class="image-preview-wrap mt-2" id="hero-bg-preview-wrap">
+            <div class="no-image" id="hero-bg-no-img">
+              <span class="icon" aria-hidden="true">&#128444;&#65039;</span>
+              <span>No image set</span>
+            </div>
+            <img id="hero-bg-preview" src="" alt="Hero background preview" style="display:none;" loading="lazy">
+          </div>
+          <div class="upload-row">
+            <label class="upload-label">
+              <input type="file" id="hero-bg-file" accept="image/*" aria-label="Upload hero background image">
+              &#128190; Upload Image
+            </label>
+            <span class="upload-status" id="hero-bg-upload-status"></span>
+          </div>
+          <p class="field-hint mt-1">Recommended: 1920&times;1080px or wider. JPG/WebP preferred.</p>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           SECTION: CTA
+           ======================================================== -->
+      <section class="section-panel" id="panel-cta" aria-label="CTA Section">
+        <div class="panel-header">
+          <div class="panel-header-text">
+            <h1 class="panel-title"><span class="icon" aria-hidden="true">&#128226;</span> CTA / Quote Section</h1>
+            <p class="panel-subtitle">The "get a free evaluation" call-to-action block.</p>
+          </div>
+        </div>
+
+        <div class="content-card">
+          <div class="form-grid single">
+            <div class="form-group">
+              <label class="form-label" for="cta-eyebrow">
+                Eyebrow
+                <span class="char-count" id="cc-cta-eyebrow"></span>
+              </label>
+              <input type="text" id="cta-eyebrow" class="field-input" maxlength="60"
+                data-field="cta.eyebrow"
+                placeholder="◆ Ready to Sell?">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cta-title">
+                Title
+                <span class="char-count" id="cc-cta-title"></span>
+              </label>
+              <input type="text" id="cta-title" class="field-input" maxlength="100"
+                data-field="cta.title"
+                placeholder="Get Your Free Evaluation Today">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="cta-subtitle">
+                Subtitle / Body
+                <span class="char-count" id="cc-cta-subtitle"></span>
+              </label>
+              <textarea id="cta-subtitle" class="field-input" rows="4" maxlength="400"
+                data-field="cta.subtitle"
+                placeholder="Walk in during store hours — no appointment needed..."></textarea>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           SECTION: LOCATIONS
+           ======================================================== -->
+      <section class="section-panel" id="panel-locations" aria-label="Locations">
+        <div class="panel-header">
+          <div class="panel-header-text">
+            <h1 class="panel-title"><span class="icon" aria-hidden="true">&#128205;</span> Locations</h1>
+            <p class="panel-subtitle">Store addresses, phones, and hours. Also manages the locations section copy.</p>
+          </div>
+        </div>
+
+        <!-- Locations section header copy -->
+        <div class="content-card">
+          <div class="card-title"><span class="icon" aria-hidden="true">&#9998;&#65039;</span> Section Copy</div>
+          <div class="form-grid single">
+            <div class="form-group">
+              <label class="form-label" for="loc-sec-eyebrow">
+                Eyebrow
+                <span class="char-count" id="cc-loc-sec-eyebrow"></span>
+              </label>
+              <input type="text" id="loc-sec-eyebrow" class="field-input" maxlength="60"
+                data-field="locationsSection.eyebrow"
+                placeholder="◆ Our Locations">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="loc-sec-title">
+                Section Title
+                <span class="char-count" id="cc-loc-sec-title"></span>
+              </label>
+              <input type="text" id="loc-sec-title" class="field-input" maxlength="80"
+                data-field="locationsSection.title"
+                placeholder="Find Your Nearest Store">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="loc-sec-body">
+                Body Paragraph
+                <span class="char-count" id="cc-loc-sec-body"></span>
+              </label>
+              <textarea id="loc-sec-body" class="field-input" rows="3" maxlength="400"
+                data-field="locationsSection.body"
+                placeholder="Two Georgia locations..."></textarea>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="loc-sec-image-caption">Image Caption</label>
+              <input type="text" id="loc-sec-image-caption" class="field-input"
+                data-field="locationsSection.imageCaption"
+                placeholder="Professional Gold Buying Service">
+            </div>
+          </div>
+        </div>
+
+        <!-- Location Cards -->
+        <div id="locations-list"></div>
+      </section>
+
+      <!-- ========================================================
+           SECTION: REVIEWS
+           ======================================================== -->
+      <section class="section-panel" id="panel-reviews" aria-label="Customer Reviews">
+        <div class="panel-header">
+          <div class="panel-header-text">
+            <h1 class="panel-title"><span class="icon" aria-hidden="true">&#11088;</span> Customer Reviews</h1>
+            <p class="panel-subtitle">Add, edit, or remove testimonials shown on the homepage.</p>
+          </div>
+        </div>
+
+        <div class="testimonials-list" id="testimonials-list"></div>
+
+        <div class="add-row" id="add-testimonial-btn" role="button" tabindex="0" aria-label="Add new review">
+          <span class="add-icon" aria-hidden="true">+</span>
+          Add Review
+        </div>
+      </section>
+
+      <!-- ========================================================
+           SECTION: IMAGES
+           ======================================================== -->
+      <section class="section-panel" id="panel-images" aria-label="Images">
+        <div class="panel-header">
+          <div class="panel-header-text">
+            <h1 class="panel-title"><span class="icon" aria-hidden="true">&#128444;&#65039;</span> Images</h1>
+            <p class="panel-subtitle">Upload or update images used across the site.</p>
+          </div>
+        </div>
+
+        <!-- Hero Image -->
+        <div class="image-group">
+          <div class="image-group-title">
+            <span aria-hidden="true">&#129464;</span> Hero Background
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="img-hero-url">Image URL</label>
+            <input type="url" id="img-hero-url" class="field-input"
+              data-field="hero.backgroundImage"
+              data-mirror="hero-bg-url"
+              placeholder="https://...">
+          </div>
+          <div class="image-preview-wrap" id="img-hero-preview-wrap">
+            <div class="no-image" id="img-hero-no-img">
+              <span class="icon" aria-hidden="true">&#128444;&#65039;</span>
+              <span>No image set</span>
+            </div>
+            <img id="img-hero-preview" src="" alt="Hero background" style="display:none;" loading="lazy">
+          </div>
+          <div class="upload-row">
+            <label class="upload-label">
+              <input type="file" id="img-hero-file" accept="image/*" aria-label="Upload hero image">
+              &#128190; Upload Image
+            </label>
+            <span class="upload-status" id="img-hero-upload-status"></span>
+          </div>
+          <p class="field-hint mt-1">Recommended: 1920&times;1080px. JPG/WebP for best performance.</p>
+        </div>
+
+        <!-- Locations Section Image -->
+        <div class="image-group">
+          <div class="image-group-title">
+            <span aria-hidden="true">&#128205;</span> Locations Section Image
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="img-loc-url">Image URL</label>
+            <input type="url" id="img-loc-url" class="field-input"
+              data-field="locationsSection.image"
+              placeholder="https://...">
+          </div>
+          <div class="image-preview-wrap" id="img-loc-preview-wrap">
+            <div class="no-image" id="img-loc-no-img">
+              <span class="icon" aria-hidden="true">&#128444;&#65039;</span>
+              <span>No image set</span>
+            </div>
+            <img id="img-loc-preview" src="" alt="Locations section image" style="display:none;" loading="lazy">
+          </div>
+          <div class="upload-row">
+            <label class="upload-label">
+              <input type="file" id="img-loc-file" accept="image/*" aria-label="Upload locations section image">
+              &#128190; Upload Image
+            </label>
+            <span class="upload-status" id="img-loc-upload-status"></span>
+          </div>
+          <p class="field-hint mt-1">Recommended: 1200&times;800px.</p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ================================================================
+     JAVASCRIPT
+     ================================================================ -->
+<script>
+'use strict';
+
+/* ============================================================
+   CONSTANTS
+   ============================================================ */
+const REPO_OWNER  = 'MuraduzzamanRifat';
+const REPO_NAME   = 'gold';
+const REPO_BRANCH = 'main';
+const CONTENT_PATH = 'content/site.json';
+
+/* ============================================================
+   GITHUB API CLASS
+   ============================================================ */
+class GH {
+  constructor(token) {
+    this.token  = token;
+    this.base   = 'https://api.github.com';
+    this.owner  = REPO_OWNER;
+    this.repo   = REPO_NAME;
+    this.branch = REPO_BRANCH;
+  }
+
+  headers() {
+    return {
+      'Authorization': `Bearer ${this.token}`,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json'
+    };
+  }
+
+  async getFile(path) {
+    const url = `${this.base}/repos/${this.owner}/${this.repo}/contents/${path}?ref=${this.branch}`;
+    const r = await fetch(url, { headers: this.headers() });
+    if (!r.ok) {
+      const txt = await r.text();
+      throw new Error(`GitHub: ${r.status} ${r.statusText} — ${txt.slice(0,200)}`);
+    }
+    const d = await r.json();
+    const decoded = JSON.parse(atob(d.content.replace(/\n/g, '')));
+    return { content: decoded, sha: d.sha };
+  }
+
+  async putFile(path, content, sha, message) {
+    const jsonStr = JSON.stringify(content, null, 2);
+    // Use encodeURIComponent + unescape to handle unicode safely before btoa
+    const encoded = btoa(unescape(encodeURIComponent(jsonStr)));
+    const body = { message, content: encoded, branch: this.branch };
+    if (sha) body.sha = sha;
+    const r = await fetch(`${this.base}/repos/${this.owner}/${this.repo}/contents/${path}`, {
+      method: 'PUT',
+      headers: this.headers(),
+      body: JSON.stringify(body)
+    });
+    if (!r.ok) {
+      const e = await r.json().catch(() => ({ message: r.statusText }));
+      throw new Error(e.message || r.statusText);
+    }
+    return r.json();
+  }
+
+  async putBinary(path, base64, message) {
+    // First check if file exists to get its SHA (for update)
+    let sha;
+    try {
+      const existing = await fetch(
+        `${this.base}/repos/${this.owner}/${this.repo}/contents/${path}?ref=${this.branch}`,
+        { headers: this.headers() }
+      );
+      if (existing.ok) {
+        const d = await existing.json();
+        sha = d.sha;
+      }
+    } catch (_) { /* new file */ }
+
+    const body = { message, content: base64, branch: this.branch };
+    if (sha) body.sha = sha;
+
+    const r = await fetch(`${this.base}/repos/${this.owner}/${this.repo}/contents/${path}`, {
+      method: 'PUT',
+      headers: this.headers(),
+      body: JSON.stringify(body)
+    });
+    if (!r.ok) {
+      const e = await r.json().catch(() => ({ message: r.statusText }));
+      throw new Error(e.message || r.statusText);
+    }
+    return r.json();
+  }
+
+  async validateToken() {
+    const r = await fetch(`${this.base}/user`, { headers: this.headers() });
+    if (!r.ok) throw new Error('Invalid token or insufficient permissions.');
+    return r.json();
+  }
+}
+
+/* ============================================================
+   STATE
+   ============================================================ */
+let gh = null;
+let siteData = null;
+let fileSHA = null;
+let isDirty = false;
+
+/* ============================================================
+   TOAST SYSTEM
+   ============================================================ */
+function showToast(type, title, message, duration = 4500) {
+  const icons = { success: '&#10003;', error: '&#33;', info: 'i', warn: '&#9888;' };
+  const container = document.getElementById('toast-container');
+
+  const toast = document.createElement('div');
+  toast.className = `toast ${type}`;
+  toast.setAttribute('role', 'alert');
+  toast.innerHTML = `
+    <span class="toast-icon" aria-hidden="true">${icons[type] || 'i'}</span>
+    <div class="toast-content">
+      <div class="toast-title">${escHtml(title)}</div>
+      ${message ? `<div class="toast-message">${escHtml(message)}</div>` : ''}
+    </div>
+  `;
+
+  container.appendChild(toast);
+
+  const remove = () => {
+    toast.style.animation = `toast-out 250ms ease forwards`;
+    setTimeout(() => toast.remove(), 280);
+  };
+
+  const timer = setTimeout(remove, duration);
+  toast.addEventListener('click', () => { clearTimeout(timer); remove(); });
+}
+
+/* ============================================================
+   UTILITIES
+   ============================================================ */
+function escHtml(str) {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function get(id) { return document.getElementById(id); }
+
+function setVal(id, val) {
+  const el = get(id);
+  if (el) el.value = val != null ? val : '';
+}
+
+function getVal(id) {
+  const el = get(id);
+  return el ? el.value.trim() : '';
+}
+
+function deepGet(obj, path) {
+  return path.split('.').reduce((o, k) => (o && o[k] !== undefined ? o[k] : ''), obj);
+}
+
+function deepSet(obj, path, value) {
+  const keys = path.split('.');
+  let cur = obj;
+  for (let i = 0; i < keys.length - 1; i++) {
+    if (cur[keys[i]] === undefined) cur[keys[i]] = {};
+    cur = cur[keys[i]];
+  }
+  cur[keys[keys.length - 1]] = value;
+}
+
+function generateId(prefix = 'id') {
+  return `${prefix}_${Date.now().toString(36)}_${Math.random().toString(36).slice(2,6)}`;
+}
+
+/* ============================================================
+   CHAR COUNT HELPERS
+   ============================================================ */
+function initCharCount(inputId, counterId, maxLen) {
+  const input = get(inputId);
+  const counter = get(counterId);
+  if (!input || !counter) return;
+
+  function update() {
+    const len = input.value.length;
+    counter.textContent = `${len}/${maxLen}`;
+    counter.className = 'char-count';
+    if (len > maxLen * 0.9) counter.classList.add('warn');
+    if (len >= maxLen) counter.classList.add('over');
+  }
+
+  input.addEventListener('input', update);
+  update();
+}
+
+/* ============================================================
+   VALIDATION HELPERS
+   ============================================================ */
+function isPhoneish(val) {
+  // Allow digits, spaces, dashes, parens, plus sign
+  return /^[\d\s\-\+\(\)\.]+$/.test(val.trim());
+}
+
+function isEmail(val) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val.trim());
+}
+
+function attachValidation(inputId, type, hintId) {
+  const input = get(inputId);
+  const hint = get(hintId);
+  if (!input) return;
+
+  function validate() {
+    const val = input.value.trim();
+    if (!val) {
+      input.className = 'field-input';
+      if (hint) { hint.textContent = ''; hint.className = 'field-hint'; }
+      return;
+    }
+    if (type === 'phone' && !isPhoneish(val)) {
+      input.classList.add('warn');
+      if (hint) {
+        hint.textContent = 'Unusual characters — expected digits, spaces, dashes.';
+        hint.className = 'field-hint warn';
+      }
+    } else if (type === 'email' && !isEmail(val)) {
+      input.classList.add('error');
+      if (hint) {
+        hint.textContent = 'Please enter a valid email address.';
+        hint.className = 'field-hint error';
+      }
+    } else {
+      input.className = 'field-input';
+      if (hint) { hint.textContent = ''; hint.className = 'field-hint'; }
+    }
+  }
+
+  input.addEventListener('blur', validate);
+  input.addEventListener('input', () => {
+    // Clear error state while typing
+    input.classList.remove('error', 'warn');
+    if (hint) { hint.textContent = ''; hint.className = 'field-hint'; }
+  });
+}
+
+/* ============================================================
+   IMAGE PREVIEW
+   ============================================================ */
+function initImagePreview(urlInputId, previewImgId, noImgId) {
+  const urlInput = get(urlInputId);
+  const previewImg = get(previewImgId);
+  const noImg = get(noImgId);
+  if (!urlInput || !previewImg) return;
+
+  function update(val) {
+    const url = (val !== undefined ? val : urlInput.value).trim();
+    if (url) {
+      previewImg.src = url;
+      previewImg.style.display = 'block';
+      if (noImg) noImg.style.display = 'none';
+      previewImg.onerror = () => {
+        previewImg.style.display = 'none';
+        if (noImg) noImg.style.display = 'flex';
+      };
+    } else {
+      previewImg.style.display = 'none';
+      previewImg.src = '';
+      if (noImg) noImg.style.display = 'flex';
+    }
+  }
+
+  urlInput.addEventListener('input', () => update());
+  return update;
+}
+
+/* ============================================================
+   IMAGE UPLOAD
+   ============================================================ */
+async function handleImageUpload(fileInputId, urlInputId, statusId, mirrorInputId) {
+  const fileInput = get(fileInputId);
+  const urlInput  = get(urlInputId);
+  const statusEl  = get(statusId);
+  const mirrorInput = mirrorInputId ? get(mirrorInputId) : null;
+
+  if (!fileInput || !fileInput.files || !fileInput.files[0]) return;
+  if (!gh) { showToast('error', 'Not connected', 'Please login first.'); return; }
+
+  const file = fileInput.files[0];
+  const timestamp = Date.now();
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+  const uploadPath = `img/uploads/${timestamp}-${safeName}`;
+
+  statusEl.textContent = 'Uploading...';
+  statusEl.className = 'upload-status uploading';
+
+  try {
+    // Read file as ArrayBuffer → base64
+    const base64 = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = e => {
+        // ArrayBuffer to base64
+        const bytes = new Uint8Array(e.target.result);
+        let binary = '';
+        for (let i = 0; i < bytes.byteLength; i++) {
+          binary += String.fromCharCode(bytes[i]);
+        }
+        resolve(btoa(binary));
+      };
+      reader.onerror = reject;
+      reader.readAsArrayBuffer(file);
+    });
+
+    const result = await gh.putBinary(
+      uploadPath,
+      base64,
+      `CMS: Upload image ${safeName}`
+    );
+
+    // Build public URL (GitHub Pages)
+    const publicUrl = `https://${REPO_OWNER.toLowerCase()}.github.io/${REPO_NAME}/${uploadPath}`;
+    // Also build raw GitHub URL as fallback
+    const rawUrl = result.content && result.content.download_url
+      ? result.content.download_url
+      : `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${REPO_BRANCH}/${uploadPath}`;
+
+    // Use raw URL (available immediately; Pages takes ~2 min)
+    urlInput.value = rawUrl;
+    urlInput.dispatchEvent(new Event('input'));
+
+    if (mirrorInput) {
+      mirrorInput.value = rawUrl;
+      mirrorInput.dispatchEvent(new Event('input'));
+    }
+
+    statusEl.textContent = 'Uploaded successfully';
+    statusEl.className = 'upload-status done';
+    markDirty();
+
+    setTimeout(() => {
+      statusEl.textContent = '';
+      statusEl.className = 'upload-status';
+    }, 4000);
+
+  } catch (err) {
+    statusEl.textContent = `Upload failed: ${err.message}`;
+    statusEl.className = 'upload-status error';
+    showToast('error', 'Upload failed', err.message);
+  }
+
+  // Reset file input
+  fileInput.value = '';
+}
+
+/* ============================================================
+   DIRTY STATE TRACKING
+   ============================================================ */
+function markDirty() {
+  isDirty = true;
+  const ss = get('save-state');
+  if (ss) {
+    ss.textContent = 'Unsaved changes';
+    ss.className = 'save-state saving';
+  }
+}
+
+function markClean() {
+  isDirty = false;
+  const ss = get('save-state');
+  if (ss) {
+    ss.textContent = 'All changes saved';
+    ss.className = 'save-state saved';
+    setTimeout(() => {
+      if (ss.textContent === 'All changes saved') {
+        ss.textContent = '';
+        ss.className = 'save-state';
+      }
+    }, 3000);
+  }
+}
+
+/* ============================================================
+   POPULATE FORMS FROM DATA
+   ============================================================ */
+function populateForms(data) {
+  // Bind all [data-field] inputs automatically
+  document.querySelectorAll('[data-field]').forEach(el => {
+    const path = el.dataset.field;
+    const val = deepGet(data, path);
+    if (el.tagName === 'TEXTAREA' || el.tagName === 'INPUT' || el.tagName === 'SELECT') {
+      el.value = val != null ? val : '';
+    }
+    // Trigger input event to update char counts and previews
+    el.dispatchEvent(new Event('input'));
+  });
+
+  // Render locations
+  renderLocations(data.locations || []);
+
+  // Render testimonials
+  renderTestimonials(data.testimonials || []);
+
+  // Update review count badge
+  updateReviewCount(data.testimonials ? data.testimonials.length : 0);
+}
+
+/* ============================================================
+   COLLECT FORM DATA INTO JSON
+   ============================================================ */
+function collectData() {
+  const data = JSON.parse(JSON.stringify(siteData)); // deep clone base
+
+  // Auto-collect [data-field] inputs (skip mirrors & image panels — handled separately)
+  const seen = new Set();
+  document.querySelectorAll('[data-field]').forEach(el => {
+    const path = el.dataset.field;
+    const isMirror = el.dataset.mirror !== undefined; // inputs in Images section that mirror Hero section
+    // Avoid double-writing; first input wins unless it's explicitly in Images panel
+    const panelId = el.closest('.section-panel') && el.closest('.section-panel').id;
+    // For mirrored fields, the Images panel URL inputs are authoritative if they differ
+    if (!seen.has(path) || panelId === 'panel-images') {
+      deepSet(data, path, el.value.trim());
+      seen.add(path);
+    }
+  });
+
+  // Collect locations from rendered cards
+  data.locations = collectLocations();
+
+  // Collect testimonials from rendered list
+  data.testimonials = collectTestimonials();
+
+  return data;
+}
+
+/* ============================================================
+   RENDER LOCATIONS
+   ============================================================ */
+function renderLocations(locations) {
+  const container = get('locations-list');
+  if (!container) return;
+  container.innerHTML = '';
+
+  locations.forEach((loc, idx) => {
+    const card = document.createElement('div');
+    card.className = 'location-card';
+    card.dataset.locIdx = idx;
+    card.innerHTML = `
+      <div class="location-card-header">
+        <span class="location-badge">Location ${idx + 1}</span>
+        <span class="location-card-title">${escHtml(loc.city || '')}, ${escHtml(loc.state || '')}</span>
+      </div>
+      <div class="form-grid two">
+        <div class="form-group">
+          <label class="form-label" for="loc-${idx}-city">City</label>
+          <input type="text" id="loc-${idx}-city" class="field-input loc-field"
+            data-loc-idx="${idx}" data-loc-field="city"
+            value="${escHtml(loc.city || '')}" placeholder="Snellville">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="loc-${idx}-state">State</label>
+          <input type="text" id="loc-${idx}-state" class="field-input loc-field"
+            data-loc-idx="${idx}" data-loc-field="state"
+            value="${escHtml(loc.state || '')}" placeholder="GA">
+        </div>
+        <div class="form-group full">
+          <label class="form-label" for="loc-${idx}-address">Full Address</label>
+          <input type="text" id="loc-${idx}-address" class="field-input loc-field"
+            data-loc-idx="${idx}" data-loc-field="address"
+            value="${escHtml(loc.address || '')}" placeholder="123 Main St, City GA 30000">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="loc-${idx}-phone">Phone (display)</label>
+          <input type="text" id="loc-${idx}-phone" class="field-input loc-field"
+            data-loc-idx="${idx}" data-loc-field="phone"
+            data-validate="phone"
+            value="${escHtml(loc.phone || '')}" placeholder="770-771-4650">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="loc-${idx}-phone-raw">
+            Phone Raw
+            <span style="font-size:0.65rem;font-weight:400;color:var(--fg4);text-transform:none;letter-spacing:0;">include country code</span>
+          </label>
+          <input type="text" id="loc-${idx}-phone-raw" class="field-input loc-field"
+            data-loc-idx="${idx}" data-loc-field="phoneRaw"
+            value="${escHtml(loc.phoneRaw || '')}" placeholder="+17707714650">
+        </div>
+        <div class="form-group full">
+          <label class="form-label" for="loc-${idx}-hours">Hours</label>
+          <input type="text" id="loc-${idx}-hours" class="field-input loc-field"
+            data-loc-idx="${idx}" data-loc-field="hours"
+            value="${escHtml(loc.hours || '')}" placeholder="Mon–Sat 10AM–6PM · Sunday Closed">
+        </div>
+      </div>
+    `;
+    container.appendChild(card);
+
+    // Attach dirty tracking to all fields in card
+    card.querySelectorAll('.loc-field').forEach(input => {
+      input.addEventListener('input', markDirty);
+
+      // Update card title on city/state change
+      if (input.dataset.locField === 'city' || input.dataset.locField === 'state') {
+        input.addEventListener('input', () => {
+          const i = parseInt(card.dataset.locIdx);
+          const cityEl = card.querySelector(`[data-loc-field="city"]`);
+          const stateEl = card.querySelector(`[data-loc-field="state"]`);
+          const titleEl = card.querySelector('.location-card-title');
+          if (titleEl) {
+            titleEl.textContent = `${cityEl ? cityEl.value : ''}, ${stateEl ? stateEl.value : ''}`;
+          }
+        });
+      }
+    });
+  });
+}
+
+function collectLocations() {
+  const cards = document.querySelectorAll('.location-card');
+  const locations = [];
+  cards.forEach(card => {
+    const idx = parseInt(card.dataset.locIdx);
+    // Preserve original location data, override with form values
+    const base = (siteData && siteData.locations && siteData.locations[idx]) || {};
+    const loc = Object.assign({}, base);
+    card.querySelectorAll('.loc-field').forEach(input => {
+      loc[input.dataset.locField] = input.value.trim();
+    });
+    locations.push(loc);
+  });
+  return locations;
+}
+
+/* ============================================================
+   RENDER TESTIMONIALS
+   ============================================================ */
+function renderTestimonials(testimonials) {
+  const container = get('testimonials-list');
+  if (!container) return;
+  container.innerHTML = '';
+
+  testimonials.forEach((t, idx) => {
+    appendTestimonialCard(t, idx);
+  });
+}
+
+function appendTestimonialCard(t, idx) {
+  const container = get('testimonials-list');
+  if (!container) return;
+
+  const card = document.createElement('div');
+  card.className = 'testimonial-card';
+  card.dataset.tIdx = idx;
+
+  const catOptions = ['Service', 'Professional', 'Premium'];
+  const catOpts = catOptions.map(c =>
+    `<option value="${c}" ${(t.category || 'Service') === c ? 'selected' : ''}>${c}</option>`
+  ).join('');
+
+  card.innerHTML = `
+    <div class="testimonial-header">
+      <span class="testimonial-number">Review #${idx + 1}</span>
+      <div class="testimonial-header-right">
+        <button class="btn btn-danger btn-sm t-delete-btn" data-t-idx="${idx}"
+          aria-label="Delete review ${idx + 1}" type="button">
+          Delete
+        </button>
+      </div>
+    </div>
+    <div class="testimonial-body">
+      <div class="form-grid two">
+        <div class="form-group">
+          <label class="form-label" for="t-${idx}-name">Reviewer Name</label>
+          <input type="text" id="t-${idx}-name" class="field-input t-field"
+            data-t-idx="${idx}" data-t-field="name"
+            value="${escHtml(t.name || '')}" placeholder="Full Name">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="t-${idx}-category">Category</label>
+          <select id="t-${idx}-category" class="field-input t-field"
+            data-t-idx="${idx}" data-t-field="category">
+            ${catOpts}
+          </select>
+        </div>
+        <div class="form-group full">
+          <label class="form-label" for="t-${idx}-quote">
+            Review Text
+            <span class="char-count" id="cc-t-${idx}-quote"></span>
+          </label>
+          <textarea id="t-${idx}-quote" class="field-input t-field" rows="3" maxlength="500"
+            data-t-idx="${idx}" data-t-field="quote"
+            placeholder="Customer review...">${escHtml(t.quote || '')}</textarea>
+        </div>
+      </div>
+    </div>
+  `;
+
+  container.appendChild(card);
+
+  // Char count for quote
+  initCharCount(`t-${idx}-quote`, `cc-t-${idx}-quote`, 500);
+
+  // Dirty tracking
+  card.querySelectorAll('.t-field').forEach(input => {
+    input.addEventListener('input', markDirty);
+    input.addEventListener('change', markDirty);
+  });
+
+  // Delete button
+  const deleteBtn = card.querySelector('.t-delete-btn');
+  if (deleteBtn) {
+    deleteBtn.addEventListener('click', () => deleteTestimonial(card));
+  }
+}
+
+function deleteTestimonial(card) {
+  if (!confirm('Delete this review? This cannot be undone until you save.')) return;
+  card.style.transition = 'opacity 200ms, transform 200ms';
+  card.style.opacity = '0';
+  card.style.transform = 'translateX(12px)';
+  setTimeout(() => {
+    card.remove();
+    renumberTestimonials();
+    updateReviewCount();
+    markDirty();
+  }, 220);
+}
+
+function renumberTestimonials() {
+  const cards = document.querySelectorAll('.testimonial-card');
+  cards.forEach((card, i) => {
+    card.dataset.tIdx = i;
+    const numEl = card.querySelector('.testimonial-number');
+    if (numEl) numEl.textContent = `Review #${i + 1}`;
+    card.querySelectorAll('[data-t-idx]').forEach(el => {
+      el.dataset.tIdx = i;
+      const field = el.dataset.tField;
+      if (field) {
+        el.id = `t-${i}-${field}`;
+        const label = card.querySelector(`[for="t-${el.dataset.tIdx || i}-${field}"]`);
+        if (label) label.htmlFor = el.id;
+      }
+    });
+  });
+}
+
+function collectTestimonials() {
+  const cards = document.querySelectorAll('.testimonial-card');
+  const testimonials = [];
+  cards.forEach((card, i) => {
+    const t = {};
+    // Preserve id from original or generate
+    const origIdx = parseInt(card.dataset.tIdx);
+    if (siteData && siteData.testimonials && siteData.testimonials[origIdx]) {
+      t.id = siteData.testimonials[origIdx].id;
+    }
+    if (!t.id) t.id = `t${String(i + 1).padStart(2, '0')}`;
+
+    card.querySelectorAll('.t-field').forEach(input => {
+      t[input.dataset.tField] = input.value.trim ? input.value.trim() : input.value;
+    });
+    testimonials.push(t);
+  });
+  return testimonials;
+}
+
+function updateReviewCount(count) {
+  const badge = get('review-count');
+  if (!badge) return;
+  if (count === undefined) {
+    count = document.querySelectorAll('.testimonial-card').length;
+  }
+  badge.textContent = count;
+}
+
+/* ============================================================
+   SIDEBAR NAVIGATION
+   ============================================================ */
+function initNav() {
+  document.querySelectorAll('.nav-item').forEach(item => {
+    function activate() {
+      const section = item.dataset.section;
+      if (!section) return;
+
+      // Update nav items
+      document.querySelectorAll('.nav-item').forEach(n => {
+        n.classList.remove('active');
+        n.removeAttribute('aria-current');
+      });
+      item.classList.add('active');
+      item.setAttribute('aria-current', 'true');
+
+      // Show panel
+      document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+      const panel = get(`panel-${section}`);
+      if (panel) {
+        panel.classList.add('active');
+        panel.scrollIntoView({ block: 'start', behavior: 'instant' });
+      }
+
+      // Auto-close sidebar on mobile
+      if (window.innerWidth <= 700) closeSidebar();
+    }
+
+    item.addEventListener('click', activate);
+    item.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); }
+    });
+  });
+}
+
+/* ============================================================
+   SIDEBAR TOGGLE (MOBILE)
+   ============================================================ */
+function initSidebarToggle() {
+  const toggle = get('sidebar-toggle');
+  const sidebar = get('sidebar');
+  const overlay = get('sidebar-overlay');
+
+  if (!toggle || !sidebar) return;
+
+  toggle.addEventListener('click', () => {
+    const isOpen = sidebar.classList.contains('open');
+    isOpen ? closeSidebar() : openSidebar();
+  });
+
+  overlay.addEventListener('click', closeSidebar);
+}
+
+function openSidebar() {
+  const sidebar = get('sidebar');
+  const overlay = get('sidebar-overlay');
+  const toggle  = get('sidebar-toggle');
+  if (sidebar) sidebar.classList.add('open');
+  if (overlay) overlay.classList.add('open');
+  if (toggle)  toggle.setAttribute('aria-expanded', 'true');
+}
+
+function closeSidebar() {
+  const sidebar = get('sidebar');
+  const overlay = get('sidebar-overlay');
+  const toggle  = get('sidebar-toggle');
+  if (sidebar) sidebar.classList.remove('open');
+  if (overlay) overlay.classList.remove('open');
+  if (toggle)  toggle.setAttribute('aria-expanded', 'false');
+}
+
+/* ============================================================
+   CHAR COUNTS INIT
+   ============================================================ */
+function initCharCounts() {
+  const configs = [
+    ['topbar-message',    'cc-topbar-message',    160],
+    ['footer-desc',       'cc-footer-desc',        320],
+    ['footer-copyright',  'cc-footer-copyright',   100],
+    ['hero-eyebrow',      'cc-hero-eyebrow',        60],
+    ['hero-headline1',    'cc-hero-headline1',       60],
+    ['hero-headline2',    'cc-hero-headline2',       60],
+    ['hero-cta-text',     'cc-hero-cta-text',        40],
+    ['cta-eyebrow',       'cc-cta-eyebrow',          60],
+    ['cta-title',         'cc-cta-title',           100],
+    ['cta-subtitle',      'cc-cta-subtitle',        400],
+    ['loc-sec-eyebrow',   'cc-loc-sec-eyebrow',      60],
+    ['loc-sec-title',     'cc-loc-sec-title',        80],
+    ['loc-sec-body',      'cc-loc-sec-body',        400],
+  ];
+  configs.forEach(([inputId, counterId, max]) => initCharCount(inputId, counterId, max));
+}
+
+/* ============================================================
+   VALIDATION INIT
+   ============================================================ */
+function initValidation() {
+  attachValidation('topbar-phone-snellville', 'phone', 'hint-topbar-phone-snellville');
+  attachValidation('topbar-phone-commerce', 'phone', 'hint-topbar-phone-commerce');
+  attachValidation('footer-email', 'email', 'hint-footer-email');
+}
+
+/* ============================================================
+   IMAGE PREVIEWS INIT
+   ============================================================ */
+function initImagePreviews() {
+  // Hero section
+  const updateHeroBg = initImagePreview('hero-bg-url', 'hero-bg-preview', 'hero-bg-no-img');
+  // Images section — hero mirror
+  const updateImgHero = initImagePreview('img-hero-url', 'img-hero-preview', 'img-hero-no-img');
+  // Images section — locations
+  initImagePreview('img-loc-url', 'img-loc-preview', 'img-loc-no-img');
+
+  // Sync hero URL between Hero panel and Images panel
+  const heroBgInput = get('hero-bg-url');
+  const imgHeroInput = get('img-hero-url');
+
+  if (heroBgInput && imgHeroInput) {
+    heroBgInput.addEventListener('input', () => {
+      imgHeroInput.value = heroBgInput.value;
+      if (updateImgHero) updateImgHero(heroBgInput.value);
+      markDirty();
+    });
+    imgHeroInput.addEventListener('input', () => {
+      heroBgInput.value = imgHeroInput.value;
+      if (updateHeroBg) updateHeroBg(imgHeroInput.value);
+      markDirty();
+    });
+  }
+}
+
+/* ============================================================
+   IMAGE UPLOAD INIT
+   ============================================================ */
+function initImageUploads() {
+  // Hero section upload
+  const heroFile = get('hero-bg-file');
+  if (heroFile) {
+    heroFile.addEventListener('change', () =>
+      handleImageUpload('hero-bg-file', 'hero-bg-url', 'hero-bg-upload-status', 'img-hero-url')
+    );
+  }
+
+  // Images panel — hero
+  const imgHeroFile = get('img-hero-file');
+  if (imgHeroFile) {
+    imgHeroFile.addEventListener('change', () =>
+      handleImageUpload('img-hero-file', 'img-hero-url', 'img-hero-upload-status', 'hero-bg-url')
+    );
+  }
+
+  // Images panel — locations section
+  const imgLocFile = get('img-loc-file');
+  if (imgLocFile) {
+    imgLocFile.addEventListener('change', () =>
+      handleImageUpload('img-loc-file', 'img-loc-url', 'img-loc-upload-status', null)
+    );
+  }
+}
+
+/* ============================================================
+   DIRTY TRACKING ON ALL SIMPLE INPUTS
+   ============================================================ */
+function initDirtyTracking() {
+  document.querySelectorAll('[data-field]').forEach(el => {
+    const ev = el.tagName === 'SELECT' ? 'change' : 'input';
+    el.addEventListener(ev, markDirty);
+  });
+}
+
+/* ============================================================
+   ADD TESTIMONIAL
+   ============================================================ */
+function initAddTestimonial() {
+  const addBtn = get('add-testimonial-btn');
+  if (!addBtn) return;
+
+  function addNew() {
+    const existing = document.querySelectorAll('.testimonial-card');
+    const newIdx = existing.length;
+    const newT = { id: generateId('t'), name: '', quote: '', category: 'Service' };
+    appendTestimonialCard(newT, newIdx);
+    updateReviewCount();
+    markDirty();
+
+    // Scroll to new card
+    const cards = document.querySelectorAll('.testimonial-card');
+    const lastCard = cards[cards.length - 1];
+    if (lastCard) {
+      setTimeout(() => lastCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 50);
+    }
+  }
+
+  addBtn.addEventListener('click', addNew);
+  addBtn.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); addNew(); }
+  });
+}
+
+/* ============================================================
+   SAVE & DEPLOY
+   ============================================================ */
+async function saveAll() {
+  if (!gh) { showToast('error', 'Not logged in', 'Please login first.'); return; }
+
+  const saveBtn = get('save-btn');
+  if (saveBtn) {
+    saveBtn.classList.add('loading');
+    saveBtn.disabled = true;
+  }
+
+  const ss = get('save-state');
+  if (ss) { ss.textContent = 'Saving...'; ss.className = 'save-state saving'; }
+
+  try {
+    // Collect all form data
+    const data = collectData();
+
+    // Get current SHA for the file
+    let sha = fileSHA;
+    try {
+      const current = await gh.getFile(CONTENT_PATH);
+      sha = current.sha;
+      fileSHA = sha;
+    } catch (e) {
+      // File may not exist yet — that's OK, we'll create it
+      sha = null;
+    }
+
+    // Commit the updated JSON
+    const now = new Date().toISOString().replace('T', ' ').slice(0, 16);
+    const commitMsg = `CMS: Update site content [${now}]`;
+    const result = await gh.putFile(CONTENT_PATH, data, sha, commitMsg);
+
+    // Update SHA from response
+    if (result && result.content && result.content.sha) {
+      fileSHA = result.content.sha;
+    }
+
+    // Update local state
+    siteData = data;
+    markClean();
+
+    showToast('success', 'Saved!', 'Site will update in ~2 minutes as GitHub Actions deploys.');
+  } catch (err) {
+    console.error('Save error:', err);
+    showToast('error', 'Save failed', err.message || 'Unknown error. Check console for details.');
+    if (ss) { ss.textContent = 'Save failed'; ss.className = 'save-state'; }
+  } finally {
+    if (saveBtn) {
+      saveBtn.classList.remove('loading');
+      saveBtn.disabled = false;
+    }
+  }
+}
+
+/* ============================================================
+   LOGIN
+   ============================================================ */
+async function doLogin(token) {
+  const loginBtn = get('login-btn');
+  const loginError = get('login-error');
+  const tokenInput = get('token-input');
+
+  if (loginBtn) {
+    loginBtn.querySelector('.btn-text').style.display = 'none';
+    loginBtn.querySelector('.btn-spinner').style.display = 'inline-flex';
+    loginBtn.disabled = true;
+  }
+  if (loginError) { loginError.textContent = ''; loginError.classList.remove('visible'); }
+
+  try {
+    gh = new GH(token.trim());
+    const user = await gh.validateToken();
+
+    // Store token
+    sessionStorage.setItem('gk_cms_token', token.trim());
+
+    // Update header user info
+    const avatarEl = get('user-avatar');
+    const loginEl = get('user-login');
+    if (avatarEl && user.avatar_url) avatarEl.src = user.avatar_url;
+    if (loginEl) loginEl.textContent = user.login || '';
+
+    // Load content
+    showLoginScreen(false);
+    showApp(true);
+
+    await loadContent();
+
+  } catch (err) {
+    gh = null;
+    const msg = err.message || 'Login failed. Check your token and try again.';
+    if (loginError) { loginError.textContent = msg; loginError.classList.add('visible'); }
+  } finally {
+    if (loginBtn) {
+      loginBtn.querySelector('.btn-text').style.display = '';
+      loginBtn.querySelector('.btn-spinner').style.display = 'none';
+      loginBtn.disabled = false;
+    }
+  }
+}
+
+async function loadContent() {
+  try {
+    const { content, sha } = await gh.getFile(CONTENT_PATH);
+    siteData = content;
+    fileSHA = sha;
+    populateForms(siteData);
+    showToast('info', 'Content loaded', `Editing ${CONTENT_PATH} on branch ${REPO_BRANCH}.`);
+  } catch (err) {
+    // File doesn't exist yet — use default template
+    siteData = getDefaultData();
+    fileSHA = null;
+    populateForms(siteData);
+    showToast('warn', 'No content file found', `${CONTENT_PATH} does not exist yet. Save to create it.`);
+  }
+}
+
+function doLogout() {
+  if (isDirty) {
+    if (!confirm('You have unsaved changes. Logout anyway?')) return;
+  }
+  sessionStorage.removeItem('gk_cms_token');
+  gh = null;
+  siteData = null;
+  fileSHA = null;
+  isDirty = false;
+  showLoginScreen(true);
+  showApp(false);
+
+  // Reset token input
+  const tokenInput = get('token-input');
+  if (tokenInput) tokenInput.value = '';
+}
+
+/* ============================================================
+   SHOW/HIDE SCREENS
+   ============================================================ */
+function showLoginScreen(show) {
+  const el = get('login-screen');
+  if (!el) return;
+  if (show) {
+    el.classList.add('active');
+    setTimeout(() => {
+      const inp = get('token-input');
+      if (inp) inp.focus();
+    }, 100);
+  } else {
+    el.classList.remove('active');
+  }
+}
+
+function showApp(show) {
+  const el = get('app-shell');
+  if (!el) return;
+  if (show) el.classList.add('active');
+  else el.classList.remove('active');
+}
+
+/* ============================================================
+   DEFAULT DATA (fallback if file not found)
+   ============================================================ */
+function getDefaultData() {
+  return {
+    topbar: {
+      message: "✦ Licensed Georgia Gold Buyer · Fair Prices · Same-Day Payment",
+      phoneSnellville: "770-771-4650",
+      phoneCommerce: "(706) 336-0043"
+    },
+    hero: {
+      eyebrow: "Trusted Since 2008",
+      headline1: "WE BUY GOLD",
+      headline2: "Fast Cash, Fair Prices",
+      ctaText: "Get a Quote Now",
+      backgroundImage: "https://images.pexels.com/photos/5632390/pexels-photo-5632390.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"
+    },
+    cta: {
+      eyebrow: "◆ Ready to Sell?",
+      title: "Get Your Free Evaluation Today",
+      subtitle: "Walk in during store hours — no appointment needed. We'll test your gold on the spot and give you a fair offer based on today's live market price."
+    },
+    locations: [
+      {
+        id: "snellville",
+        city: "Snellville",
+        state: "GA",
+        address: "3635 Stone Mountain Hwy, Snellville GA 30039",
+        phone: "770-771-4650",
+        phoneRaw: "+17707714650",
+        hours: "Mon–Sat 10AM–6PM · Sunday Closed"
+      },
+      {
+        id: "commerce",
+        city: "Commerce",
+        state: "GA",
+        address: "480 Banks Crossing Dr, Commerce GA 30529",
+        phone: "(706) 336-0043",
+        phoneRaw: "+17063360043",
+        hours: "Mon–Sat 10AM–6PM · Sunday Closed"
+      }
+    ],
+    testimonials: [
+      { id: "t01", name: "Jerry Vaughan", quote: "Awsome salesman to work with. He's extremely fast...", category: "Service" },
+      { id: "t02", name: "Jaime Lee", quote: "Super professional, knowledgeable, and fair...", category: "Professional" },
+      { id: "t03", name: "Brandon Coots", quote: "Not only did I have a great experience...", category: "Premium" },
+      { id: "t04", name: "Luis Elias", quote: "Bery please to do business here...", category: "Professional" },
+      { id: "t05", name: "Taylor Dodson", quote: "Had a fantastic time – fair prices...", category: "Premium" },
+      { id: "t06", name: "Chad Usher", quote: "I've been to this store numerous times...", category: "Service" },
+      { id: "t07", name: "Debbie Meadow", quote: "This was a great experience...", category: "Professional" },
+      { id: "t08", name: "Herb James", quote: "Bought some 20 Franc Gold coins here last week...", category: "Premium" }
+    ],
+    locationsSection: {
+      eyebrow: "◆ Our Locations",
+      title: "Find Your Nearest Store",
+      body: "Two Georgia locations. Licensed precious-metals dealers. We buy gold, silver, jewelry, coins, and valuables — with transparent pricing, same-day payment, and no pressure.",
+      image: "https://images.pexels.com/photos/3945683/pexels-photo-3945683.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop",
+      imageCaption: "Professional Gold Buying Service"
+    },
+    footer: {
+      desc: "Licensed Georgia precious-metals dealer. We buy gold, silver, jewelry, coins, and valuables. Transparent pricing, same-day payment, no pressure.",
+      email: "Dan@goldntreasures.co",
+      copyright: "© 2026 Gold Kings. All Rights Reserved."
+    }
+  };
+}
+
+/* ============================================================
+   BOOTSTRAP
+   ============================================================ */
+function init() {
+  // Init UI components (always, even before login)
+  initNav();
+  initSidebarToggle();
+  initCharCounts();
+  initValidation();
+  initImagePreviews();
+  initImageUploads();
+  initDirtyTracking();
+  initAddTestimonial();
+
+  // Save button
+  const saveBtn = get('save-btn');
+  if (saveBtn) saveBtn.addEventListener('click', saveAll);
+
+  // Logout button
+  const logoutBtn = get('logout-btn');
+  if (logoutBtn) logoutBtn.addEventListener('click', doLogout);
+
+  // Login button
+  const loginBtn = get('login-btn');
+  if (loginBtn) loginBtn.addEventListener('click', () => {
+    const token = get('token-input').value.trim();
+    if (!token) {
+      const inp = get('token-input');
+      inp.classList.add('error');
+      setTimeout(() => inp.classList.remove('error'), 1500);
+      return;
+    }
+    doLogin(token);
+  });
+
+  // Enter key on token input
+  const tokenInput = get('token-input');
+  if (tokenInput) {
+    tokenInput.addEventListener('keydown', e => {
+      if (e.key === 'Enter') {
+        const btn = get('login-btn');
+        if (btn) btn.click();
+      }
+    });
+  }
+
+  // Warn on page unload if dirty
+  window.addEventListener('beforeunload', e => {
+    if (isDirty) {
+      e.preventDefault();
+      e.returnValue = '';
+    }
+  });
+
+  // Check for existing session
+  const storedToken = sessionStorage.getItem('gk_cms_token');
+  if (storedToken) {
+    // Auto-login with stored token
+    doLogin(storedToken);
+  } else {
+    showLoginScreen(true);
+    showApp(false);
+    // Focus token input
+    setTimeout(() => {
+      const inp = get('token-input');
+      if (inp) inp.focus();
+    }, 100);
+  }
+}
+
+// Boot when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+</script>
+</body>
+</html>
