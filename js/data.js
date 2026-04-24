@@ -98,22 +98,22 @@ export const services = [
 export const showcaseSlides = [
   {
     img: 'https://images.pexels.com/photos/4194857/pexels-photo-4194857.jpeg?auto=compress&cs=tinysrgb&w=1400&h=900&fit=crop',
-    k: 'Step One',
-    v: 'Bring Your Gold'
+    k: 'Step One — Walk In',
+    v: 'No appointment needed. Open Mon–Sat.'
   },
   {
     img: 'https://images.pexels.com/photos/3945683/pexels-photo-3945683.jpeg?auto=compress&cs=tinysrgb&w=1400&h=900&fit=crop',
-    k: 'Step Two',
-    v: 'Fast Evaluation'
+    k: 'Step Two — 5-Min Test',
+    v: 'Purity tested with industry equipment. Transparent process.'
   },
   {
     img: 'https://images.pexels.com/photos/3998365/pexels-photo-3998365.jpeg?auto=compress&cs=tinysrgb&w=1400&h=900&fit=crop',
-    k: 'Step Three',
-    v: 'Fair Cash Offer'
+    k: 'Step Three — See Your Offer',
+    v: 'We show live spot price. No lowball games, ever.'
   },
   {
     img: 'https://images.pexels.com/photos/5632399/pexels-photo-5632399.jpeg?auto=compress&cs=tinysrgb&w=1400&h=900&fit=crop',
-    k: 'Step Four',
-    v: 'Instant Payment'
+    k: 'Step Four — Walk Out With Cash',
+    v: 'Accept and receive cash on the spot. Same day.'
   }
 ];

@@ -19,6 +19,10 @@ function initCursor() {
   let rx = tx, ry = ty;
   let dx = tx, dy = ty;
 
+  const dot = cursor.querySelector('.cursor__dot');
+  const ring = cursor.querySelector('.cursor__ring');
+  const lab = cursor.querySelector('.cursor__label');
+
   window.addEventListener('pointermove', e => {
     tx = e.clientX;
     ty = e.clientY;
@@ -32,10 +36,6 @@ function initCursor() {
     dy += (ty - dy) * 0.35;
     rx += (tx - rx) * 0.15;
     ry += (ty - ry) * 0.15;
-
-    const dot = cursor.querySelector('.cursor__dot');
-    const ring = cursor.querySelector('.cursor__ring');
-    const lab = cursor.querySelector('.cursor__label');
 
     dot.style.transform = `translate(${dx}px, ${dy}px) translate(-50%,-50%)`;
     ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%,-50%)`;
@@ -287,6 +287,7 @@ function editorialReveals() {
    ============================================================================ */
 
 function aboutParallax() {
+  if (window.matchMedia('(max-width: 900px)').matches) return;
   gsap.to('.about__visual img', {
     yPercent: -12,
     ease: 'none',
@@ -308,9 +309,15 @@ async function boot() {
   initSmoothScroll();
 
   const heroCanvas = document.getElementById('hero-canvas');
-  initHero({ canvas: heroCanvas, imageUrl: heroImage }).catch(() => {
-    heroCanvas.style.cssText = `background:url('${heroImage}') center/cover;`;
-  });
+  if (!window.matchMedia('(max-width: 900px)').matches) {
+    initHero({ canvas: heroCanvas, imageUrl: heroImage }).catch(() => {
+      if (heroCanvas) heroCanvas.style.cssText = `background:url('${heroImage}') center/cover;`;
+    });
+  } else {
+    const stage = document.querySelector('.hero__stage');
+    if (stage) stage.style.cssText = `background:url('${heroImage}') center/cover no-repeat;min-height:100vh;`;
+    if (heroCanvas) heroCanvas.remove();
+  }
 
   revealHero();
 
@@ -334,20 +341,13 @@ async function boot() {
    ============================================================================ */
 
 function initKeyboardNavigation() {
-  // Allow Enter/Space to activate buttons
   document.addEventListener('keydown', e => {
     if ((e.key === 'Enter' || e.key === ' ') && document.activeElement?.closest('.gcard, .filter, .location-call')) {
       e.preventDefault();
       document.activeElement?.click?.();
     }
-  });
-
-  // Escape to close modals (future enhancement)
-  document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {
-      document.querySelectorAll('[hidden], [role="dialog"]').forEach(el => {
-        el.hidden = true;
-      });
+      document.querySelectorAll('[role="dialog"]').forEach(el => { el.hidden = true; });
     }
   });
 }
