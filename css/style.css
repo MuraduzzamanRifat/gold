@@ -1125,6 +1125,110 @@ body::before {
 }
 
 /* ============================================================================
+   ROLLING COINS ANIMATION
+   ============================================================================ */
+
+.hero__coins {
+  position: absolute;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+  height: 110px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 3;
+}
+
+@keyframes rollAcross {
+  0%   { transform: translateX(-130px) rotate(0deg);      opacity: 0; }
+  4%   { opacity: 1; }
+  92%  { opacity: 1; }
+  100% { transform: translateX(calc(100vw + 130px)) rotate(900deg); opacity: 0; }
+}
+
+.rolling-coin {
+  position: absolute;
+  bottom: 0;
+  border-radius: 50%;
+  animation: rollAcross linear infinite;
+  /* promote each coin to its own GPU compositor layer */
+  will-change: transform, opacity;
+  contain: strict;
+}
+
+.coin-face {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  position: relative;
+  /* inset shadows stay on compositor layer, no extra paint */
+}
+
+/* drop-shadow on ::after so it sits in a static layer separate from motion */
+.coin-face::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.coin-face--gold {
+  background: radial-gradient(circle at 32% 28%,
+    #fef3c7 0%,
+    #fde68a 15%,
+    #d4a017 45%,
+    #a07810 75%,
+    #6b4f0a 100%
+  );
+  border: 2px solid rgba(212, 160, 23, 0.6);
+}
+
+.coin-face--gold::after {
+  box-shadow:
+    inset -5px -5px 12px rgba(0,0,0,0.50),
+    inset 5px 5px 12px rgba(255,255,255,0.20),
+    0 6px 20px rgba(212,160,23,0.45);
+}
+
+.coin-face--silver {
+  background: radial-gradient(circle at 32% 28%,
+    #ffffff 0%,
+    #e8e8e8 15%,
+    #b0b0b0 45%,
+    #808080 75%,
+    #505050 100%
+  );
+  border: 2px solid rgba(180, 180, 180, 0.5);
+}
+
+.coin-face--silver::after {
+  box-shadow:
+    inset -5px -5px 12px rgba(0,0,0,0.40),
+    inset 5px 5px 12px rgba(255,255,255,0.28),
+    0 6px 20px rgba(160,160,160,0.28);
+}
+
+/* individual coin sizes, speeds, vertical positions */
+.coin-1 { width: 88px; height: 88px; bottom: 8px;  animation-duration: 9s;  animation-delay: 0s;    }
+.coin-2 { width: 64px; height: 64px; bottom: 18px; animation-duration: 12s; animation-delay: -4s;   }
+.coin-3 { width: 104px;height: 104px;bottom: 2px;  animation-duration: 11s; animation-delay: -7.5s; }
+.coin-4 { width: 52px; height: 52px; bottom: 22px; animation-duration: 8s;  animation-delay: -2s;   }
+.coin-5 { width: 76px; height: 76px; bottom: 12px; animation-duration: 10s; animation-delay: -5.5s; }
+.coin-6 { width: 60px; height: 60px; bottom: 20px; animation-duration: 13s; animation-delay: -9s;   }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__coins { display: none; }
+}
+
+@media (max-width: 640px) {
+  .hero__coins { height: 70px; }
+  .coin-3 { display: none; }
+  .coin-1 { width: 60px; height: 60px; }
+  .coin-5 { width: 52px; height: 52px; }
+}
+
+/* ============================================================================
    GALLERY SECTION
    ============================================================================ */
 

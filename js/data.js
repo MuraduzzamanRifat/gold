@@ -1,6 +1,6 @@
 // Gold Kings — Buy Gold Service Data
 
-export const heroImage = 'https://images.pexels.com/photos/4194857/pexels-photo-4194857.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop';
+export const heroImage = 'https://images.pexels.com/photos/5632390/pexels-photo-5632390.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop';
 
 export const aboutImage = 'https://images.pexels.com/photos/5632399/pexels-photo-5632399.jpeg?auto=compress&cs=tinysrgb&w=1200&h=900&fit=crop';
 
