@@ -18,6 +18,7 @@
   --gold-light: #fde68a;
   --gold-lighter: #fef3c7;
   --gold-dim: rgba(212, 160, 23, 0.5);
+  --gold-border: rgba(212, 160, 23, 0.60);
   --gold-dark: rgba(212, 160, 23, 0.3);
 
   /* Neutral */
@@ -52,7 +53,14 @@
 
   --duration-fast: 150ms;
   --duration-base: 200ms;
+  --duration-hover: 200ms;
   --duration-slow: 700ms;
+
+  /* Shape */
+  --radius-pill: 9999px;
+
+  /* Gradients */
+  --divider-gradient: linear-gradient(to right, transparent, rgba(212, 160, 23, 0.35), transparent);
 
   /* Spacing */
   --edge: clamp(32px, 6vw, 96px);
@@ -65,6 +73,7 @@
   --z-modal-bg: 900;
   --z-modal: 950;
   --z-toast: 1000;
+  --z-grain: 9999;
   --z-cursor: 10000;
 
   --touch-target: 44px;
@@ -357,7 +366,8 @@ body::before {
   background-size: 200px 200px;
   opacity: 0.035;
   mix-blend-mode: overlay;
-  z-index: 9999;
+  z-index: var(--z-grain);
+  will-change: transform;
 }
 
 /* ============================================================================
@@ -668,7 +678,7 @@ body::before {
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 1px solid rgba(212, 160, 23, 0.5);
+  border: 1px solid var(--gold-dim);
   background: radial-gradient(circle at 35% 35%, var(--champagne) 0%, var(--gold) 60%, rgba(139, 90, 20, 0.8) 100%);
   display: flex;
   align-items: center;
@@ -739,9 +749,9 @@ body::before {
   background: rgba(7, 6, 10, 0.88);
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(212, 160, 23, 0.10);
+  border-bottom: 1px solid var(--rule-2);
   margin-top: 40px;
-  transition: background 0.7ms, border-color 0.7s;
+  transition: background var(--duration-slow), border-color var(--duration-slow);
 }
 
 .nav__brand {
@@ -785,7 +795,7 @@ body::before {
   font-size: 10px;
   letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.70);
+  color: var(--fg-2);
   text-decoration: none;
   position: relative;
   padding: 8px 12px;
@@ -793,7 +803,7 @@ body::before {
   min-width: var(--touch-target);
   display: inline-flex;
   align-items: center;
-  transition: color var(--duration-slow) var(--ease);
+  transition: color var(--duration-hover) var(--ease);
   border-radius: 2px;
 }
 
@@ -819,11 +829,11 @@ body::before {
 .nav__links a[href="#contact"],
 .nav__links a[href="index.html#contact"] {
   background: transparent;
-  border: 1px solid rgba(212, 160, 23, 0.60);
-  border-radius: 9999px;
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-pill);
   color: var(--gold-light);
   padding: 8px 20px;
-  transition: background var(--duration-slow) var(--ease), color var(--duration-slow) var(--ease);
+  transition: background var(--duration-hover) var(--ease), color var(--duration-hover) var(--ease);
 }
 
 .nav__links a[href="#contact"]:hover,
@@ -1046,8 +1056,8 @@ body::before {
   text-decoration: none;
   cursor: pointer;
   border: none;
-  border-radius: 9999px;
-  transition: background var(--duration-slow) var(--ease), box-shadow var(--duration-slow) var(--ease);
+  border-radius: var(--radius-pill);
+  transition: background var(--duration-hover) var(--ease), box-shadow var(--duration-hover) var(--ease);
   pointer-events: all;
   box-shadow: 0 4px 20px rgba(212, 160, 23, 0.20);
   font-weight: 400;
@@ -1118,13 +1128,6 @@ body::before {
    GALLERY SECTION
    ============================================================================ */
 
-.section-divider {
-  height: 1px;
-  background: linear-gradient(to right, transparent, var(--gold), transparent);
-  opacity: 0.25;
-  border: none;
-}
-
 .gallery {
   padding: 160px var(--edge) 100px;
   position: relative;
@@ -1137,7 +1140,7 @@ body::before {
   left: var(--edge);
   right: var(--edge);
   height: 1px;
-  background: linear-gradient(to right, transparent, rgba(212,160,23,0.35), transparent);
+  background: var(--divider-gradient);
 }
 
 .gallery__head {
@@ -1191,10 +1194,10 @@ body::before {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--duration-slow) var(--ease);
+  transition: color var(--duration-hover) var(--ease), background var(--duration-hover) var(--ease), border-color var(--duration-hover) var(--ease), box-shadow var(--duration-hover) var(--ease);
   cursor: pointer;
   background: transparent;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
 }
 
 .filter:hover {
@@ -1536,7 +1539,7 @@ body::before {
   left: var(--edge);
   right: var(--edge);
   height: 1px;
-  background: linear-gradient(to right, transparent, rgba(212,160,23,0.35), transparent);
+  background: var(--divider-gradient);
   z-index: 1;
 }
 
@@ -1636,7 +1639,7 @@ body::before {
   left: var(--edge);
   right: var(--edge);
   height: 1px;
-  background: linear-gradient(to right, transparent, rgba(212,160,23,0.35), transparent);
+  background: var(--divider-gradient);
 }
 
 .about__grid {
@@ -1806,9 +1809,9 @@ body::before {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--duration-slow) var(--ease);
-  border: 1px solid rgba(212, 160, 23, 0.55);
-  border-radius: 9999px;
+  transition: color var(--duration-hover) var(--ease), background var(--duration-hover) var(--ease), border-color var(--duration-hover) var(--ease), box-shadow var(--duration-hover) var(--ease);
+  border: 1px solid var(--gold-border);
+  border-radius: var(--radius-pill);
 }
 
 .location-call:hover {
@@ -1840,7 +1843,7 @@ body::before {
   left: var(--edge);
   right: var(--edge);
   height: 1px;
-  background: linear-gradient(to right, transparent, rgba(212,160,23,0.35), transparent);
+  background: var(--divider-gradient);
 }
 
 .footer__top {
@@ -2104,9 +2107,9 @@ body::before {
   text-transform: uppercase;
   text-decoration: none;
   border: 1px solid var(--rule);
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
   cursor: pointer;
-  transition: all var(--duration-slow) var(--ease);
+  transition: color var(--duration-hover) var(--ease), background var(--duration-hover) var(--ease), border-color var(--duration-hover) var(--ease), box-shadow var(--duration-hover) var(--ease);
   min-height: 44px;
 }
 
@@ -2128,13 +2131,13 @@ body::before {
 .btn-secondary {
   background: transparent;
   color: var(--gold-light);
-  border-color: rgba(212, 160, 23, 0.60);
+  border-color: var(--gold-border);
 }
 
 .btn-secondary:hover {
-  background: rgba(212, 160, 23, 0.10);
+  background: var(--rule-2);
   color: var(--gold-lighter);
-  border-color: rgba(212, 160, 23, 0.80);
+  border-color: var(--gold);
   text-decoration: none;
 }
 
@@ -2296,7 +2299,7 @@ body::before {
   left: var(--edge);
   right: var(--edge);
   height: 1px;
-  background: linear-gradient(to right, transparent, rgba(212,160,23,0.35), transparent);
+  background: var(--divider-gradient);
 }
 
 .cta-section::after {
@@ -2515,7 +2518,7 @@ body::before {
   left: var(--edge);
   right: var(--edge);
   height: 1px;
-  background: linear-gradient(to right, transparent, rgba(212,160,23,0.35), transparent);
+  background: var(--divider-gradient);
 }
 
 .page-hero::after {
@@ -3106,7 +3109,6 @@ body::before {
   .why-section__inner { grid-template-columns: 1fr; gap: 40px; }
 }
 
-/* (duplicate topbar rules removed — see TOPBAR section above) */
 
 /* ============================================================================
    PRICES PAGE
@@ -3195,9 +3197,9 @@ body::before {
   text-transform: uppercase;
   font-weight: 400;
   border: none;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
   cursor: pointer;
-  transition: background var(--duration-slow) var(--ease), box-shadow var(--duration-slow) var(--ease);
+  transition: background var(--duration-hover) var(--ease), box-shadow var(--duration-hover) var(--ease);
   box-shadow: 0 4px 16px rgba(212, 160, 23, 0.20);
 }
 .btn-gold:hover {
@@ -3212,15 +3214,15 @@ body::before {
   justify-content: center;
   text-decoration: none;
   padding: 14px 32px;
-  border: 1px solid rgba(212, 160, 23, 0.60);
+  border: 1px solid var(--gold-border);
   color: var(--gold-light);
   font-family: var(--mono);
   font-size: 10px;
   letter-spacing: 0.28em;
   text-transform: uppercase;
   font-weight: 400;
-  border-radius: 9999px;
-  transition: all var(--duration-slow) var(--ease);
+  border-radius: var(--radius-pill);
+  transition: color var(--duration-hover) var(--ease), background var(--duration-hover) var(--ease), border-color var(--duration-hover) var(--ease), box-shadow var(--duration-hover) var(--ease);
 }
 .btn-outline:hover {
   border-color: var(--gold);
