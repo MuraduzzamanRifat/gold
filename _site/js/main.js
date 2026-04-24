@@ -103,7 +103,7 @@ function runPreloader() {
     const counter = { val: 0 };
     gsap.to(counter, {
       val: 100,
-      duration: 2.2,
+      duration: 0.8,
       ease: 'power2.inOut',
       onUpdate() {
         const n = Math.floor(counter.val);
@@ -114,7 +114,7 @@ function runPreloader() {
         neural.state.opacity = 0;
         gsap.to(preloaderEl, {
           yPercent: -100,
-          duration: 1.0,
+          duration: 0.6,
           ease: 'expo.inOut',
           onComplete() {
             preloaderEl.style.display = 'none';
