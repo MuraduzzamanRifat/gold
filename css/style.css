@@ -1183,52 +1183,24 @@ body::before {
   height: 100%;
   border-radius: 50%;
   position: relative;
-  /* inset shadows stay on compositor layer, no extra paint */
 }
 
-/* drop-shadow on ::after so it sits in a static layer separate from motion */
-.coin-face::after {
-  content: '';
+/* SVG fills the coin face completely */
+.coin-svg {
   position: absolute;
-  inset: -4px;
-  border-radius: 50%;
-  pointer-events: none;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
+/* Outer glow only — SVG handles all inner rendering */
 .coin-face--gold {
-  background: radial-gradient(circle at 32% 28%,
-    #fef3c7 0%,
-    #fde68a 15%,
-    #d4a017 45%,
-    #a07810 75%,
-    #6b4f0a 100%
-  );
-  border: 2px solid rgba(212, 160, 23, 0.6);
-}
-
-.coin-face--gold::after {
-  box-shadow:
-    inset -5px -5px 12px rgba(0,0,0,0.50),
-    inset 5px 5px 12px rgba(255,255,255,0.20),
-    0 6px 20px rgba(212,160,23,0.45);
+  box-shadow: 0 8px 24px rgba(212,160,23,0.50);
 }
 
 .coin-face--silver {
-  background: radial-gradient(circle at 32% 28%,
-    #ffffff 0%,
-    #e8e8e8 15%,
-    #b0b0b0 45%,
-    #808080 75%,
-    #505050 100%
-  );
-  border: 2px solid rgba(180, 180, 180, 0.5);
-}
-
-.coin-face--silver::after {
-  box-shadow:
-    inset -5px -5px 12px rgba(0,0,0,0.40),
-    inset 5px 5px 12px rgba(255,255,255,0.28),
-    0 6px 20px rgba(160,160,160,0.28);
+  box-shadow: 0 8px 24px rgba(160,160,160,0.32);
 }
 
 /* individual coin sizes, speeds, vertical positions */

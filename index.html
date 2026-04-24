@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="./css/style.css?v=20260425c">
+  <link rel="stylesheet" href="./css/style.css?v=20260425d">
 
   <link rel="canonical" href="https://muraduzzamanrifat.github.io/gold/">
   <meta property="og:url" content="https://muraduzzamanrifat.github.io/gold/">
@@ -138,12 +138,203 @@
 
     <!-- ROLLING COINS ANIMATION -->
     <div class="hero__coins" aria-hidden="true">
-      <div class="rolling-coin coin-1"><div class="coin-face coin-face--gold"></div></div>
-      <div class="rolling-coin coin-2"><div class="coin-face coin-face--silver"></div></div>
-      <div class="rolling-coin coin-3"><div class="coin-face coin-face--gold"></div></div>
-      <div class="rolling-coin coin-4"><div class="coin-face coin-face--silver"></div></div>
-      <div class="rolling-coin coin-5"><div class="coin-face coin-face--gold"></div></div>
-      <div class="rolling-coin coin-6"><div class="coin-face coin-face--gold"></div></div>
+
+      <!-- COIN 1: GOLD 88px -->
+      <div class="rolling-coin coin-1">
+        <div class="coin-face coin-face--gold">
+          <svg class="coin-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <path id="c1ta" d="M 50,50 m-37,0 a37,37 0 1,1 74,0"/>
+              <path id="c1ba" d="M 50,50 m-31,0 a31,31 0 0,0 62,0"/>
+              <radialGradient id="c1g" cx="35%" cy="28%" r="72%">
+                <stop offset="0%" stop-color="#fffde4"/><stop offset="15%" stop-color="#ffe680"/>
+                <stop offset="45%" stop-color="#d4a017"/><stop offset="75%" stop-color="#9a6808"/>
+                <stop offset="100%" stop-color="#5a3c05"/>
+              </radialGradient>
+              <radialGradient id="c1sh" cx="30%" cy="25%" r="55%">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.52)"/>
+                <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+              </radialGradient>
+            </defs>
+            <circle cx="50" cy="50" r="50" fill="url(#c1g)"/>
+            <circle cx="50" cy="50" r="47" fill="none" stroke="rgba(70,42,0,0.45)" stroke-width="5.5" stroke-dasharray="2.2 1.4"/>
+            <circle cx="50" cy="50" r="44.5" fill="none" stroke="rgba(255,222,80,0.78)" stroke-width="1.5"/>
+            <circle cx="50" cy="50" r="43.5" fill="none" stroke="rgba(0,0,0,0.22)" stroke-width="0.8"/>
+            <circle cx="50" cy="50" r="36" fill="none" stroke="rgba(255,200,60,0.38)" stroke-width="0.8"/>
+            <polygon points="32,58 32,44 41,52 50,30 59,52 68,44 68,58" fill="rgba(75,46,4,0.84)" stroke="rgba(255,215,60,0.55)" stroke-width="1.5" stroke-linejoin="round"/>
+            <rect x="32" y="56" width="36" height="7" rx="3" fill="rgba(75,46,4,0.84)"/>
+            <circle cx="50" cy="33" r="3" fill="rgba(255,215,60,0.88)"/>
+            <circle cx="40.5" cy="49" r="2.2" fill="rgba(255,215,60,0.72)"/>
+            <circle cx="59.5" cy="49" r="2.2" fill="rgba(255,215,60,0.72)"/>
+            <text font-family="Georgia,serif" font-size="6" fill="rgba(75,46,4,0.88)" letter-spacing="2"><textPath href="#c1ta" startOffset="14%">GOLD KINGS</textPath></text>
+            <text font-family="Georgia,serif" font-size="5" fill="rgba(75,46,4,0.80)" letter-spacing="1.5"><textPath href="#c1ba" startOffset="20%">LIBERTY · 2024</textPath></text>
+            <circle cx="50" cy="50" r="50" fill="url(#c1sh)"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- COIN 2: SILVER 64px -->
+      <div class="rolling-coin coin-2">
+        <div class="coin-face coin-face--silver">
+          <svg class="coin-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <path id="c2ta" d="M 50,50 m-37,0 a37,37 0 1,1 74,0"/>
+              <path id="c2ba" d="M 50,50 m-31,0 a31,31 0 0,0 62,0"/>
+              <radialGradient id="c2g" cx="35%" cy="28%" r="72%">
+                <stop offset="0%" stop-color="#ffffff"/><stop offset="15%" stop-color="#e8e8e8"/>
+                <stop offset="45%" stop-color="#b0b0b0"/><stop offset="75%" stop-color="#787878"/>
+                <stop offset="100%" stop-color="#404040"/>
+              </radialGradient>
+              <radialGradient id="c2sh" cx="30%" cy="25%" r="55%">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.65)"/>
+                <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+              </radialGradient>
+            </defs>
+            <circle cx="50" cy="50" r="50" fill="url(#c2g)"/>
+            <circle cx="50" cy="50" r="47" fill="none" stroke="rgba(40,40,40,0.35)" stroke-width="5.5" stroke-dasharray="2.2 1.4"/>
+            <circle cx="50" cy="50" r="44.5" fill="none" stroke="rgba(220,220,220,0.88)" stroke-width="1.5"/>
+            <circle cx="50" cy="50" r="43.5" fill="none" stroke="rgba(0,0,0,0.18)" stroke-width="0.8"/>
+            <circle cx="50" cy="50" r="36" fill="none" stroke="rgba(200,200,200,0.38)" stroke-width="0.8"/>
+            <polygon points="50,30 54.7,41.5 67.1,42.4 57.6,50.5 60.6,62.6 50,56.5 39.4,62.6 42.4,50.5 32.9,42.4 45.3,41.5" fill="rgba(38,38,38,0.80)" stroke="rgba(200,200,200,0.55)" stroke-width="1" stroke-linejoin="round"/>
+            <text font-family="Georgia,serif" font-size="6" fill="rgba(38,38,38,0.82)" letter-spacing="2"><textPath href="#c2ta" startOffset="8%">SILVER KINGS</textPath></text>
+            <text font-family="Georgia,serif" font-size="5" fill="rgba(38,38,38,0.72)" letter-spacing="1"><textPath href="#c2ba" startOffset="12%">E PLURIBUS UNUM</textPath></text>
+            <circle cx="50" cy="50" r="50" fill="url(#c2sh)"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- COIN 3: GOLD 104px -->
+      <div class="rolling-coin coin-3">
+        <div class="coin-face coin-face--gold">
+          <svg class="coin-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <path id="c3ta" d="M 50,50 m-37,0 a37,37 0 1,1 74,0"/>
+              <path id="c3ba" d="M 50,50 m-31,0 a31,31 0 0,0 62,0"/>
+              <radialGradient id="c3g" cx="35%" cy="28%" r="72%">
+                <stop offset="0%" stop-color="#fffde4"/><stop offset="15%" stop-color="#ffe680"/>
+                <stop offset="45%" stop-color="#d4a017"/><stop offset="75%" stop-color="#9a6808"/>
+                <stop offset="100%" stop-color="#5a3c05"/>
+              </radialGradient>
+              <radialGradient id="c3sh" cx="30%" cy="25%" r="55%">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.52)"/>
+                <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+              </radialGradient>
+            </defs>
+            <circle cx="50" cy="50" r="50" fill="url(#c3g)"/>
+            <circle cx="50" cy="50" r="47" fill="none" stroke="rgba(70,42,0,0.45)" stroke-width="5.5" stroke-dasharray="2.2 1.4"/>
+            <circle cx="50" cy="50" r="44.5" fill="none" stroke="rgba(255,222,80,0.78)" stroke-width="1.5"/>
+            <circle cx="50" cy="50" r="43.5" fill="none" stroke="rgba(0,0,0,0.22)" stroke-width="0.8"/>
+            <circle cx="50" cy="50" r="36" fill="none" stroke="rgba(255,200,60,0.38)" stroke-width="0.8"/>
+            <polygon points="32,58 32,44 41,52 50,30 59,52 68,44 68,58" fill="rgba(75,46,4,0.84)" stroke="rgba(255,215,60,0.55)" stroke-width="1.5" stroke-linejoin="round"/>
+            <rect x="32" y="56" width="36" height="7" rx="3" fill="rgba(75,46,4,0.84)"/>
+            <circle cx="50" cy="33" r="3" fill="rgba(255,215,60,0.88)"/>
+            <circle cx="40.5" cy="49" r="2.2" fill="rgba(255,215,60,0.72)"/>
+            <circle cx="59.5" cy="49" r="2.2" fill="rgba(255,215,60,0.72)"/>
+            <text font-family="Georgia,serif" font-size="6" fill="rgba(75,46,4,0.88)" letter-spacing="2"><textPath href="#c3ta" startOffset="14%">GOLD KINGS</textPath></text>
+            <text font-family="Georgia,serif" font-size="5" fill="rgba(75,46,4,0.80)" letter-spacing="1.5"><textPath href="#c3ba" startOffset="20%">LIBERTY · 2024</textPath></text>
+            <circle cx="50" cy="50" r="50" fill="url(#c3sh)"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- COIN 4: SILVER 52px -->
+      <div class="rolling-coin coin-4">
+        <div class="coin-face coin-face--silver">
+          <svg class="coin-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <path id="c4ta" d="M 50,50 m-37,0 a37,37 0 1,1 74,0"/>
+              <path id="c4ba" d="M 50,50 m-31,0 a31,31 0 0,0 62,0"/>
+              <radialGradient id="c4g" cx="35%" cy="28%" r="72%">
+                <stop offset="0%" stop-color="#ffffff"/><stop offset="15%" stop-color="#e8e8e8"/>
+                <stop offset="45%" stop-color="#b0b0b0"/><stop offset="75%" stop-color="#787878"/>
+                <stop offset="100%" stop-color="#404040"/>
+              </radialGradient>
+              <radialGradient id="c4sh" cx="30%" cy="25%" r="55%">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.65)"/>
+                <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+              </radialGradient>
+            </defs>
+            <circle cx="50" cy="50" r="50" fill="url(#c4g)"/>
+            <circle cx="50" cy="50" r="47" fill="none" stroke="rgba(40,40,40,0.35)" stroke-width="5.5" stroke-dasharray="2.2 1.4"/>
+            <circle cx="50" cy="50" r="44.5" fill="none" stroke="rgba(220,220,220,0.88)" stroke-width="1.5"/>
+            <circle cx="50" cy="50" r="43.5" fill="none" stroke="rgba(0,0,0,0.18)" stroke-width="0.8"/>
+            <circle cx="50" cy="50" r="36" fill="none" stroke="rgba(200,200,200,0.38)" stroke-width="0.8"/>
+            <polygon points="50,30 54.7,41.5 67.1,42.4 57.6,50.5 60.6,62.6 50,56.5 39.4,62.6 42.4,50.5 32.9,42.4 45.3,41.5" fill="rgba(38,38,38,0.80)" stroke="rgba(200,200,200,0.55)" stroke-width="1" stroke-linejoin="round"/>
+            <text font-family="Georgia,serif" font-size="6" fill="rgba(38,38,38,0.82)" letter-spacing="2"><textPath href="#c4ta" startOffset="8%">SILVER KINGS</textPath></text>
+            <text font-family="Georgia,serif" font-size="5" fill="rgba(38,38,38,0.72)" letter-spacing="1"><textPath href="#c4ba" startOffset="12%">E PLURIBUS UNUM</textPath></text>
+            <circle cx="50" cy="50" r="50" fill="url(#c4sh)"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- COIN 5: GOLD 76px -->
+      <div class="rolling-coin coin-5">
+        <div class="coin-face coin-face--gold">
+          <svg class="coin-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <path id="c5ta" d="M 50,50 m-37,0 a37,37 0 1,1 74,0"/>
+              <path id="c5ba" d="M 50,50 m-31,0 a31,31 0 0,0 62,0"/>
+              <radialGradient id="c5g" cx="35%" cy="28%" r="72%">
+                <stop offset="0%" stop-color="#fffde4"/><stop offset="15%" stop-color="#ffe680"/>
+                <stop offset="45%" stop-color="#d4a017"/><stop offset="75%" stop-color="#9a6808"/>
+                <stop offset="100%" stop-color="#5a3c05"/>
+              </radialGradient>
+              <radialGradient id="c5sh" cx="30%" cy="25%" r="55%">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.52)"/>
+                <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+              </radialGradient>
+            </defs>
+            <circle cx="50" cy="50" r="50" fill="url(#c5g)"/>
+            <circle cx="50" cy="50" r="47" fill="none" stroke="rgba(70,42,0,0.45)" stroke-width="5.5" stroke-dasharray="2.2 1.4"/>
+            <circle cx="50" cy="50" r="44.5" fill="none" stroke="rgba(255,222,80,0.78)" stroke-width="1.5"/>
+            <circle cx="50" cy="50" r="43.5" fill="none" stroke="rgba(0,0,0,0.22)" stroke-width="0.8"/>
+            <circle cx="50" cy="50" r="36" fill="none" stroke="rgba(255,200,60,0.38)" stroke-width="0.8"/>
+            <polygon points="32,58 32,44 41,52 50,30 59,52 68,44 68,58" fill="rgba(75,46,4,0.84)" stroke="rgba(255,215,60,0.55)" stroke-width="1.5" stroke-linejoin="round"/>
+            <rect x="32" y="56" width="36" height="7" rx="3" fill="rgba(75,46,4,0.84)"/>
+            <circle cx="50" cy="33" r="3" fill="rgba(255,215,60,0.88)"/>
+            <circle cx="40.5" cy="49" r="2.2" fill="rgba(255,215,60,0.72)"/>
+            <circle cx="59.5" cy="49" r="2.2" fill="rgba(255,215,60,0.72)"/>
+            <text font-family="Georgia,serif" font-size="6" fill="rgba(75,46,4,0.88)" letter-spacing="2"><textPath href="#c5ta" startOffset="14%">GOLD KINGS</textPath></text>
+            <text font-family="Georgia,serif" font-size="5" fill="rgba(75,46,4,0.80)" letter-spacing="1.5"><textPath href="#c5ba" startOffset="20%">LIBERTY · 2024</textPath></text>
+            <circle cx="50" cy="50" r="50" fill="url(#c5sh)"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- COIN 6: GOLD 60px -->
+      <div class="rolling-coin coin-6">
+        <div class="coin-face coin-face--gold">
+          <svg class="coin-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <path id="c6ta" d="M 50,50 m-37,0 a37,37 0 1,1 74,0"/>
+              <path id="c6ba" d="M 50,50 m-31,0 a31,31 0 0,0 62,0"/>
+              <radialGradient id="c6g" cx="35%" cy="28%" r="72%">
+                <stop offset="0%" stop-color="#fffde4"/><stop offset="15%" stop-color="#ffe680"/>
+                <stop offset="45%" stop-color="#d4a017"/><stop offset="75%" stop-color="#9a6808"/>
+                <stop offset="100%" stop-color="#5a3c05"/>
+              </radialGradient>
+              <radialGradient id="c6sh" cx="30%" cy="25%" r="55%">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.52)"/>
+                <stop offset="100%" stop-color="rgba(255,255,255,0)"/>
+              </radialGradient>
+            </defs>
+            <circle cx="50" cy="50" r="50" fill="url(#c6g)"/>
+            <circle cx="50" cy="50" r="47" fill="none" stroke="rgba(70,42,0,0.45)" stroke-width="5.5" stroke-dasharray="2.2 1.4"/>
+            <circle cx="50" cy="50" r="44.5" fill="none" stroke="rgba(255,222,80,0.78)" stroke-width="1.5"/>
+            <circle cx="50" cy="50" r="43.5" fill="none" stroke="rgba(0,0,0,0.22)" stroke-width="0.8"/>
+            <circle cx="50" cy="50" r="36" fill="none" stroke="rgba(255,200,60,0.38)" stroke-width="0.8"/>
+            <polygon points="32,58 32,44 41,52 50,30 59,52 68,44 68,58" fill="rgba(75,46,4,0.84)" stroke="rgba(255,215,60,0.55)" stroke-width="1.5" stroke-linejoin="round"/>
+            <rect x="32" y="56" width="36" height="7" rx="3" fill="rgba(75,46,4,0.84)"/>
+            <circle cx="50" cy="33" r="3" fill="rgba(255,215,60,0.88)"/>
+            <circle cx="40.5" cy="49" r="2.2" fill="rgba(255,215,60,0.72)"/>
+            <circle cx="59.5" cy="49" r="2.2" fill="rgba(255,215,60,0.72)"/>
+            <text font-family="Georgia,serif" font-size="6" fill="rgba(75,46,4,0.88)" letter-spacing="2"><textPath href="#c6ta" startOffset="14%">GOLD KINGS</textPath></text>
+            <text font-family="Georgia,serif" font-size="5" fill="rgba(75,46,4,0.80)" letter-spacing="1.5"><textPath href="#c6ba" startOffset="20%">LIBERTY · 2024</textPath></text>
+            <circle cx="50" cy="50" r="50" fill="url(#c6sh)"/>
+          </svg>
+        </div>
+      </div>
+
     </div>
 
     <div class="hero__marquee" aria-hidden="true">
