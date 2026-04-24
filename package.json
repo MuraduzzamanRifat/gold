@@ -1,0 +1,15 @@
+{
+  "name": "gold-kings-site",
+  "version": "1.0.0",
+  "description": "Gold Kings - Premium precious metals buying service",
+  "scripts": {
+    "build": "eleventy",
+    "dev": "eleventy --serve",
+    "deploy": "npm run build && git add . && git commit -m 'Build: Eleventy generated files' && git push"
+  },
+  "dependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "@11ty/eleventy-img": "^4.0.0"
+  },
+  "devDependencies": {}
+}

@@ -1,0 +1,42 @@
+[
+  {
+    "id": "snellville",
+    "city": "Snellville",
+    "state": "GA",
+    "phone": "770-771-4650",
+    "address": "Snellville, Georgia",
+    "mapUrl": "https://maps.google.com/?q=Snellville,GA",
+    "mapEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3325.123456789!2d-84.05!3d33.86!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sSnellville%20GA!5e0!3m2!1sen!2sus!4v1234567890",
+    "hours": [
+      { "day": "Monday – Friday", "time": "10:00 AM – 6:00 PM" },
+      { "day": "Saturday", "time": "11:00 AM – 5:00 PM" },
+      { "day": "Sunday", "time": "Closed" }
+    ],
+    "testimonials": [
+      { "name": "Michael R.", "quote": "Amazing service and fair prices. I've been coming here for years. Always treated with respect!" },
+      { "name": "Sarah M.", "quote": "Quick evaluation, honest pricing. Best place in Snellville to sell your gold. Highly recommend!" },
+      { "name": "James T.", "quote": "Professional staff. They really know their stuff. Great customer service from start to finish." }
+    ],
+    "imageUrl": "https://images.pexels.com/photos/5632399/pexels-photo-5632399.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"
+  },
+  {
+    "id": "commerce",
+    "city": "Commerce",
+    "state": "GA",
+    "phone": "(706) 336-0043",
+    "address": "Commerce, Georgia",
+    "mapUrl": "https://maps.google.com/?q=Commerce,GA",
+    "mapEmbed": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3327.987654321!2d-83.47!3d34.18!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sCommerce%20GA!5e0!3m2!1sen!2sus!4v1234567890",
+    "hours": [
+      { "day": "Monday – Friday", "time": "10:00 AM – 6:00 PM" },
+      { "day": "Saturday", "time": "11:00 AM – 5:00 PM" },
+      { "day": "Sunday", "time": "Closed" }
+    ],
+    "testimonials": [
+      { "name": "David L.", "quote": "Been dealing with Gold Kings for years. Always fair prices and honest dealings. Highly recommend!" },
+      { "name": "Jennifer H.", "quote": "Quick process, great service. They know their stuff and pay fair value. Very satisfied!" },
+      { "name": "Robert P.", "quote": "Professional and friendly. Best prices I've found in Commerce. Will definitely return!" }
+    ],
+    "imageUrl": "https://images.pexels.com/photos/3998365/pexels-photo-3998365.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"
+  }
+]
