@@ -775,6 +775,28 @@ body::before {
   color: var(--gold);
 }
 
+.nav__logo-img {
+  height: 40px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 1px 6px rgba(212, 160, 23, 0.30));
+  transition: filter var(--duration-hover);
+}
+
+.nav__brand:hover .nav__logo-img {
+  filter: drop-shadow(0 2px 12px rgba(212, 160, 23, 0.55));
+}
+
+.footer__logo-img {
+  height: 36px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+  opacity: 0.85;
+  filter: drop-shadow(0 1px 4px rgba(212, 160, 23, 0.25));
+}
+
 .nav__tagline {
   font-family: var(--sans);
   font-size: 8px;
