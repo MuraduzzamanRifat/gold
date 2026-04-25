@@ -1,9 +1,26 @@
 // Gold Kings CMS — runtime content injector
 // Fetches content/site.json from GitHub raw CDN and patches the DOM.
 // Fallback: if fetch fails or field missing, hardcoded HTML stays intact.
+// Caches in sessionStorage for 5 minutes to avoid redundant fetches.
 
 (function () {
   const RAW = 'https://raw.githubusercontent.com/MuraduzzamanRifat/gold/main/content/site.json';
+  const CACHE_KEY = 'gk_cms_v1';
+  const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+
+  function readCache() {
+    try {
+      const raw = sessionStorage.getItem(CACHE_KEY);
+      if (!raw) return null;
+      const { ts, data } = JSON.parse(raw);
+      if (Date.now() - ts < CACHE_TTL) return data;
+    } catch (_) {}
+    return null;
+  }
+
+  function writeCache(data) {
+    try { sessionStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data })); } catch (_) {}
+  }
 
   function set(selector, value, attr) {
     if (!value) return;
@@ -105,11 +122,18 @@
   // Expose content globally so main.js can use it (e.g. for testimonials)
   window.__cmsContent = null;
 
-  fetch(RAW + '?t=' + Date.now())
-    .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
-    .then(c => {
-      window.__cmsContent = c;
-      applyContent(c);
-    })
-    .catch(() => { /* silent — hardcoded HTML stays */ });
+  const cached = readCache();
+  if (cached) {
+    window.__cmsContent = cached;
+    applyContent(cached);
+  } else {
+    fetch(RAW)
+      .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(c => {
+        window.__cmsContent = c;
+        writeCache(c);
+        applyContent(c);
+      })
+      .catch(() => { /* silent — hardcoded HTML stays */ });
+  }
 })();

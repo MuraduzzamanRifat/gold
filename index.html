@@ -13,11 +13,21 @@
 
   <title>Gold Kings — We Buy Gold | Fast Cash, Fair Prices</title>
 
+  <!-- preconnect: fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- preconnect: CDN for GSAP / Three.js / Lenis -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <!-- dns-prefetch: image CDNs -->
+  <link rel="dns-prefetch" href="https://images.pexels.com">
+  <link rel="dns-prefetch" href="https://raw.githubusercontent.com">
+
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="./css/style.css?v=20260425e">
+  <!-- Preload Three.js module so it's ready when main.js imports it -->
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js">
+
+  <link rel="stylesheet" href="./css/style.css?v=20260425f">
 
   <link rel="canonical" href="https://muraduzzamanrifat.github.io/gold/">
   <meta property="og:url" content="https://muraduzzamanrifat.github.io/gold/">
@@ -60,12 +70,13 @@
   }
   </script>
 
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
+  <!-- defer removes render-blocking; modules are already deferred so execution order is preserved -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
 
-  <script src="./js/cms.js?v=20260425e" defer></script>
-  <script type="module" src="./js/main.js?v=20260425e"></script>
+  <script src="./js/cms.js?v=20260425f" defer></script>
+  <script type="module" src="./js/main.js?v=20260425f"></script>
 </head>
 <body>
   <!-- CURSOR -->
@@ -416,7 +427,7 @@
   <section class="about" id="locations">
     <div class="about__grid">
       <div class="about__visual" data-reveal>
-        <img src="https://images.pexels.com/photos/3945683/pexels-photo-3945683.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop" alt="Gold Kings professional gold buying service" loading="lazy" data-cms="ls.image">
+        <img src="https://images.pexels.com/photos/3945683/pexels-photo-3945683.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop" alt="Gold Kings professional gold buying service" loading="lazy" width="1200" height="800" data-cms="ls.image">
         <span class="about__caption" data-cms="ls.imageCaption">Professional Gold Buying Service</span>
       </div>
 
