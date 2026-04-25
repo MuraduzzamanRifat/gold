@@ -18,16 +18,21 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- preconnect: CDN for GSAP / Three.js / Lenis -->
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <!-- dns-prefetch: image CDNs -->
-  <link rel="dns-prefetch" href="https://images.pexels.com">
+  <!-- preconnect: hero image CDN (LCP-critical) -->
+  <link rel="preconnect" href="https://images.pexels.com" crossorigin>
   <link rel="dns-prefetch" href="https://raw.githubusercontent.com">
 
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <!-- LCP: preload hero texture so Three.js TextureLoader hits HTTP cache -->
+  <link rel="preload" as="image" href="https://images.pexels.com/photos/5632390/pexels-photo-5632390.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop" fetchpriority="high" crossorigin>
+
+  <!-- Async-load fonts to prevent render-blocking; fallback for noscript -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
 
   <!-- Preload Three.js module so it's ready when main.js imports it -->
   <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js">
 
-  <link rel="stylesheet" href="./css/style.css?v=20260425f">
+  <link rel="stylesheet" href="./css/style.css?v=20260426a">
 
   <link rel="canonical" href="https://muraduzzamanrifat.github.io/gold/">
   <meta property="og:url" content="https://muraduzzamanrifat.github.io/gold/">
@@ -75,8 +80,8 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
 
-  <script src="./js/cms.js?v=20260425f" defer></script>
-  <script type="module" src="./js/main.js?v=20260425f"></script>
+  <script src="./js/cms.js?v=20260426a" defer></script>
+  <script type="module" src="./js/main.js?v=20260426a"></script>
 </head>
 <body>
   <!-- CURSOR -->
@@ -99,7 +104,7 @@
   <!-- NAVIGATION -->
   <header class="nav" id="nav" role="banner">
     <a href="#hero" class="nav__brand" aria-label="Gold Kings Home">
-      <img src="./img/logo.png" alt="Gold Kings" class="nav__logo-img">
+      <img src="./img/logo.png" alt="Gold Kings" class="nav__logo-img" width="164" height="40" fetchpriority="high" decoding="async">
       <span class="nav__tagline">ONLINE</span>
     </a>
     <nav class="nav__links" aria-label="Main navigation">
@@ -465,7 +470,7 @@
   <footer class="footer">
     <div class="footer__top">
       <div class="footer__brand">
-        <img src="./img/logo.png" alt="Gold Kings" class="footer__logo-img">
+        <img src="./img/logo.png" alt="Gold Kings" class="footer__logo-img" width="148" height="36" loading="lazy" decoding="async">
         <span class="footer__sub">ONLINE</span>
       </div>
       <p class="footer__desc" data-cms="footer.desc">Licensed Georgia precious-metals dealer. We buy gold, silver, jewelry, coins, and valuables. Transparent pricing, same-day payment, no pressure.</p>
