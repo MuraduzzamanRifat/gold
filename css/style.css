@@ -3522,7 +3522,9 @@ body::before {
   width: 100%;
 }
 
-/* Section atmospheric corner gradient — variation across sections */
+/* Section atmospheric corner gradient — variation across sections.
+   overflow:clip contains the radial-gradient ::before which positions itself
+   off-canvas (left:-10%/right:-10%) and was triggering 144px horizontal scroll. */
 .editorial,
 .dont-buy,
 .process-strip,
@@ -3537,6 +3539,7 @@ body::before {
 .benefits {
   position: relative;
   isolation: isolate;
+  overflow: hidden;
 }
 .editorial::before,
 .dont-buy::before,
@@ -3584,8 +3587,8 @@ body::before {
 /* Sub-page nav — match index nav scroll behavior smoothly */
 .nav.scrolled {
   background: rgba(10, 8, 4, 0.85);
-  backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
 }
 
 /* ============================================================================
@@ -3607,6 +3610,7 @@ body::before {
   opacity: 0.05;
   pointer-events: none;
   white-space: nowrap;
+  -webkit-user-select: none;
   user-select: none;
   z-index: 1;
 }
@@ -4314,3 +4318,196 @@ a.locx__item {
   background: linear-gradient(90deg, transparent, rgba(200, 164, 90, 0.4), transparent);
 }
 .footer > * { position: relative; z-index: 1; }
+
+/* ============================================================================
+   MOBILE NAV — hamburger toggle + fullscreen menu
+   ============================================================================ */
+
+/* Hamburger button (hidden on desktop) */
+.nav__toggle {
+  display: none;
+  position: relative;
+  width: 44px; height: 44px;
+  background: transparent;
+  border: 1px solid rgba(200, 164, 90, 0.30);
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 0;
+  z-index: 110;
+  transition: border-color 0.3s, background 0.3s;
+}
+.nav__toggle:hover {
+  border-color: var(--gold);
+  background: rgba(200, 164, 90, 0.08);
+}
+.nav__toggle span {
+  position: absolute;
+  left: 11px; right: 11px;
+  height: 1.5px;
+  background: var(--gold);
+  transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1),
+              opacity 0.3s, top 0.3s;
+}
+.nav__toggle span:nth-child(1) { top: 14px; }
+.nav__toggle span:nth-child(2) { top: 21px; }
+.nav__toggle span:nth-child(3) { top: 28px; }
+
+.nav__toggle[aria-expanded="true"] span:nth-child(1) {
+  top: 21px; transform: rotate(45deg);
+}
+.nav__toggle[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+.nav__toggle[aria-expanded="true"] span:nth-child(3) {
+  top: 21px; transform: rotate(-45deg);
+}
+
+@media (max-width: 768px) {
+  /* Strip backdrop-filter on mobile nav — it creates a containing block that
+     traps the fixed-positioned mobile menu overlay inside the nav's bounds. */
+  .nav {
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    padding: 14px 20px;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .nav.scrolled {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .nav__toggle { display: block; }
+
+  /* Fullscreen menu overlay — sits above topbar (z 50) and nav (z 100) */
+  .nav__links {
+    position: fixed;
+    inset: 0;
+    background: #050402;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 32px;
+    padding: 80px 24px;
+    z-index: 105;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.4s, visibility 0.4s;
+  }
+  .nav.is-open .nav__links {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  /* Override global a[href] inline-flex center rule so links stack cleanly */
+  .nav__links a {
+    font-family: var(--serif, 'Cormorant Garamond', serif) !important;
+    font-size: 28px !important;
+    font-weight: 300 !important;
+    letter-spacing: 0.02em !important;
+    text-transform: none !important;
+    color: var(--fg) !important;
+    padding: 14px 24px !important;
+    min-height: auto !important;
+    min-width: auto !important;
+    display: block !important;
+    text-align: center !important;
+    line-height: 1.2 !important;
+  }
+  .nav__links a::after { display: none !important; }
+  .nav__links a:hover {
+    color: var(--gold-light) !important;
+  }
+  /* Hamburger sits above the open menu so it can close it */
+  .nav__toggle { z-index: 110; position: relative; }
+  .nav.is-open .nav__toggle { background: rgba(0,0,0,0.4); }
+
+  /* Lock scroll while menu is open */
+  body.nav-open { overflow: hidden; }
+}
+
+/* ============================================================================
+   MOBILE TOPBAR — stack message + phones vertically
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .topbar {
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 16px;
+    font-size: 10px;
+    text-align: center;
+  }
+  .topbar__phones {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .topbar__phones [aria-hidden="true"] { display: none; }
+}
+
+/* ============================================================================
+   MOBILE HERO — tighten typography, reduce padding
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .hero { height: calc(100vh - 60px); min-height: 540px; margin-top: 60px; }
+  .hero__overlay { padding: 60px 20px 40px; gap: 20px; }
+  .hero__title { font-size: clamp(40px, 11vw, 72px) !important; max-width: none !important; }
+  .hero__eyebrow { font-size: 9px; letter-spacing: 0.4em; }
+  .hero__foot {
+    grid-template-columns: 1fr !important;
+    gap: 12px;
+    text-align: center;
+  }
+  .hero__cap--mid { order: -1; }
+  .hero__cap { font-size: 11px; }
+  .hero__cta { padding: 14px 24px; font-size: 11px; }
+
+  /* Hide cinematic letterbox on mobile (too cramped) */
+  .hero::before, .hero::after { display: none; }
+}
+
+/* ============================================================================
+   MOBILE PRICE-CINE + LOCX cards
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .price-cine { padding: 60px 0 80px; }
+  .price-cine__inner { padding: 0 20px; }
+  .price-cine__ticker { gap: 4px; }
+  .price-cine__currency { font-size: 36px; }
+  .price-cine__amount { font-size: clamp(56px, 18vw, 84px); }
+  .price-cine__delta { margin-left: 8px; font-size: 10px; }
+  .price-cine__title { font-size: clamp(32px, 8vw, 52px); }
+  .price-cine__sub { margin-bottom: 40px; font-size: 14px; }
+  a.loc-card { padding: 24px 20px; }
+  .loc-card__city { font-size: 32px !important; }
+  .loc-card__phone { font-size: 22px; }
+
+  .locx { padding: 60px 0; }
+  .locx__grid { grid-template-columns: 1fr; gap: 32px; padding: 0 20px; }
+  .locx__media { aspect-ratio: 4/3; }
+  .locx__title { font-size: clamp(36px, 9vw, 56px); }
+  .locx__body { font-size: 15px; margin-bottom: 32px; }
+  .locx__media-tag { right: 16px; bottom: -16px; padding: 12px 16px; }
+  .locx__media-tag strong { font-size: 22px; }
+  a.locx__item { padding: 22px 20px; }
+  .locx__item-city { font-size: 28px !important; }
+  .locx__item-phone { font-size: 18px; }
+}
+
+/* ============================================================================
+   MOBILE SECTION GENERAL POLISH
+   ============================================================================ */
+
+@media (max-width: 768px) {
+  .gallery__head { padding: 0 20px; }
+  .gallery__title, .about__title { font-size: clamp(32px, 8vw, 56px); }
+  .footer { padding: 60px 20px 28px; }
+  .footer::before { font-size: 28vw; }
+  .preloader__logo { width: 88px; height: 88px; }
+  .preloader__brand { font-size: 16px; letter-spacing: 0.4em; }
+  .preloader__bar { width: 180px; }
+}

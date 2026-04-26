@@ -406,6 +406,30 @@ function initTiltCards() {
   });
 }
 
+/* Hamburger menu toggle — only fires on mobile (button hidden on desktop via CSS) */
+function initNavToggle() {
+  const btn = document.getElementById('nav-toggle');
+  const nav = document.querySelector('.nav');
+  if (!btn || !nav) return;
+
+  const setOpen = open => {
+    btn.setAttribute('aria-expanded', String(open));
+    nav.classList.toggle('is-open', open);
+    document.body.classList.toggle('nav-open', open);
+  };
+
+  btn.addEventListener('click', () => {
+    setOpen(btn.getAttribute('aria-expanded') !== 'true');
+  });
+  // Close on link click + on Escape
+  nav.querySelectorAll('.nav__links a').forEach(a => {
+    a.addEventListener('click', () => setOpen(false));
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && nav.classList.contains('is-open')) setOpen(false);
+  });
+}
+
 /* Nav scroll behavior — adds .scrolled class for backdrop blur */
 function initNavScroll() {
   const nav = document.querySelector('.nav');
@@ -445,6 +469,7 @@ async function boot() {
   initCursor();
   initSmoothScroll();
   initNavScroll();
+  initNavToggle();
   initParallax();
   initTiltCards();
   initMagneticCTAs();
