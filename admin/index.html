@@ -1164,6 +1164,9 @@ a:focus-visible {
     <div class="save-state" id="save-state" aria-live="polite"></div>
 
     <div class="header-actions">
+      <a id="view-live-btn" class="btn btn-ghost btn-sm" href="https://muraduzzamanrifat.github.io/gold/?cms=fresh" target="_blank" rel="noopener" aria-label="View this page on the live site">
+        &#128065; View live &rarr;
+      </a>
       <button class="btn btn-gold btn-save" id="save-btn" type="button" aria-label="Save changes and deploy">
         <span class="btn-text">&#x1F4BE;&nbsp; Save &amp; Deploy</span>
         <span class="btn-spinner">
@@ -1188,7 +1191,7 @@ a:focus-visible {
       <nav class="sidebar-nav" aria-label="Section navigation">
         <div class="sidebar-section-label">Content</div>
 
-        <div class="nav-item active" data-section="general" role="button" tabindex="0" aria-current="true" aria-label="General Settings">
+        <div class="nav-item active" data-section="general" data-live-path="/" role="button" tabindex="0" aria-current="true" aria-label="General Settings">
           <span class="nav-icon" aria-hidden="true">&#9881;&#65039;</span>
           <span class="nav-label">General</span>
         </div>
@@ -1397,8 +1400,8 @@ a:focus-visible {
       <section class="section-panel" id="panel-hero" aria-label="Hero Section">
         <div class="panel-header">
           <div class="panel-header-text">
-            <h1 class="panel-title"><span class="icon" aria-hidden="true">&#129464;</span> Hero Section</h1>
-            <p class="panel-subtitle">The main banner visitors see first — make it count.</p>
+            <h1 class="panel-title"><span class="icon" aria-hidden="true">&#129464;</span> Hero Section <span style="font-size:0.7em;color:var(--fg2);font-weight:normal;">(homepage <code>/</code>)</span></h1>
+            <p class="panel-subtitle">Controls the <strong>homepage banner</strong> — the giant background, eyebrow, headline, and CTA. <em>For Snellville/Commerce hero images, use the <strong>Page: Snellville</strong> or <strong>Page: Commerce</strong> panels in the sidebar.</em></p>
           </div>
         </div>
 
@@ -3327,6 +3330,16 @@ function initNav() {
 
       if (section === 'library') loadImageLibrary();
       if (window.innerWidth <= 700) closeSidebar();
+
+      // Update header View live link to match the page this panel controls
+      const viewBtn = get('view-live-btn');
+      if (viewBtn) {
+        const path = item.dataset.livePath || '/';
+        viewBtn.href = `https://${REPO_OWNER.toLowerCase()}.github.io/${REPO_NAME}${path}?cms=fresh`;
+        // Hide on sections that don't map to a page (library, backup, tracking)
+        const hideForSections = new Set(['library', 'backup', 'tracking']);
+        viewBtn.style.display = hideForSections.has(section) ? 'none' : '';
+      }
     }
 
     item.addEventListener('click', activate);
