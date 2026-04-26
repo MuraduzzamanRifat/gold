@@ -1007,6 +1007,70 @@ a:focus-visible {
   color: var(--gold);
   font-weight: 600;
 }
+
+/* Image Library grid + tiles */
+.library-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+  padding: 0.5rem;
+}
+.lib-tile {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.lib-tile-img {
+  aspect-ratio: 1;
+  background: var(--bg);
+  overflow: hidden;
+  cursor: pointer;
+}
+.lib-tile-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.lib-tile-meta {
+  padding: 0.6rem 0.7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.lib-tile-name {
+  font-size: 0.72rem;
+  color: var(--fg2);
+  word-break: break-all;
+  line-height: 1.3;
+}
+.lib-tile-actions {
+  display: flex;
+  gap: 0.3rem;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.7rem;
+  color: var(--fg3);
+}
+.lib-tile-actions .btn-clear { padding: 0.3rem 0.5rem; }
+.lib-tile-actions-group { display: flex; gap: 0.3rem; }
+
+/* Inline link inside a toast (used by Save success "View live →") */
+.toast-link {
+  color: var(--gold);
+  text-decoration: underline;
+}
+
+/* Library status text */
+.library-status {
+  padding: 1rem;
+  color: var(--fg2);
+  font-size: 0.85rem;
+}
+.library-status.error { color: var(--error); }
 </style>
 </head>
 <body>
@@ -1126,105 +1190,105 @@ a:focus-visible {
           <span class="nav-label">General</span>
         </div>
 
-        <div class="nav-item" data-section="hero" role="button" tabindex="0" aria-label="Hero Section">
+        <div class="nav-item" data-section="hero" data-live-path="/"" role="button" tabindex="0" aria-label="Hero Section">
           <span class="nav-icon" aria-hidden="true">&#129464;</span>
           <span class="nav-label">Hero</span>
         </div>
 
-        <div class="nav-item" data-section="cta" role="button" tabindex="0" aria-label="CTA Section">
+        <div class="nav-item" data-section="cta" data-live-path="/"" role="button" tabindex="0" aria-label="CTA Section">
           <span class="nav-icon" aria-hidden="true">&#128226;</span>
           <span class="nav-label">CTA / Quote</span>
         </div>
 
-        <div class="nav-item" data-section="locations" role="button" tabindex="0" aria-label="Locations">
+        <div class="nav-item" data-section="locations" data-live-path="/"" role="button" tabindex="0" aria-label="Locations">
           <span class="nav-icon" aria-hidden="true">&#128205;</span>
           <span class="nav-label">Locations</span>
         </div>
 
-        <div class="nav-item" data-section="reviews" role="button" tabindex="0" aria-label="Customer Reviews">
+        <div class="nav-item" data-section="reviews" data-live-path="/"" role="button" tabindex="0" aria-label="Customer Reviews">
           <span class="nav-icon" aria-hidden="true">&#11088;</span>
           <span class="nav-label">Reviews</span>
           <span class="nav-count" id="review-count">8</span>
         </div>
 
-        <div class="nav-item" data-section="images" role="button" tabindex="0" aria-label="Images">
+        <div class="nav-item" data-section="images" data-live-path="/"" role="button" tabindex="0" aria-label="Images">
           <span class="nav-icon" aria-hidden="true">&#128444;&#65039;</span>
           <span class="nav-label">Images</span>
         </div>
 
-        <div class="nav-item" data-section="library" role="button" tabindex="0" aria-label="Image Library">
+        <div class="nav-item" data-section="library" data-live-path="/"" role="button" tabindex="0" aria-label="Image Library">
           <span class="nav-icon" aria-hidden="true">&#128193;</span>
           <span class="nav-label">Image Library</span>
         </div>
 
         <div class="sidebar-section-label" style="margin-top:1.25rem;">Locations</div>
 
-        <div class="nav-item" data-section="page-snellville" role="button" tabindex="0" aria-label="Page: Snellville">
+        <div class="nav-item" data-section="page-snellville" data-live-path="/snellville.html"" role="button" tabindex="0" aria-label="Page: Snellville">
           <span class="nav-icon" aria-hidden="true">&#127968;</span>
           <span class="nav-label">Snellville</span>
         </div>
 
-        <div class="nav-item" data-section="page-commerce" role="button" tabindex="0" aria-label="Page: Commerce">
+        <div class="nav-item" data-section="page-commerce" data-live-path="/commerce.html"" role="button" tabindex="0" aria-label="Page: Commerce">
           <span class="nav-icon" aria-hidden="true">&#127970;</span>
           <span class="nav-label">Commerce</span>
         </div>
 
         <div class="sidebar-section-label" style="margin-top:1.25rem;">Info Pages</div>
 
-        <div class="nav-item" data-section="page-whatWeBuy" role="button" tabindex="0" aria-label="Page: What We Buy">
+        <div class="nav-item" data-section="page-whatWeBuy" data-live-path="/what-we-buy.html"" role="button" tabindex="0" aria-label="Page: What We Buy">
           <span class="nav-icon" aria-hidden="true">&#128176;</span>
           <span class="nav-label">What We Buy</span>
         </div>
-        <div class="nav-item" data-section="page-howItWorks" role="button" tabindex="0" aria-label="Page: How It Works">
+        <div class="nav-item" data-section="page-howItWorks" data-live-path="/how-it-works.html"" role="button" tabindex="0" aria-label="Page: How It Works">
           <span class="nav-icon" aria-hidden="true">&#9881;&#65039;</span>
           <span class="nav-label">How It Works</span>
         </div>
-        <div class="nav-item" data-section="page-prices" role="button" tabindex="0" aria-label="Page: Prices">
+        <div class="nav-item" data-section="page-prices" data-live-path="/prices.html"" role="button" tabindex="0" aria-label="Page: Prices">
           <span class="nav-icon" aria-hidden="true">&#128200;</span>
           <span class="nav-label">Prices</span>
         </div>
-        <div class="nav-item" data-section="page-jewelry" role="button" tabindex="0" aria-label="Page: Jewelry">
+        <div class="nav-item" data-section="page-jewelry" data-live-path="/jewelry.html"" role="button" tabindex="0" aria-label="Page: Jewelry">
           <span class="nav-icon" aria-hidden="true">&#128141;</span>
           <span class="nav-label">Jewelry</span>
         </div>
-        <div class="nav-item" data-section="page-faqs" role="button" tabindex="0" aria-label="Page: FAQs">
+        <div class="nav-item" data-section="page-faqs" data-live-path="/faqs.html"" role="button" tabindex="0" aria-label="Page: FAQs">
           <span class="nav-icon" aria-hidden="true">&#10067;</span>
           <span class="nav-label">FAQs</span>
         </div>
 
         <div class="sidebar-section-label" style="margin-top:1.25rem;">Trust Pages</div>
 
-        <div class="nav-item" data-section="page-about" role="button" tabindex="0" aria-label="Page: About">
+        <div class="nav-item" data-section="page-about" data-live-path="/about.html"" role="button" tabindex="0" aria-label="Page: About">
           <span class="nav-icon" aria-hidden="true">&#128218;</span>
           <span class="nav-label">About</span>
         </div>
-        <div class="nav-item" data-section="page-whyChoose" role="button" tabindex="0" aria-label="Page: Why Choose">
+        <div class="nav-item" data-section="page-whyChoose" data-live-path="/why-choose-gold-kings.html"" role="button" tabindex="0" aria-label="Page: Why Choose">
           <span class="nav-icon" aria-hidden="true">&#127942;</span>
           <span class="nav-label">Why Choose</span>
         </div>
-        <div class="nav-item" data-section="page-churchFundraising" role="button" tabindex="0" aria-label="Page: Church Fundraising">
+        <div class="nav-item" data-section="page-churchFundraising" data-live-path="/church-fundraising.html"" role="button" tabindex="0" aria-label="Page: Church Fundraising">
           <span class="nav-icon" aria-hidden="true">&#9962;&#65039;</span>
           <span class="nav-label">Church Fundraising</span>
         </div>
 
         <div class="sidebar-section-label" style="margin-top:1.25rem;">Legal</div>
 
-        <div class="nav-item" data-section="page-terms" role="button" tabindex="0" aria-label="Page: Terms">
+        <div class="nav-item" data-section="page-terms" data-live-path="/terms-conditions.html"" role="button" tabindex="0" aria-label="Page: Terms">
           <span class="nav-icon" aria-hidden="true">&#128221;</span>
           <span class="nav-label">Terms</span>
         </div>
-        <div class="nav-item" data-section="page-privacy" role="button" tabindex="0" aria-label="Page: Privacy">
+        <div class="nav-item" data-section="page-privacy" data-live-path="/privacy-policy.html"" role="button" tabindex="0" aria-label="Page: Privacy">
           <span class="nav-icon" aria-hidden="true">&#128274;</span>
           <span class="nav-label">Privacy</span>
         </div>
-        <div class="nav-item" data-section="page-refundReturns" role="button" tabindex="0" aria-label="Page: Refund &amp; Returns">
+        <div class="nav-item" data-section="page-refundReturns" data-live-path="/refund-returns.html"" role="button" tabindex="0" aria-label="Page: Refund &amp; Returns">
           <span class="nav-icon" aria-hidden="true">&#128179;</span>
           <span class="nav-label">Refund &amp; Returns</span>
         </div>
 
         <div class="sidebar-section-label" style="margin-top:1.25rem;">Marketing</div>
 
-        <div class="nav-item" data-section="tracking" role="button" tabindex="0" aria-label="Tracking Codes">
+        <div class="nav-item" data-section="tracking" data-live-path="/"" role="button" tabindex="0" aria-label="Tracking Codes">
           <span class="nav-icon" aria-hidden="true">&#128202;</span>
           <span class="nav-label">Tracking</span>
         </div>
@@ -1601,8 +1665,8 @@ a:focus-visible {
           <button class="btn btn-ghost btn-sm" id="library-refresh" type="button">&#8635; Refresh</button>
         </div>
         <div class="content-card">
-          <div id="library-status" style="padding:1rem;color:var(--fg2);font-size:0.85rem;">Loading library…</div>
-          <div id="library-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;padding:0.5rem;"></div>
+          <div id="library-status" class="library-status">Loading library…</div>
+          <div id="library-grid" class="library-grid"></div>
         </div>
       </section>
 
@@ -2097,8 +2161,8 @@ class GH {
   // Lists files in a directory. Returns [] for non-existent dir.
   async listDir(path) {
     const r = await fetch(
-      `${this.base}/repos/${this.owner}/${this.repo}/contents/${path}?ref=${this.branch}&_=${Date.now()}`,
-      { headers: this.headers() }
+      `${this.base}/repos/${this.owner}/${this.repo}/contents/${path}?ref=${this.branch}`,
+      { headers: this.headers(), cache: 'no-cache' }
     );
     if (r.status === 404) return [];
     if (!r.ok) throw new Error(`GitHub: ${r.status} ${r.statusText}`);
@@ -2131,7 +2195,10 @@ let isDirty = false;
 /* ============================================================
    TOAST SYSTEM
    ============================================================ */
-function showToast(type, title, message, duration = 4500, allowHtml = false) {
+function showToast(type, title, message, opts) {
+  // Back-compat: opts may be a number (legacy duration) or an object
+  if (typeof opts === 'number') opts = { duration: opts };
+  const { duration = 4500, allowHtml = false } = opts || {};
   const icons = { success: '&#10003;', error: '&#33;', info: 'i', warn: '&#9888;' };
   const container = document.getElementById('toast-container');
 
@@ -2862,10 +2929,7 @@ function initNav() {
         panel.scrollIntoView({ block: 'start', behavior: 'instant' });
       }
 
-      // Lazy-load image library on first activation
       if (section === 'library') loadImageLibrary();
-
-      // Auto-close sidebar on mobile
       if (window.innerWidth <= 700) closeSidebar();
     }
 
@@ -3039,59 +3103,71 @@ function initImageUploads() {
 /* ============================================================
    IMAGE LIBRARY — gallery of img/uploads/ via GitHub Contents API
    ============================================================ */
+const IMAGE_EXT_RE = /\.(png|jpe?g|webp|gif|avif)$/i;
+
+// wsrv.nl is a free anonymous edge-cached image proxy. We use it to render
+// 360px thumbnails (vs full-resolution PNGs that may be 2-3 MB each).
+function thumbUrl(rawUrl, w = 360) {
+  return `https://wsrv.nl/?url=${encodeURIComponent(rawUrl)}&w=${w}&output=webp`;
+}
+
+function formatSize(bytes) {
+  const kb = Math.round(bytes / 1024);
+  return kb >= 1024 ? (kb / 1024).toFixed(1) + ' MB' : kb + ' KB';
+}
+
 async function loadImageLibrary() {
   const grid = get('library-grid');
   const status = get('library-status');
   if (!grid || !status) return;
   if (!gh) { status.textContent = 'Login required.'; grid.innerHTML = ''; return; }
   status.textContent = 'Loading…';
+  status.classList.remove('error');
   grid.innerHTML = '';
   try {
     const items = await gh.listDir('img/uploads');
-    const images = items.filter(it => it.type === 'file' && /\.(png|jpe?g|webp|gif|avif)$/i.test(it.name));
+    const images = items
+      .filter(it => it.type === 'file' && IMAGE_EXT_RE.test(it.name))
+      .sort((a, b) => b.name.localeCompare(a.name)); // filename starts with upload-timestamp; newest first
     if (images.length === 0) {
       status.textContent = 'No uploaded images yet. Upload one from any image field.';
       return;
     }
     status.textContent = `${images.length} image${images.length === 1 ? '' : 's'} in library`;
-    images.sort((a, b) => b.name.localeCompare(a.name)); // newest first (filename starts with timestamp)
     images.forEach(it => grid.appendChild(buildLibraryTile(it)));
   } catch (e) {
     status.textContent = 'Error loading library: ' + e.message;
-    status.style.color = 'var(--error)';
+    status.classList.add('error');
   }
 }
 
 function buildLibraryTile(item) {
-  const tile = document.createElement('div');
-  tile.style.cssText = 'background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;';
   const rawUrl = item.download_url || `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${REPO_BRANCH}/${item.path}`;
-  const sizeKb = Math.round(item.size / 1024);
+  const tile = document.createElement('div');
+  tile.className = 'lib-tile';
   tile.innerHTML = `
-    <div style="aspect-ratio:1;background:var(--bg);overflow:hidden;cursor:pointer;" data-action="copy" title="Click to copy URL">
-      <img src="${escHtml(rawUrl)}" alt="${escHtml(item.name)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
+    <div class="lib-tile-img" data-action="copy" title="Click to copy URL">
+      <img src="${escHtml(thumbUrl(rawUrl))}" alt="${escHtml(item.name)}" loading="lazy">
     </div>
-    <div style="padding:0.6rem 0.7rem;display:flex;flex-direction:column;gap:0.4rem;">
-      <div style="font-size:0.72rem;color:var(--fg2);word-break:break-all;line-height:1.3;">${escHtml(item.name)}</div>
-      <div style="display:flex;gap:0.3rem;align-items:center;justify-content:space-between;font-size:0.7rem;color:var(--fg3);">
-        <span>${sizeKb >= 1024 ? (sizeKb/1024).toFixed(1) + ' MB' : sizeKb + ' KB'}</span>
-        <div style="display:flex;gap:0.3rem;">
-          <button type="button" class="btn-clear" data-action="copy" data-url="${escHtml(rawUrl)}" style="padding:0.3rem 0.5rem;">Copy</button>
-          <button type="button" class="btn-clear" data-action="delete" data-path="${escHtml(item.path)}" data-sha="${escHtml(item.sha)}" style="padding:0.3rem 0.5rem;">Delete</button>
+    <div class="lib-tile-meta">
+      <div class="lib-tile-name">${escHtml(item.name)}</div>
+      <div class="lib-tile-actions">
+        <span>${formatSize(item.size)}</span>
+        <div class="lib-tile-actions-group">
+          <button type="button" class="btn-clear" data-action="copy">Copy</button>
+          <button type="button" class="btn-clear" data-action="delete">Delete</button>
         </div>
       </div>
     </div>
   `;
-  // Click on image OR Copy button copies URL to clipboard
   tile.querySelectorAll('[data-action="copy"]').forEach(el => {
     el.addEventListener('click', e => {
       e.stopPropagation();
       navigator.clipboard.writeText(rawUrl).then(() =>
         showToast('success', 'Copied!', 'Image URL copied to clipboard. Paste into any image URL field.')
-      ).catch(() => showToast('error', 'Copy failed', 'Try Ctrl+L on the URL field instead.'));
+      ).catch(() => showToast('error', 'Copy failed', 'Manually copy the URL: ' + rawUrl));
     });
   });
-  // Delete removes the file from img/uploads/ via the GitHub API
   tile.querySelector('[data-action="delete"]').addEventListener('click', async e => {
     e.stopPropagation();
     if (!confirm(`Delete ${item.name}?\n\nThis removes the file from the repo permanently. Any pages still pointing to it will break.`)) return;
@@ -3222,27 +3298,12 @@ async function saveAll() {
     siteData = data;
     markClean();
 
-    // Build a "View live" URL based on the active panel (defaults to homepage)
     const liveBase = `https://${REPO_OWNER.toLowerCase()}.github.io/${REPO_NAME}`;
-    const activeSection = document.querySelector('.nav-item.active')?.dataset.section || '';
-    const sectionToPath = {
-      'page-snellville': '/snellville.html',
-      'page-commerce': '/commerce.html',
-      'page-whatWeBuy': '/what-we-buy.html',
-      'page-howItWorks': '/how-it-works.html',
-      'page-prices': '/prices.html',
-      'page-jewelry': '/jewelry.html',
-      'page-faqs': '/faqs.html',
-      'page-about': '/about.html',
-      'page-whyChoose': '/why-choose-gold-kings.html',
-      'page-churchFundraising': '/church-fundraising.html',
-      'page-terms': '/terms-conditions.html',
-      'page-privacy': '/privacy-policy.html',
-      'page-refundReturns': '/refund-returns.html'
-    };
-    const livePath = sectionToPath[activeSection] || '/';
+    const livePath = document.querySelector('.nav-item.active')?.dataset.livePath || '/';
     const viewUrl = `${liveBase}${livePath}?cms=fresh`;
-    showToast('success', 'Saved!', `Live in ~3 seconds. <a href="${viewUrl}" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:underline;">View live &rarr;</a>`, 8000, true);
+    showToast('success', 'Saved!',
+      `Live in ~3 seconds. <a href="${viewUrl}" target="_blank" rel="noopener" class="toast-link">View live &rarr;</a>`,
+      { duration: 8000, allowHtml: true });
   } catch (err) {
     console.error('Save error:', err);
     showToast('error', 'Save failed', err.message || 'Unknown error. Check console for details.');
