@@ -493,7 +493,8 @@ async function boot() {
   initParallax();
   initTiltCards();
   initMagneticCTAs();
-  initCoinCenterpiece(preloader);
+  // Coin centerpiece + rolling coins removed from homepage hero per user request
+  // initCoinCenterpiece(preloader);
 
   const heroCanvas = document.getElementById('hero-canvas');
   if (heroCanvas) {
