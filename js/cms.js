@@ -130,23 +130,17 @@
           const val = p[field];
           if (val == null || val === '') return;
           document.querySelectorAll(sel).forEach(el => {
-            // Image fields → set src + og:image meta
-            if (field.toLowerCase().includes('image') || field.toLowerCase().includes('background')) {
-              if (el.tagName === 'IMG') {
-                el.src = val;
-              } else if (el.tagName === 'LINK') {
-                el.href = val;
-              } else if (el.tagName === 'META') {
-                el.setAttribute('content', val);
-              }
+            // <meta> always uses content attribute, regardless of field name
+            if (el.tagName === 'META') { el.setAttribute('content', val); return; }
+            // Image fields: handle <img>, <link rel=preload>
+            if (/image|background/i.test(field)) {
+              if (el.tagName === 'IMG') el.src = val;
+              else if (el.tagName === 'LINK') el.href = val;
               return;
             }
-            // Headlines — allow HTML (<em>) tags
-            if (/headline|line[12]|title/i.test(field)) {
-              el.innerHTML = val;
-              return;
-            }
-            // Default: text only
+            // HTML-bearing fields (allow <em>, <br>): titles, headlines, sub-paragraphs
+            if (/title|headline|line\d|sub/i.test(field)) { el.innerHTML = val; return; }
+            // Default: plain text (covers <title>, eyebrow, mark, etc.)
             el.textContent = val;
           });
         });

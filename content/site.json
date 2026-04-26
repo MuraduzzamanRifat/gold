@@ -117,6 +117,94 @@
       "heroLine1": "SELL GOLD IN <em>COMMERCE</em>",
       "heroLine2": "Same-Day Cash, <em>Fair Prices</em>",
       "heroBackgroundImage": "https://images.pexels.com/photos/3998365/pexels-photo-3998365.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"
+    },
+    "whatWeBuy": {
+      "seoTitle": "What We Buy — Gold Kings | Georgia's Premier Gold Buyer",
+      "seoDescription": "Gold Kings buys gold jewelry, silver flatware, coins, bullion, scrap gold, dental gold, estate jewelry and luxury watches. Snellville & Commerce, GA.",
+      "heroMark": "BUY",
+      "heroEyebrow": "◆ What We Buy",
+      "heroTitle": "We Buy <em>Everything</em> Precious",
+      "heroSub": "Gold, silver, coins, watches — any karat, any condition, any quantity. Walk in. Walk out with cash."
+    },
+    "howItWorks": {
+      "seoTitle": "How Selling Your Gold Works — Gold Kings | 5-Step Process",
+      "seoDescription": "Our 5-step buying process: bring it in, we test & weigh in front of you, live spot pricing, clear cash offer, you decide. No pressure.",
+      "heroMark": "PROCESS",
+      "heroEyebrow": "◆ How Selling Your Gold Works",
+      "heroTitle": "Five steps,<br><em>about ten minutes.</em>",
+      "heroSub": "Walk in. Watch us test and weigh. Hear how the offer is calculated. Decide. That's the whole process."
+    },
+    "prices": {
+      "seoTitle": "Live Gold & Silver Prices — Gold Kings Georgia",
+      "seoDescription": "Live gold and silver spot prices. Understand how Gold Kings calculates your offer — based on live market rates, karat purity, and certified weight.",
+      "heroMark": "PRICES",
+      "heroEyebrow": "◆ Gold & Silver Prices",
+      "heroTitle": "Transparent Pricing.<br><em>Live Market Rates.</em>",
+      "heroSub": "We don't guess. We don't use outdated charts. We use the live spot price at the moment you walk in — and we show you every step of the calculation."
+    },
+    "jewelry": {
+      "seoTitle": "Jewelry by Weight — Gold Kings | Market-Rate Gold & Silver",
+      "seoDescription": "Gold Kings sells gold and silver jewelry by weight at current market rates. No retail markup, transparent pricing. Visit our Snellville or Commerce, GA store.",
+      "heroMark": "WEIGHT",
+      "heroEyebrow": "◆ Jewelry by Weight",
+      "heroTitle": "Jewelry <em>by Weight</em> —<br>Fair Market Pricing",
+      "heroSub": "Choose from our curated selection of gold and silver jewelry. Priced at current market value — not retail markup. What you pay is what the metal is worth."
+    },
+    "faqs": {
+      "seoTitle": "FAQs — Gold Kings | Selling Gold in Georgia",
+      "seoDescription": "Frequently asked questions about selling gold, silver, and jewelry at Gold Kings. Snellville & Commerce, GA. Licensed precious-metals dealer.",
+      "heroMark": "ASK",
+      "heroEyebrow": "◆ Frequently Asked Questions",
+      "heroTitle": "Questions,<br><em>Answered Honestly.</em>",
+      "heroSub": "Everything you need to know before you walk in. No fine print. No surprises."
+    },
+    "about": {
+      "seoTitle": "About Gold Kings — Honest, Transparent, Fair | Snellville & Commerce, GA",
+      "seoDescription": "Gold Kings is a locally-operated, licensed Georgia precious-metals buyer. Two counters, one promise: weigh in front of you, calculate live, settle same-day.",
+      "heroMark": "ABOUT",
+      "heroEyebrow": "◆ About Gold Kings · Established 2008",
+      "heroTitle": "A local buyer<br><em>worth trusting.</em>",
+      "heroSub": "Selling gold and silver should be honest, transparent, and fair. That's the principle the business was built on. Two Georgia counters, one promise."
+    },
+    "whyChoose": {
+      "seoTitle": "Why Choose Gold Kings — Transparent, Licensed, No Pressure",
+      "seoDescription": "Why customers choose Gold Kings: testing in front of you, no-pressure environment, immediate payment, licensed dealer, better than a pawn shop.",
+      "heroMark": "TRUST",
+      "heroEyebrow": "◆ Why Choose Gold Kings",
+      "heroTitle": "Transparent dealings,<br><em>real comfort.</em>",
+      "heroSub": "Six reasons customers come back, send friends, and trust us with the items that matter to them."
+    },
+    "churchFundraising": {
+      "seoTitle": "Church Gold Fundraising Program — Gold Kings | Faith-Based Stewardship",
+      "seoDescription": "Gold Kings partners with churches to convert donated gold & silver into ministry funding. Transparent process, respectful handling, fair market pricing.",
+      "heroMark": "FAITH",
+      "heroEyebrow": "◆ Church Gold Fundraising Program",
+      "heroTitle": "Stewardship,<br><em>handled with care.</em>",
+      "heroSub": "Help your congregation turn unused gold and silver into real funding for ministry — through a transparent process you can show your members."
+    },
+    "terms": {
+      "seoTitle": "Terms & Conditions — Gold Kings | Snellville & Commerce, GA",
+      "seoDescription": "Gold Kings Terms & Conditions. Licensed Georgia precious-metals dealer with locations in Snellville and Commerce. Read our policies before visiting.",
+      "heroMark": "TERMS",
+      "heroEyebrow": "◆ Legal · Terms & Conditions",
+      "heroTitle": "The fine print,<br><em>plainly written.</em>",
+      "heroSub": "By visiting our website or one of our Georgia counters, you agree to the terms below. We've kept them as direct as we can."
+    },
+    "privacy": {
+      "seoTitle": "Privacy Policy — Gold Kings | Snellville & Commerce, GA",
+      "seoDescription": "How Gold Kings collects, uses, and protects your information. Licensed Georgia precious-metals dealer. Snellville & Commerce locations.",
+      "heroMark": "PRIVACY",
+      "heroEyebrow": "◆ Legal · Privacy Policy",
+      "heroTitle": "Your information,<br><em>handled with care.</em>",
+      "heroSub": "What we collect, what we do with it, and what you can ask us to do about it."
+    },
+    "refundReturns": {
+      "seoTitle": "Refund & Returns Policy — Gold Kings | All Sales Are Final",
+      "seoDescription": "Gold Kings is a precious-metals dealer, not a pawn shop. All sales are final. Read our refund & returns policy.",
+      "heroMark": "FINAL",
+      "heroEyebrow": "◆ Legal · Refund & Returns",
+      "heroTitle": "All sales<br><em>are final.</em>",
+      "heroSub": "We're a precious-metals dealer, not a pawn shop. Make sure you're comfortable with the offer before accepting payment."
     }
   }
 }
