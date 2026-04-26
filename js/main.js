@@ -215,12 +215,46 @@ function initMagneticCTAs() {
 }
 
 // Lazy-load the 3D coin — only on desktop with motion enabled
+// Preloader has a guaranteed 3.2s minimum display so the stroke-draw +
+// bar fill animation reads fully, regardless of how fast the WebGL loads.
 function initCoinCenterpiece() {
-  if (REDUCED_MOTION || window.matchMedia('(max-width: 900px)').matches) return;
+  const PRELOADER_MIN_MS = 3200;
+  const startedAt = performance.now();
+  let coinReady = false;
+
+  const dismiss = () => {
+    const pre = document.getElementById('preloader');
+    if (!pre) return;
+    pre.classList.add('is-out');
+    setTimeout(() => pre.remove(), 1100);
+  };
+
+  // Schedule dismissal: wait until BOTH (a) min display elapsed AND (b) coin ready
+  const tryDismiss = () => {
+    const elapsed = performance.now() - startedAt;
+    const wait = Math.max(0, PRELOADER_MIN_MS - elapsed);
+    if (coinReady || wait > 0) {
+      setTimeout(dismiss, wait);
+    } else {
+      dismiss();
+    }
+  };
+
+  // Always dismiss after min duration even if coin fails — keeps the page from
+  // ever getting stuck behind a stuck preloader
+  setTimeout(() => { coinReady = true; tryDismiss(); }, PRELOADER_MIN_MS);
+
+  if (REDUCED_MOTION || window.matchMedia('(max-width: 900px)').matches) {
+    return;
+  }
   const coinCanvas = document.getElementById('coin-canvas');
   if (!coinCanvas) return;
+
   import('./coin3d.js')
-    .then(m => m.initCoin3D({ canvas: coinCanvas }))
+    .then(m => m.initCoin3D({
+      canvas: coinCanvas,
+      onReady: () => { coinReady = true; tryDismiss(); }
+    }))
     .catch(err => {
       console.warn('Coin3D init failed', err);
       coinCanvas.style.display = 'none';
