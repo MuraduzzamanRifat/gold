@@ -289,7 +289,7 @@ label {
 .t-display {
   font-family: var(--serif);
   font-weight: 300;
-  font-size: clamp(72px, 14vw, 220px);
+  font-size: clamp(48px, 8vw, 140px);
   line-height: 0.93;
   letter-spacing: -0.02em;
 }
@@ -1008,7 +1008,7 @@ body::before {
 .hero__title {
   font-family: var(--serif);
   font-weight: 300;
-  font-size: clamp(72px, 14vw, 220px);
+  font-size: clamp(48px, 8vw, 140px);
   line-height: 0.93;
   letter-spacing: -0.02em;
   align-self: center;
