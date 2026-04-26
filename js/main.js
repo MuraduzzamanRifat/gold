@@ -1,4 +1,8 @@
-import { initHero, initShowcase } from './webgl.js';
+// webgl.js statically imports 'three' (a bare specifier) which only resolves via
+// the importmap on index.html. Dynamic-import it so this file has no bare
+// specifiers and can run on every page (including the legal/content pages that
+// have no WebGL and no importmap). Three.js parse cost is also skipped on
+// pages that don't need it.
 import { heroImage, testimonials, showcaseSlides } from './data.js';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -262,6 +266,7 @@ async function buildShowcase() {
     return;
   }
 
+  const { initShowcase } = await import('./webgl.js');
   const sc = await initShowcase({ canvas, slides: showcaseSlides });
   if (!sc) return;
 
@@ -483,9 +488,11 @@ async function boot() {
       if (stage) stage.style.cssText = `background:url('${heroImage}') center/cover no-repeat;min-height:100vh;`;
       heroCanvas.remove();
     } else {
-      initHero({ canvas: heroCanvas, imageUrl: heroImage }).catch(() => {
-        heroCanvas.style.cssText = `background:url('${heroImage}') center/cover;`;
-      });
+      import('./webgl.js')
+        .then(({ initHero }) => initHero({ canvas: heroCanvas, imageUrl: heroImage }))
+        .catch(() => {
+          heroCanvas.style.cssText = `background:url('${heroImage}') center/cover;`;
+        });
     }
   }
   // Reveal hero on any page that has one (including image-based hero on location pages)

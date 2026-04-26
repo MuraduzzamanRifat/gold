@@ -3027,81 +3027,9 @@ body::before {
   .stat-item { flex: 0 0 50%; border-bottom: 1px solid var(--rule); }
 }
 
-/* ============================================================================
-   INNER PAGE CTA SECTION
-   ============================================================================ */
-.page-cta {
-  padding: 80px var(--edge);
-  text-align: center;
-  background: var(--bg-3);
-  border-top: 1px solid var(--rule);
-}
-.page-cta__eyebrow {
-  font-family: var(--mono);
-  font-size: 9px;
-  letter-spacing: 0.5em;
-  text-transform: uppercase;
-  color: var(--gold);
-  margin-bottom: 20px;
-}
-.page-cta__title {
-  font-family: var(--serif);
-  font-size: clamp(36px, 5vw, 64px);
-  font-weight: 300;
-  color: var(--fg);
-  line-height: 1.1;
-  margin-bottom: 20px;
-}
-.page-cta__title em { color: var(--gold-light); font-style: italic; }
-.page-cta__sub {
-  font-family: var(--sans);
-  font-size: 15px;
-  color: var(--fg-2);
-  line-height: 1.7;
-  max-width: 520px;
-  margin: 0 auto 40px;
-}
-.page-cta__locs {
-  display: flex;
-  justify-content: center;
-  gap: 40px;
-  flex-wrap: wrap;
-}
-.page-cta__loc {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  align-items: center;
-}
-.page-cta__loc-name {
-  font-family: var(--sans);
-  font-size: 11px;
-  letter-spacing: 0.2em;
-  color: var(--fg-3);
-  text-transform: uppercase;
-}
-.page-cta__loc-phone {
-  font-family: var(--serif);
-  font-size: 24px;
-  font-weight: 300;
-  color: var(--gold-light);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.page-cta__loc-phone:hover { color: var(--fg); }
-.page-cta__loc-addr {
-  font-family: var(--sans);
-  font-size: 12px;
-  color: var(--fg-3);
-}
-.page-cta__divider {
-  width: 1px;
-  background: var(--rule);
-  align-self: stretch;
-}
-@media (max-width: 640px) {
-  .page-cta__divider { display: none; }
-}
+/* .page-cta and its subselectors are defined in the PAGE CTA section appended
+   to this file (~line 5276). The old version that lived here was deleted to
+   eliminate cascade conflicts. */
 
 /* ============================================================================
    HOW IT WORKS STEPS (horizontal, inner pages)
