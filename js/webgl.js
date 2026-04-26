@@ -98,7 +98,22 @@ export async function initHero({ canvas, imageUrl, onProgress }) {
   }
   tick();
 
-  return { renderer, scene, camera, uniforms };
+  // setImage swaps the texture in place — used by main.js to react to
+  // cms:ready arriving after initHero already rendered with the fallback.
+  let currentUrl = imageUrl;
+  async function setImage(newUrl) {
+    if (!newUrl || newUrl === currentUrl) return;
+    try {
+      const newTexture = await loadTexture(newUrl);
+      const old = uniforms.uTexture.value;
+      uniforms.uTexture.value = newTexture;
+      uniforms.uImageSize.value.set(newTexture.image.naturalWidth, newTexture.image.naturalHeight);
+      if (old && old.dispose) old.dispose();
+      currentUrl = newUrl;
+    } catch (_) { /* keep current texture if load fails */ }
+  }
+
+  return { renderer, scene, camera, uniforms, setImage };
 }
 
 // ============================================================

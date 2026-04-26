@@ -503,22 +503,34 @@ async function boot() {
     // CMS fetch is slow — falls back to data.js heroImage.
     const cmsImageUrl = Promise.race([
       (window.__cmsReady || Promise.resolve(null)).then(c => c?.hero?.backgroundImage || null),
-      new Promise(r => setTimeout(() => r(null), 800))
+      new Promise(r => setTimeout(() => r(null), 2500))  // 2.5s — covers slow CDN; previously 800ms was too tight
     ]);
     cmsImageUrl.then(url => {
       const finalUrl = url || heroImage;
-      // Reduced-motion users get a static cover image instead of the animated WebGL hero
+      // Reduced-motion / mobile users get a static cover image, not animated WebGL.
+      // Reach the static path also when WebGL fails — same code path means uploaded
+      // images always show, regardless of GPU/CPU/network conditions.
       if (REDUCED_MOTION || window.matchMedia('(max-width: 900px)').matches) {
         const stage = document.querySelector('.hero__stage');
         if (stage) stage.style.cssText = `background:url('${finalUrl}') center/cover no-repeat;min-height:100vh;`;
         heroCanvas.remove();
-      } else {
-        import('./webgl.js')
-          .then(({ initHero }) => initHero({ canvas: heroCanvas, imageUrl: finalUrl }))
-          .catch(() => {
-            heroCanvas.style.cssText = `background:url('${finalUrl}') center/cover;`;
-          });
+        return;
       }
+      import('./webgl.js')
+        .then(({ initHero }) => initHero({ canvas: heroCanvas, imageUrl: finalUrl }))
+        .then(controller => {
+          // If the CMS data arrives AFTER initHero rendered with the fallback URL,
+          // swap the texture in place. Without this, the WebGL canvas would keep
+          // showing the old data.js heroImage on top of the (correctly updated)
+          // static <img class="hero__bg-img"> behind it.
+          document.addEventListener('cms:ready', e => {
+            const cmsUrl = e.detail?.hero?.backgroundImage;
+            if (cmsUrl && controller && controller.setImage) controller.setImage(cmsUrl);
+          });
+        })
+        .catch(() => {
+          heroCanvas.style.cssText = `background:url('${finalUrl}') center/cover;`;
+        });
     });
   }
   // Reveal hero on any page that has one (including image-based hero on location pages)
