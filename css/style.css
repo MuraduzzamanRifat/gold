@@ -951,6 +951,7 @@ body::before {
   gap: 32px;
   color: var(--fg);
   pointer-events: none;
+  z-index: 5;
 }
 
 .hero__eyebrow {
@@ -3653,4 +3654,69 @@ body::before {
 }
 @media (prefers-reduced-motion: reduce) {
   .hero__stage--kenburns img { animation: none; }
+}
+
+/* ============================================================================
+   HERO 3D CENTERPIECE — real WebGL coin replaces SVG rolling coins
+   ============================================================================ */
+
+.hero__centerpiece {
+  position: absolute;
+  right: -4%;
+  top: 8%;
+  bottom: 8%;
+  width: 46%;
+  z-index: 4;
+  pointer-events: none;
+}
+
+/* When the 3D coin is present on desktop, keep title text in the left column */
+@media (min-width: 901px) {
+  .hero__centerpiece + .hero__coins ~ .hero__overlay .hero__title,
+  .hero:has(.hero__centerpiece) .hero__title,
+  .hero:has(.hero__centerpiece) .hero__eyebrow {
+    max-width: 58%;
+  }
+  .hero:has(.hero__centerpiece) .hero__foot {
+    max-width: 92%;
+  }
+}
+.hero__centerpiece canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* When 3D coin is active, fade the SVG rolling coins on hero */
+.hero .hero__coins {
+  opacity: 0.18;
+  transition: opacity 1s ease-out;
+}
+
+@media (max-width: 900px) {
+  .hero__centerpiece { display: none; }
+  .hero .hero__coins { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero__centerpiece { display: none; }
+  .hero .hero__coins { opacity: 1; }
+}
+
+/* ============================================================================
+   SPLIT-TEXT REVEAL — char-by-char hero title cascade
+   ============================================================================ */
+
+.hero__title .char {
+  display: inline-block;
+  will-change: transform, opacity;
+}
+
+/* ============================================================================
+   MAGNETIC CTA — pull effect on hover (set via inline transform from JS)
+   ============================================================================ */
+
+.hero__cta {
+  position: relative;
+  transform-origin: center;
+  transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }

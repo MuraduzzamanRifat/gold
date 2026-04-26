@@ -152,16 +152,34 @@ function runPreloader() {
    HERO REVEAL
    ============================================================================ */
 
+// Wrap each visible character in a <span class="char"> so we can stagger them.
+// Preserves <em> tags by leaving any HTML tag content untouched.
+function splitHeroChars() {
+  document.querySelectorAll('.hero__title .line').forEach(line => {
+    if (line.dataset.split === 'done') return;
+    const html = line.innerHTML;
+    // Tokenize: capture HTML tags OR single chars (incl. spaces)
+    const out = html.replace(/(<\/?[a-zA-Z][^>]*>)|(\s)|(.)/g, (_, tag, space, ch) => {
+      if (tag) return tag;
+      if (space) return '<span class="char">&nbsp;</span>';
+      return `<span class="char">${ch}</span>`;
+    });
+    line.innerHTML = out;
+    line.dataset.split = 'done';
+  });
+}
+
 function revealHero() {
   if (REDUCED_MOTION) return;
-  const lines = document.querySelectorAll('.hero__title .line');
-  gsap.from(lines, {
-    y: 60,
+  splitHeroChars();
+  const chars = document.querySelectorAll('.hero__title .char');
+  gsap.from(chars, {
+    yPercent: 110,
     opacity: 0,
-    duration: 1.2,
-    ease: 'power3.out',
-    stagger: 0.08,
-    delay: 0.2
+    duration: 0.9,
+    ease: 'power4.out',
+    stagger: 0.022,
+    delay: 0.25
   });
 
   gsap.from('.hero__eyebrow, .hero__foot', {
@@ -169,8 +187,44 @@ function revealHero() {
     opacity: 0,
     duration: 0.8,
     ease: 'power2.out',
-    delay: 0.5
+    delay: 0.6
   });
+}
+
+// Magnetic pull on CTAs — button center drifts toward cursor when nearby
+function initMagneticCTAs() {
+  if (REDUCED_MOTION) return;
+  const radius = 110;
+  const pull = 0.35;
+  document.querySelectorAll('.hero__cta').forEach(btn => {
+    btn.addEventListener('pointermove', e => {
+      const rect = btn.getBoundingClientRect();
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
+      const dx = e.clientX - cx;
+      const dy = e.clientY - cy;
+      const dist = Math.hypot(dx, dy);
+      if (dist < radius) {
+        gsap.to(btn, { x: dx * pull, y: dy * pull, duration: 0.35, ease: 'power3.out' });
+      }
+    });
+    btn.addEventListener('pointerleave', () => {
+      gsap.to(btn, { x: 0, y: 0, duration: 0.6, ease: 'elastic.out(1, 0.4)' });
+    });
+  });
+}
+
+// Lazy-load the 3D coin — only on desktop with motion enabled
+function initCoinCenterpiece() {
+  if (REDUCED_MOTION || window.matchMedia('(max-width: 900px)').matches) return;
+  const coinCanvas = document.getElementById('coin-canvas');
+  if (!coinCanvas) return;
+  import('./coin3d.js')
+    .then(m => m.initCoin3D({ canvas: coinCanvas }))
+    .catch(err => {
+      console.warn('Coin3D init failed', err);
+      coinCanvas.style.display = 'none';
+    });
 }
 
 /* ============================================================================
@@ -347,6 +401,8 @@ async function boot() {
   initCursor();
   initSmoothScroll();
   initNavScroll();
+  initMagneticCTAs();
+  initCoinCenterpiece();
 
   const heroCanvas = document.getElementById('hero-canvas');
   if (heroCanvas) {

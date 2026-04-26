@@ -32,7 +32,7 @@
   <!-- Preload Three.js module so it's ready when main.js imports it -->
   <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js">
 
-  <link rel="stylesheet" href="./css/style.css?v=20260426f">
+  <link rel="stylesheet" href="./css/style.css?v=20260426g">
 
   <link rel="canonical" href="https://muraduzzamanrifat.github.io/gold/">
   <meta property="og:url" content="https://muraduzzamanrifat.github.io/gold/">
@@ -70,7 +70,8 @@
   <script type="importmap">
   {
     "imports": {
-      "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js"
+      "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.165.0/examples/jsm/"
     }
   }
   </script>
@@ -80,8 +81,8 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
 
-  <script src="./js/cms.js?v=20260426f" defer></script>
-  <script type="module" src="./js/main.js?v=20260426f"></script>
+  <script src="./js/cms.js?v=20260426g" defer></script>
+  <script type="module" src="./js/main.js?v=20260426g"></script>
 </head>
 <body>
   <!-- CURSOR -->
@@ -148,7 +149,12 @@
       </div>
     </div>
 
-    <!-- ROLLING COINS ANIMATION -->
+    <!-- 3D COIN CENTERPIECE — real WebGL gold coin with PBR reflections -->
+    <div class="hero__centerpiece" aria-hidden="true">
+      <canvas id="coin-canvas"></canvas>
+    </div>
+
+    <!-- ROLLING COINS ANIMATION (hidden when 3D coin is active) -->
     <div class="hero__coins" aria-hidden="true">
 
       <!-- COIN 1: GOLD 88px -->
