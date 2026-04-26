@@ -5204,3 +5204,181 @@ a.locx__item {
   .final-cta__title { font-size: clamp(40px, 11vw, 64px); }
   .final-cta__phone { font-size: clamp(36px, 11vw, 56px); }
 }
+
+/* ============================================================================
+   STICKY MOBILE CTA BAR — always-visible call buttons for local conversion
+   Hidden on desktop, slides up from bottom on mobile.
+   ============================================================================ */
+
+.sticky-cta {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 90;
+  padding: 8px 12px calc(8px + env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(180deg, rgba(7, 5, 3, 0.85) 0%, rgba(7, 5, 3, 0.97) 50%);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(200, 164, 90, 0.30);
+  gap: 8px;
+}
+.sticky-cta__btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 8px;
+  background: linear-gradient(180deg, var(--gold-light, #E2C06B), var(--gold, #C8A45A));
+  color: #0A0804 !important;
+  text-decoration: none;
+  border-radius: 12px;
+  text-align: center;
+  font-family: var(--mono, "JetBrains Mono", monospace);
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 6px 20px rgba(212, 160, 23, 0.30);
+  /* Override global a[href] inline-flex center */
+  min-height: 56px;
+  min-width: auto;
+}
+.sticky-cta__btn:hover, .sticky-cta__btn:active {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px rgba(212, 160, 23, 0.45);
+}
+.sticky-cta__lbl {
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  opacity: 0.72;
+  margin-bottom: 2px;
+}
+.sticky-cta__phone {
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+@media (max-width: 768px) {
+  .sticky-cta { display: flex; }
+  /* Lift footer + final-cta padding so the sticky bar doesn't cover it */
+  body { padding-bottom: 80px; }
+}
+
+/* On desktop the menu open state shouldn't show the mobile CTA */
+.nav.is-open ~ .sticky-cta { display: none; }
+
+/* ============================================================================
+   PAGE CTA — strong conversion section for long-form pages (about, how, why,
+   church, terms, privacy, refund). Render before footer.
+   ============================================================================ */
+
+.page-cta {
+  padding: clamp(80px, 12vh, 140px) clamp(20px, 5vw, 80px);
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(212, 160, 23, 0.10) 0%, transparent 60%),
+    linear-gradient(180deg, #0A0804 0%, #050402 100%);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.page-cta::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200, 164, 90, 0.4), transparent);
+}
+.page-cta__inner {
+  max-width: 760px;
+  margin: 0 auto;
+  position: relative;
+}
+.page-cta__chap {
+  display: inline-block;
+  font-family: var(--mono, monospace);
+  font-size: 11px;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+  padding: 6px 16px;
+  border: 1px solid rgba(200, 164, 90, 0.30);
+  border-radius: 999px;
+}
+.page-cta__title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(36px, 5.5vw, 72px);
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+  color: var(--fg);
+}
+.page-cta__title em { font-style: italic; color: var(--gold-light); }
+.page-cta__sub {
+  font-size: 17px;
+  color: var(--fg-2, rgba(253,250,245,0.7));
+  line-height: 1.6;
+  margin-bottom: 40px;
+  max-width: 540px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.page-cta__locs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+a.page-cta__loc {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  text-align: left;
+  padding: 22px 24px;
+  background: linear-gradient(160deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+  border: 1px solid rgba(200, 164, 90, 0.25);
+  border-radius: 14px;
+  text-decoration: none;
+  color: var(--fg);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s, background 0.4s;
+  min-height: auto;
+  min-width: auto;
+}
+a.page-cta__loc:hover {
+  transform: translateY(-3px);
+  border-color: rgba(226, 192, 107, 0.55);
+  background: linear-gradient(160deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+}
+.page-cta__loc-name {
+  font-family: var(--mono, monospace);
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+.page-cta__loc-phone {
+  font-family: var(--serif);
+  font-size: 26px;
+  font-weight: 500;
+  color: var(--gold-light);
+  letter-spacing: 0.02em;
+}
+.page-cta__loc-tap {
+  font-family: var(--mono, monospace);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--fg-3, rgba(253,250,245,0.5));
+  margin-top: 8px;
+}
+@media (max-width: 640px) {
+  .page-cta__locs { grid-template-columns: 1fr; }
+}
