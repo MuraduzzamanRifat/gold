@@ -153,8 +153,8 @@ img {
   object-position: center;
 }
 
-img[alt] {
-  /* Ensure alt text doesn't break layout */
+img[alt]:not([src*=".png"]):not([src*=".svg"]) {
+  /* fallback bg only for raster photos that may break — never for transparent PNG/SVG marks */
   background-color: var(--bg-2);
 }
 
@@ -777,9 +777,11 @@ body::before {
 
 .nav__logo-img {
   height: 40px;
-  width: auto;
+  width: 164px;
   display: block;
   object-fit: contain;
+  background: transparent;
+  align-self: flex-start;
   filter: drop-shadow(0 1px 6px rgba(212, 160, 23, 0.30));
   transition: filter var(--duration-hover);
 }
@@ -790,9 +792,11 @@ body::before {
 
 .footer__logo-img {
   height: 36px;
-  width: auto;
+  width: 148px;
   display: block;
   object-fit: contain;
+  background: transparent;
+  align-self: flex-start;
   opacity: 0.85;
   filter: drop-shadow(0 1px 4px rgba(212, 160, 23, 0.25));
 }
