@@ -70,12 +70,14 @@
       setText('[data-cms="cta.subtitle"]', c.cta.subtitle);
     }
 
-    // ── Locations list in CTA section ───────────────────────────────────────
+    // ── Locations ──────────────────────────────────────────────────────────
+    // Premium-rebuild (price-cine, locx) uses just city name without state suffix.
+    // Address uses innerHTML so the JSON can include <br> for multi-line cards.
     if (Array.isArray(c.locations)) {
       c.locations.forEach((loc, i) => {
         const pfx = 'loc.' + i + '.';
-        setText(`[data-cms="${pfx}city"]`, loc.city + ', ' + loc.state);
-        setText(`[data-cms="${pfx}address"]`, loc.address);
+        setText(`[data-cms="${pfx}city"]`, loc.city);
+        set(`[data-cms="${pfx}address"]`, loc.address);
         setText(`[data-cms="${pfx}hours"]`, loc.hours);
         document.querySelectorAll(`[data-cms="${pfx}phone"]`).forEach(el => {
           el.textContent = loc.phone;

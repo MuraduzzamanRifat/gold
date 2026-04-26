@@ -70,6 +70,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+  <script src="./js/cms.js?v=20260426o" defer></script>
 
   <script type="module" src="./js/main.js?v=20260426f"></script>
 </head>
@@ -96,11 +97,11 @@
 
   <!-- TOPBAR -->
   <div class="topbar">
-    <span>✦ Licensed Georgia Gold Buyer · Fair Prices · Same-Day Payment</span>
+    <span data-cms="topbar.message">✦ Licensed Georgia Gold Buyer · Fair Prices · Same-Day Payment</span>
     <span class="topbar__phones">
-      <a href="tel:+17707714650" class="topbar__phone-link">Snellville: 770-771-4650</a>
+      <a href="tel:+17707714650" class="topbar__phone-link" data-cms="topbar.phoneSnellville">Snellville: 770-771-4650</a>
       <span aria-hidden="true">·</span>
-      <a href="tel:+17063360043" class="topbar__phone-link">Commerce: (706) 336-0043</a>
+      <a href="tel:+17063360043" class="topbar__phone-link" data-cms="topbar.phoneCommerce">Commerce: (706) 336-0043</a>
     </span>
   </div>
 

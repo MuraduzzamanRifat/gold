@@ -32,7 +32,7 @@
   <!-- Preload Three.js module so it's ready when main.js imports it -->
   <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js">
 
-  <link rel="stylesheet" href="./css/style.css?v=20260426n">
+  <link rel="stylesheet" href="./css/style.css?v=20260426o">
 
   <link rel="canonical" href="https://muraduzzamanrifat.github.io/gold/">
   <meta property="og:url" content="https://muraduzzamanrifat.github.io/gold/">
@@ -81,8 +81,8 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
 
-  <script src="./js/cms.js?v=20260426n" defer></script>
-  <script type="module" src="./js/main.js?v=20260426n"></script>
+  <script src="./js/cms.js?v=20260426o" defer></script>
+  <script type="module" src="./js/main.js?v=20260426o"></script>
 </head>
 <body>
   <!-- PRELOADER — gold logo stroke-draw + progress bar -->
@@ -414,9 +414,9 @@
             <span class="loc-card__num">01 / GA</span>
             <span class="loc-card__live">● OPEN</span>
           </div>
-          <h3 class="loc-card__city">Snellville</h3>
-          <p class="loc-card__addr">3635 Stone Mountain Hwy<br>Snellville, GA 30039</p>
-          <div class="loc-card__phone">770-771-4650</div>
+          <h3 class="loc-card__city" data-cms="loc.0.city">Snellville</h3>
+          <p class="loc-card__addr" data-cms="loc.0.address">3635 Stone Mountain Hwy<br>Snellville, GA 30039</p>
+          <div class="loc-card__phone" data-cms="loc.0.phone">770-771-4650</div>
           <div class="loc-card__cta">Call now <span aria-hidden="true">→</span></div>
         </a>
 
@@ -425,9 +425,9 @@
             <span class="loc-card__num">02 / GA</span>
             <span class="loc-card__live">● OPEN</span>
           </div>
-          <h3 class="loc-card__city">Commerce</h3>
-          <p class="loc-card__addr">480 Banks Crossing Dr<br>Commerce, GA 30529</p>
-          <div class="loc-card__phone">(706) 336-0043</div>
+          <h3 class="loc-card__city" data-cms="loc.1.city">Commerce</h3>
+          <p class="loc-card__addr" data-cms="loc.1.address">480 Banks Crossing Dr<br>Commerce, GA 30529</p>
+          <div class="loc-card__phone" data-cms="loc.1.phone">(706) 336-0043</div>
           <div class="loc-card__cta">Call now <span aria-hidden="true">→</span></div>
         </a>
       </div>
@@ -492,19 +492,19 @@
         <div class="locx__list">
           <a href="snellville.html" class="locx__item" data-tilt>
             <span class="locx__item-num">— 01</span>
-            <h3 class="locx__item-city">Snellville</h3>
-            <p class="locx__item-addr">3635 Stone Mountain Hwy, Snellville GA 30039</p>
+            <h3 class="locx__item-city" data-cms="loc.0.city">Snellville</h3>
+            <p class="locx__item-addr" data-cms="loc.0.address">3635 Stone Mountain Hwy, Snellville GA 30039</p>
             <div class="locx__item-row">
-              <span class="locx__item-phone">770-771-4650</span>
+              <span class="locx__item-phone" data-cms="loc.0.phone">770-771-4650</span>
               <span class="locx__item-arrow" aria-hidden="true">→</span>
             </div>
           </a>
           <a href="commerce.html" class="locx__item" data-tilt>
             <span class="locx__item-num">— 02</span>
-            <h3 class="locx__item-city">Commerce</h3>
-            <p class="locx__item-addr">480 Banks Crossing Dr, Commerce GA 30529</p>
+            <h3 class="locx__item-city" data-cms="loc.1.city">Commerce</h3>
+            <p class="locx__item-addr" data-cms="loc.1.address">480 Banks Crossing Dr, Commerce GA 30529</p>
             <div class="locx__item-row">
-              <span class="locx__item-phone">(706) 336-0043</span>
+              <span class="locx__item-phone" data-cms="loc.1.phone">(706) 336-0043</span>
               <span class="locx__item-arrow" aria-hidden="true">→</span>
             </div>
           </a>
