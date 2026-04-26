@@ -120,7 +120,7 @@
       setText('[data-cms="footer.copyright"]', c.footer.copyright);
     }
 
-    // ── Per-page content (recursive — supports nested arrays/objects) ────────
+    // ── Per-page content ─────────────────────────────────────────────────────
     if (c.pages && typeof c.pages === 'object') {
       Object.keys(c.pages).forEach(pageKey => {
         walkAndBind(c.pages[pageKey], `page.${pageKey}`);
@@ -195,9 +195,10 @@
     }
   }
 
-  // Recursively walks a JSON sub-tree applying values to [data-cms="<prefix>"] elements.
-  // Leaves can be string/number/bool. Objects → walk keys. Arrays → walk by index.
-  // Heuristics on the FULL prefix decide whether to write src/href/innerHTML/textContent.
+  const RE_ALT = /\.alt$/i;
+  const RE_IMAGE = /\bimage\b|\bbackground\b|\.image$|\.bg$/i;
+  const RE_HTML = /title|headline|line\d|\bsub\b|body|kicker|list/i;
+
   function walkAndBind(obj, prefix) {
     if (obj == null) return;
     if (Array.isArray(obj)) {
@@ -208,13 +209,12 @@
       Object.keys(obj).forEach(k => walkAndBind(obj[k], `${prefix}.${k}`));
       return;
     }
-    // Leaf
     const val = obj;
     if (val === '' || val == null) return;
 
-    // .alt paths bind to the sibling .image's <img> (alt has no own data-cms in HTML)
-    if (/\.alt$/i.test(prefix)) {
-      const imgPath = prefix.replace(/\.alt$/, '.image');
+    // .alt paths bind to the sibling .image's <img> (alt has no own data-cms attr in HTML)
+    if (RE_ALT.test(prefix)) {
+      const imgPath = prefix.replace(RE_ALT, '.image');
       document.querySelectorAll(`[data-cms="${imgPath}"]`).forEach(el => {
         if (el.tagName === 'IMG') el.alt = val;
       });
@@ -223,15 +223,12 @@
 
     document.querySelectorAll(`[data-cms="${prefix}"]`).forEach(el => {
       if (el.tagName === 'META') { el.setAttribute('content', val); return; }
-      if (/\bimage\b|\bbackground\b|\.image$|\.bg$/i.test(prefix)) {
+      if (RE_IMAGE.test(prefix)) {
         if (el.tagName === 'IMG') el.src = val;
         else if (el.tagName === 'LINK') el.href = val;
         return;
       }
-      if (/title|headline|line\d|\bsub\b|body|kicker|list/i.test(prefix)) {
-        el.innerHTML = val;
-        return;
-      }
+      if (RE_HTML.test(prefix)) { el.innerHTML = val; return; }
       el.textContent = val;
     });
   }
