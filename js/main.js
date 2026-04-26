@@ -4,6 +4,9 @@ import { heroImage, aboutImage, testimonials, locations, services, showcaseSlide
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Honor user's motion preference — drives WebGL gating and animation skipping
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 /* ============================================================================
    CUSTOM CURSOR
    ============================================================================ */
@@ -150,6 +153,7 @@ function runPreloader() {
    ============================================================================ */
 
 function revealHero() {
+  if (REDUCED_MOTION) return;
   const lines = document.querySelectorAll('.hero__title .line');
   gsap.from(lines, {
     y: 60,
@@ -205,17 +209,19 @@ async function buildGallery() {
     grid.appendChild(el);
   });
 
-  gsap.from('.testimonial-card', {
-    y: 70,
-    opacity: 0,
-    duration: 1.1,
-    ease: 'power3.out',
-    stagger: 0.07,
-    scrollTrigger: {
-      trigger: '.gallery__grid',
-      start: 'top 80%'
-    }
-  });
+  if (!REDUCED_MOTION) {
+    gsap.from('.testimonial-card', {
+      y: 70,
+      opacity: 0,
+      duration: 1.1,
+      ease: 'power3.out',
+      stagger: 0.07,
+      scrollTrigger: {
+        trigger: '.gallery__grid',
+        start: 'top 80%'
+      }
+    });
+  }
 }
 
 // Lightbox not needed for testimonials
@@ -228,6 +234,11 @@ async function buildShowcase() {
   const canvas = document.getElementById('showcase-canvas');
   const scrollEl = document.getElementById('showcase-scroll');
   if (!canvas || !scrollEl) return;
+  // Reduced-motion: skip the WebGL scroll-pinned showcase entirely
+  if (REDUCED_MOTION) {
+    canvas.style.display = 'none';
+    return;
+  }
 
   const sc = await initShowcase({ canvas, slides: showcaseSlides });
   if (!sc) return;
@@ -257,6 +268,7 @@ async function buildShowcase() {
    ============================================================================ */
 
 function editorialReveals() {
+  if (REDUCED_MOTION) return;
   // Per-element reveal so each one triggers when it enters its own viewport zone
   document.querySelectorAll('[data-reveal]').forEach(el => {
     gsap.from(el, {
@@ -314,7 +326,7 @@ function initNavScroll() {
    ============================================================================ */
 
 function aboutParallax() {
-  if (window.matchMedia('(max-width: 900px)').matches) return;
+  if (REDUCED_MOTION || window.matchMedia('(max-width: 900px)').matches) return;
   gsap.to('.about__visual img', {
     yPercent: -12,
     ease: 'none',
@@ -338,14 +350,15 @@ async function boot() {
 
   const heroCanvas = document.getElementById('hero-canvas');
   if (heroCanvas) {
-    if (!window.matchMedia('(max-width: 900px)').matches) {
-      initHero({ canvas: heroCanvas, imageUrl: heroImage }).catch(() => {
-        heroCanvas.style.cssText = `background:url('${heroImage}') center/cover;`;
-      });
-    } else {
+    // Reduced-motion users get a static cover image instead of the animated WebGL hero
+    if (REDUCED_MOTION || window.matchMedia('(max-width: 900px)').matches) {
       const stage = document.querySelector('.hero__stage');
       if (stage) stage.style.cssText = `background:url('${heroImage}') center/cover no-repeat;min-height:100vh;`;
       heroCanvas.remove();
+    } else {
+      initHero({ canvas: heroCanvas, imageUrl: heroImage }).catch(() => {
+        heroCanvas.style.cssText = `background:url('${heroImage}') center/cover;`;
+      });
     }
   }
   // Reveal hero on any page that has one (including image-based hero on location pages)
