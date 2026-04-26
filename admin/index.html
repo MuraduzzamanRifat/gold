@@ -946,6 +946,58 @@ select.field-input {
   0%, 100% { background: transparent; }
   30% { background: var(--gold-glow); }
 }
+
+/* ============================================================
+   UX/A11Y: focus-visible, cursor, reduced-motion (ui-ux-pro-max)
+   ============================================================ */
+
+/* Visible gold focus ring for keyboard navigation across all interactive elements */
+.nav-item:focus-visible,
+.btn:focus-visible,
+.upload-label:focus-visible,
+button:focus-visible,
+[role="button"]:focus-visible,
+a:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(200, 164, 90, 0.35);
+  border-radius: var(--radius);
+}
+
+.field-input:focus-visible {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(200, 164, 90, 0.20);
+}
+
+/* Pointer cursor on every clickable surface (skill: "cursor-pointer required") */
+.nav-item,
+.add-row,
+.testimonial-card .t-delete-btn,
+.upload-label,
+[role="button"] {
+  cursor: pointer;
+}
+
+/* Smooth state transitions on the touchable surfaces */
+.nav-item,
+.btn,
+.upload-label,
+.field-input {
+  transition: background-color 200ms ease,
+              border-color 200ms ease,
+              color 200ms ease,
+              box-shadow 200ms ease;
+}
+
+/* Honor user's reduced-motion preference (skill: "prefers-reduced-motion") */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
 </style>
 </head>
 <body>
