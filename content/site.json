@@ -1,6 +1,6 @@
 {
   "topbar": {
-    "message": "â¦ Licensed Georgia Gold Buyer Â· Fair Prices Â· Same-Day Payment",
+    "message": "✦ Licensed Georgia Gold Buyer · Fair Prices · Same-Day Payment",
     "phoneSnellville": "770-771-4650",
     "phoneCommerce": "(706) 336-0043"
   },
@@ -12,9 +12,9 @@
     "backgroundImage": "https://raw.githubusercontent.com/MuraduzzamanRifat/gold/main/img/uploads/1777178091297-ChatGPT_Image_Apr_26__2026__10_34_21_AM__1_.png"
   },
   "cta": {
-    "eyebrow": "â Ready to Sell?",
+    "eyebrow": "◆ Ready to Sell?",
     "title": "Get Your Free Evaluation Today",
-    "subtitle": "Walk in during store hours â no appointment needed. We'll test your gold on the spot and give you a fair offer based on today's live market price."
+    "subtitle": "Walk in during store hours — no appointment needed. We'll test your gold on the spot and give you a fair offer based on today's live market price."
   },
   "locations": [
     {
@@ -24,7 +24,7 @@
       "address": "3635 Stone Mountain Hwy, Snellville GA 30039",
       "phone": "770-771-4650",
       "phoneRaw": "+17707714650",
-      "hours": "MonâSat 10AMâ6PM Â· Sunday Closed"
+      "hours": "Mon–Sat 10AM–6PM · Sunday Closed"
     },
     {
       "id": "commerce",
@@ -33,63 +33,63 @@
       "address": "480 Banks Crossing Dr, Commerce GA 30529",
       "phone": "(706) 336-0043",
       "phoneRaw": "+17063360043",
-      "hours": "MonâSat 10AMâ6PM Â· Sunday Closed"
+      "hours": "Mon–Sat 10AM–6PM · Sunday Closed"
     }
   ],
   "testimonials": [
     {
       "id": "t01",
       "name": "Jerry Vaughan",
-      "category": "Service",
-      "quote": "Awsome salesman to work with. He's extremely fast and holds a conversation while checking coins. He made sure to keep everything organized and separated also!. If silver was not so low he had it."
+      "quote": "Awsome salesman to work with. He's extremely fast and holds a conversation while checking coins. He made sure to keep everything organized and separated also!. If silver was not so low he had it.",
+      "category": "Service"
     },
     {
       "id": "t02",
       "name": "Jaime Lee",
-      "category": "Professional",
-      "quote": "Super professional, knowledgeable, and fair. Would definitely recommend. If for whatever reason you don't like the owner (which I don't see how you wouldnt) his dog Champ will steal your heart!"
+      "quote": "Super professional, knowledgeable, and fair. Would definitely recommend. If for whatever reason you don't like the owner (which I don't see how you wouldnt) his dog Champ will steal your heart!",
+      "category": "Professional"
     },
     {
       "id": "t03",
       "name": "Brandon Coots",
-      "category": "Premium",
-      "quote": "Not only did I have a great experience I was going to be there after they closed. I have a quick call and not only did he start his process over the phone he also waited on me and stayed open almost an hour after his advertised close time to wait on me. Then made the best deal I've been offered out of 30 different places I went too. Very friendly professional and knowledgeable. Blew all competitors out of the water by a long shot. All it took was a simple call letting him know I was on the way. Will go here for all of my future needs and will recommend to everyone. Great customer service skills. A+++"
+      "quote": "Not only did I have a great experience I was going to be there after they closed. I have a quick call and not only did he start his process over the phone he also waited on me and stayed open almost an hour after his advertised close time to wait on me. Then made the best deal I've been offered out of 30 different places I went too. Very friendly professional and knowledgeable. Blew all competitors out of the water by a long shot. All it took was a simple call letting him know I was on the way. Will go here for all of my future needs and will recommend to everyone. Great customer service skills. A+++",
+      "category": "Premium"
     },
     {
       "id": "t04",
       "name": "Luis Elias",
-      "category": "Professional",
-      "quote": "Bery please to do business here everything straight forward. Precious Metals and jewelry."
+      "quote": "Bery please to do business here everything straight forward. Precious Metals and jewelry.",
+      "category": "Professional"
     },
     {
       "id": "t05",
       "name": "Taylor Dodson",
-      "category": "Premium",
-      "quote": "Had a fantastic time â fair prices, incredibly helpful and knowledgeable. This was my second visit and I'm definitely planning to return. I highly recommend checking this store out."
+      "quote": "Had a fantastic time – fair prices, incredibly helpful and knowledgeable. This was my second visit and I'm definitely planning to return. I highly recommend checking this store out.",
+      "category": "Premium"
     },
     {
       "id": "t06",
       "name": "Chad Usher",
-      "category": "Service",
-      "quote": "I've been to this store numerous times and they are always helpful! Adam is more than willing to share his knowledge about gold and jewelry prices and what the market is doing. I've been more than happy with everything I've purchased from them!"
+      "quote": "I've been to this store numerous times and they are always helpful! Adam is more than willing to share his knowledge about gold and jewelry prices and what the market is doing. I've been more than happy with everything I've purchased from them!",
+      "category": "Service"
     },
     {
       "id": "t07",
       "name": "Debbie Meadow",
-      "category": "Professional",
-      "quote": "This was a great experience. I'm happy, their happy, in and out and that day they even could pay in cash. Thanks"
+      "quote": "This was a great experience. I'm happy, their happy, in and out and that day they even could pay in cash. Thanks",
+      "category": "Professional"
     },
     {
       "id": "t08",
       "name": "Herb James",
-      "category": "Premium",
-      "quote": "Bought some 20 Franc Gold coins here last week. Very personable owner and great value, nice looking coins. Very satisfied with my purchase, wish I could have bought them all. : )"
+      "quote": "Bought some 20 Franc Gold coins here last week. Very personable owner and great value, nice looking coins. Very satisfied with my purchase, wish I could have bought them all. : )",
+      "category": "Premium"
     }
   ],
   "locationsSection": {
-    "eyebrow": "â Our Locations",
+    "eyebrow": "◆ Our Locations",
     "title": "Find Your Nearest Store",
-    "body": "Two Georgia locations. Licensed precious-metals dealers. We buy gold, silver, jewelry, coins, and valuables â with transparent pricing, same-day payment, and no pressure. We also serve church gold fundraising programs. Walk in anytime, MonâSat 10AMâ6PM.",
+    "body": "Two Georgia locations. Licensed precious-metals dealers. We buy gold, silver, jewelry, coins, and valuables — with transparent pricing, same-day payment, and no pressure. We also serve church gold fundraising programs. Walk in anytime, Mon–Sat 10AM–6PM.",
     "image": "https://images.pexels.com/photos/3945683/pexels-photo-3945683.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop",
     "imageCaption": "Professional Gold Buying Service"
   },

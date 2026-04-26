@@ -1942,7 +1942,13 @@ class GH {
       throw new Error(`GitHub: ${r.status} ${r.statusText} — ${txt.slice(0,200)}`);
     }
     const d = await r.json();
-    const decoded = JSON.parse(atob(d.content.replace(/\n/g, '')));
+    // Decode base64 → UTF-8 bytes → string. (atob alone produces a Latin-1-ish
+    // binary string; passing that to JSON.parse mangles multi-byte UTF-8 chars
+    // into mojibake. We must reinterpret as UTF-8 via TextDecoder.)
+    const binStr = atob(d.content.replace(/\n/g, ''));
+    const bytes = Uint8Array.from(binStr, c => c.charCodeAt(0));
+    const utf8Text = new TextDecoder('utf-8').decode(bytes);
+    const decoded = JSON.parse(utf8Text);
     return { content: decoded, sha: d.sha };
   }
 
