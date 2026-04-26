@@ -222,8 +222,14 @@
       if (val == null) return;
       if (el.tagName === 'META') { el.setAttribute('content', val); return; }
       if (RE_IMAGE.test(key)) {
-        if (el.tagName === 'IMG') el.src = val;
-        else if (el.tagName === 'LINK') el.href = val;
+        if (el.tagName === 'IMG') {
+          el.src = val;
+          // Pull alt from the same item if it exists — keeps a11y intact
+          // without needing a duplicate data-cms-field="alt" on the IMG.
+          if (item && typeof item.alt === 'string' && item.alt) el.alt = item.alt;
+        } else if (el.tagName === 'LINK') {
+          el.href = val;
+        }
         return;
       }
       if (key === 'alt') {
