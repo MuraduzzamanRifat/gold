@@ -284,9 +284,9 @@ function editorialReveals() {
     }
   });
 
-  // Page-mark slow drift in
-  const mark = document.querySelector('.page-hero__mark');
-  if (mark) {
+  // Editorial mark drift in (page-hero variant or hero variant)
+  const marks = document.querySelectorAll('.page-hero__mark, .hero__mark');
+  marks.forEach(mark => {
     gsap.from(mark, {
       x: -80,
       opacity: 0,
@@ -294,7 +294,7 @@ function editorialReveals() {
       ease: 'expo.out',
       delay: 0.2
     });
-  }
+  });
 }
 
 /* Nav scroll behavior — adds .scrolled class for backdrop blur */
