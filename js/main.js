@@ -296,19 +296,18 @@ async function buildShowcase() {
 
 function editorialReveals() {
   if (REDUCED_MOTION) return;
-  // Per-element reveal so each one triggers when it enters its own viewport zone
-  document.querySelectorAll('[data-reveal]').forEach(el => {
-    gsap.from(el, {
-      y: 40,
-      opacity: 0,
+  // Single batched ScrollTrigger for all [data-reveal] elements (was 1-per-element)
+  gsap.set('[data-reveal]', { y: 40, opacity: 0 });
+  ScrollTrigger.batch('[data-reveal]', {
+    start: 'top 88%',
+    once: true,
+    onEnter: els => gsap.to(els, {
+      y: 0,
+      opacity: 1,
       duration: 1.0,
       ease: 'power3.out',
-      scrollTrigger: {
-        trigger: el,
-        start: 'top 88%',
-        once: true
-      }
-    });
+      stagger: 0.05
+    })
   });
 
   gsap.from('.gallery__title, .about__title', {

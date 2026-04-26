@@ -3864,6 +3864,7 @@ body::before {
   max-width: 920px; margin: 0 auto;
   perspective: 1200px;
 }
+.price-cine__locs--single { grid-template-columns: 1fr; }
 
 /* Selector starts with `a` to match the specificity of the global a[href] rule
    (line ~194) which sets center align — we need to override align/justify here. */
@@ -3983,6 +3984,7 @@ a.loc-card {
   gap: clamp(40px, 6vw, 100px); align-items: center;
   position: relative; z-index: 1;
 }
+.locx__grid--single { grid-template-columns: 1fr; }
 
 .locx__media {
   position: relative; aspect-ratio: 4/5;
@@ -4027,6 +4029,7 @@ a.loc-card {
 }
 
 .locx__text { padding: clamp(20px, 3vw, 40px) 0; }
+.locx__text--centered { text-align: center; max-width: 720px; margin: 0 auto; }
 .locx__eyebrow {
   display: inline-block;
   font-family: var(--mono, monospace);
@@ -4799,8 +4802,6 @@ a.locx__item {
   position: relative;
   overflow: hidden;
   align-self: start;
-  -webkit-backdrop-filter: blur(18px);
-  backdrop-filter: blur(18px);
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
 }
 .hours-card::before {
@@ -4894,9 +4895,7 @@ a.locx__item {
   display: block;
   max-width: 1280px;
   width: 100%;
-  transition: filter 0.5s;
 }
-.snell-map iframe:hover { filter: none; }
 
 /* Service area — neighborhoods */
 .service-area {
