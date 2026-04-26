@@ -119,6 +119,123 @@
       });
       setText('[data-cms="footer.copyright"]', c.footer.copyright);
     }
+
+    // ── Per-page content (Snellville, Commerce, ...) ─────────────────────────
+    if (c.pages && typeof c.pages === 'object') {
+      Object.keys(c.pages).forEach(pageKey => {
+        const p = c.pages[pageKey];
+        if (!p || typeof p !== 'object') return;
+        Object.keys(p).forEach(field => {
+          const sel = `[data-cms="page.${pageKey}.${field}"]`;
+          const val = p[field];
+          if (val == null || val === '') return;
+          document.querySelectorAll(sel).forEach(el => {
+            // Image fields → set src + og:image meta
+            if (field.toLowerCase().includes('image') || field.toLowerCase().includes('background')) {
+              if (el.tagName === 'IMG') {
+                el.src = val;
+              } else if (el.tagName === 'LINK') {
+                el.href = val;
+              } else if (el.tagName === 'META') {
+                el.setAttribute('content', val);
+              }
+              return;
+            }
+            // Headlines — allow HTML (<em>) tags
+            if (/headline|line[12]|title/i.test(field)) {
+              el.innerHTML = val;
+              return;
+            }
+            // Default: text only
+            el.textContent = val;
+          });
+        });
+      });
+    }
+
+    // ── Tracking codes (Meta Pixel, GTM, GA4, custom HEAD/BODY) ──────────────
+    if (c.tracking) injectTracking(c.tracking);
+  }
+
+  /* ----------------------------------------------------------------------------
+     TRACKING INJECTION
+     Idempotent — guards against double-injection if cms.js runs twice.
+     ---------------------------------------------------------------------------- */
+  function injectTracking(t) {
+    if (window.__gkTrackingInjected) return;
+    window.__gkTrackingInjected = true;
+
+    // ── Google Tag Manager (head + noscript body) ─────────────────────────────
+    if (t.gtmId && /^GTM-[A-Z0-9]+$/i.test(t.gtmId)) {
+      const id = t.gtmId.trim();
+      // head
+      const s = document.createElement('script');
+      s.text = "(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','" + id + "');";
+      document.head.appendChild(s);
+      // body noscript fallback
+      if (document.body) {
+        const ns = document.createElement('noscript');
+        const ifr = document.createElement('iframe');
+        ifr.src = 'https://www.googletagmanager.com/ns.html?id=' + id;
+        ifr.height = '0'; ifr.width = '0';
+        ifr.style.display = 'none'; ifr.style.visibility = 'hidden';
+        ns.appendChild(ifr);
+        document.body.insertBefore(ns, document.body.firstChild);
+      }
+    }
+
+    // ── Google Analytics 4 (gtag) ─────────────────────────────────────────────
+    if (t.gaMeasurementId && /^G-[A-Z0-9]+$/i.test(t.gaMeasurementId)) {
+      const id = t.gaMeasurementId.trim();
+      const s1 = document.createElement('script');
+      s1.async = true;
+      s1.src = 'https://www.googletagmanager.com/gtag/js?id=' + id;
+      document.head.appendChild(s1);
+      const s2 = document.createElement('script');
+      s2.text = "window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','" + id + "');";
+      document.head.appendChild(s2);
+    }
+
+    // ── Meta (Facebook) Pixel ─────────────────────────────────────────────────
+    if (t.metaPixelId && /^\d{10,20}$/.test(t.metaPixelId.trim())) {
+      const id = t.metaPixelId.trim();
+      const s = document.createElement('script');
+      s.text = "!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','" + id + "');fbq('track','PageView');";
+      document.head.appendChild(s);
+      if (document.body) {
+        const ns = document.createElement('noscript');
+        const img = document.createElement('img');
+        img.height = 1; img.width = 1; img.style.display = 'none';
+        img.src = 'https://www.facebook.com/tr?id=' + id + '&ev=PageView&noscript=1';
+        ns.appendChild(img);
+        document.body.appendChild(ns);
+      }
+    }
+
+    // ── Custom HEAD / BODY raw HTML ───────────────────────────────────────────
+    if (t.customHead && typeof t.customHead === 'string' && t.customHead.trim()) {
+      injectRawHTML(t.customHead, document.head);
+    }
+    if (t.customBody && typeof t.customBody === 'string' && t.customBody.trim()) {
+      if (document.body) injectRawHTML(t.customBody, document.body);
+    }
+  }
+
+  // Parses raw HTML string into nodes and re-creates <script> tags so they execute.
+  // (innerHTML-injected scripts don't run; we have to clone them via createElement.)
+  function injectRawHTML(html, target) {
+    const tpl = document.createElement('template');
+    tpl.innerHTML = html;
+    Array.from(tpl.content.childNodes).forEach(node => {
+      if (node.nodeType === 1 && node.tagName === 'SCRIPT') {
+        const s = document.createElement('script');
+        for (const attr of node.attributes) s.setAttribute(attr.name, attr.value);
+        s.text = node.textContent;
+        target.appendChild(s);
+      } else {
+        target.appendChild(node.cloneNode(true));
+      }
+    });
   }
 
   // Expose content globally so main.js can use it (e.g. for testimonials)

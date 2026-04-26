@@ -97,5 +97,26 @@
     "desc": "Licensed Georgia precious-metals dealer. We buy gold, silver, jewelry, coins, and valuables. Transparent pricing, same-day payment, no pressure.",
     "email": "Dan@goldntreasures.co",
     "copyright": "© 2026 Gold Kings. All Rights Reserved."
+  },
+  "tracking": {
+    "metaPixelId": "",
+    "gtmId": "",
+    "gaMeasurementId": "",
+    "customHead": "",
+    "customBody": ""
+  },
+  "pages": {
+    "snellville": {
+      "heroEyebrow": "Snellville, GA · Est. 2008 · Licensed Georgia Dealer",
+      "heroLine1": "SELL GOLD IN <em>SNELLVILLE</em>",
+      "heroLine2": "Same-Day Cash, <em>Fair Prices</em>",
+      "heroBackgroundImage": "https://images.pexels.com/photos/5632390/pexels-photo-5632390.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"
+    },
+    "commerce": {
+      "heroEyebrow": "Commerce, GA · Licensed Georgia Dealer · Banks Crossing",
+      "heroLine1": "SELL GOLD IN <em>COMMERCE</em>",
+      "heroLine2": "Same-Day Cash, <em>Fair Prices</em>",
+      "heroBackgroundImage": "https://images.pexels.com/photos/3998365/pexels-photo-3998365.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"
+    }
   }
 }

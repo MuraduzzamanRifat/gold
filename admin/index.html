@@ -1090,6 +1090,25 @@ select.field-input {
           <span class="nav-icon" aria-hidden="true">&#128444;&#65039;</span>
           <span class="nav-label">Images</span>
         </div>
+
+        <div class="sidebar-section-label" style="margin-top:1.25rem;">Pages</div>
+
+        <div class="nav-item" data-section="page-snellville" role="button" tabindex="0" aria-label="Page: Snellville">
+          <span class="nav-icon" aria-hidden="true">&#127968;</span>
+          <span class="nav-label">Snellville</span>
+        </div>
+
+        <div class="nav-item" data-section="page-commerce" role="button" tabindex="0" aria-label="Page: Commerce">
+          <span class="nav-icon" aria-hidden="true">&#127970;</span>
+          <span class="nav-label">Commerce</span>
+        </div>
+
+        <div class="sidebar-section-label" style="margin-top:1.25rem;">Marketing</div>
+
+        <div class="nav-item" data-section="tracking" role="button" tabindex="0" aria-label="Tracking Codes">
+          <span class="nav-icon" aria-hidden="true">&#128202;</span>
+          <span class="nav-label">Tracking</span>
+        </div>
       </nav>
 
       <div class="sidebar-footer">
@@ -1444,6 +1463,209 @@ select.field-input {
             <span class="upload-status" id="img-loc-upload-status"></span>
           </div>
           <p class="field-hint mt-1">Recommended: 1200&times;800px.</p>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           SECTION: PAGE — SNELLVILLE
+           ======================================================== -->
+      <section class="section-panel" id="panel-page-snellville" aria-label="Page: Snellville">
+        <div class="panel-header">
+          <div class="panel-header-text">
+            <h1 class="panel-title"><span class="icon" aria-hidden="true">&#127968;</span> Page: Snellville</h1>
+            <p class="panel-subtitle">Hero content shown only on the Snellville location page. Use <code>&lt;em&gt;…&lt;/em&gt;</code> in headlines for the gold italic accent.</p>
+          </div>
+        </div>
+
+        <div class="content-card">
+          <div class="card-title"><span class="icon" aria-hidden="true">&#128293;</span> Hero</div>
+          <div class="form-grid single">
+            <div class="form-group">
+              <label class="form-label" for="page-snell-eyebrow">
+                Eyebrow
+                <span class="char-count" id="cc-page-snell-eyebrow"></span>
+              </label>
+              <input type="text" id="page-snell-eyebrow" class="field-input" maxlength="120"
+                data-field="pages.snellville.heroEyebrow"
+                placeholder="Snellville, GA · Est. 2008 · Licensed Georgia Dealer">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="page-snell-line1">
+                Headline Line 1 (HTML allowed)
+                <span class="char-count" id="cc-page-snell-line1"></span>
+              </label>
+              <input type="text" id="page-snell-line1" class="field-input" maxlength="120"
+                data-field="pages.snellville.heroLine1"
+                placeholder="SELL GOLD IN <em>SNELLVILLE</em>">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="page-snell-line2">
+                Headline Line 2 (HTML allowed)
+                <span class="char-count" id="cc-page-snell-line2"></span>
+              </label>
+              <input type="text" id="page-snell-line2" class="field-input" maxlength="120"
+                data-field="pages.snellville.heroLine2"
+                placeholder="Same-Day Cash, <em>Fair Prices</em>">
+            </div>
+          </div>
+        </div>
+
+        <div class="image-group">
+          <div class="image-group-title">
+            <span aria-hidden="true">&#129464;</span> Hero Background Image
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="page-snell-bg">Image URL</label>
+            <input type="url" id="page-snell-bg" class="field-input"
+              data-field="pages.snellville.heroBackgroundImage"
+              placeholder="https://...">
+          </div>
+          <div class="image-preview-wrap" id="page-snell-bg-preview-wrap">
+            <div class="no-image" id="page-snell-bg-no-img">
+              <span class="icon" aria-hidden="true">&#128444;&#65039;</span>
+              <span>No image set</span>
+            </div>
+            <img id="page-snell-bg-preview" src="" alt="Snellville hero background" style="display:none;" loading="lazy">
+          </div>
+          <div class="upload-row">
+            <label class="upload-label">
+              <input type="file" id="page-snell-bg-file" accept="image/*" aria-label="Upload Snellville hero image">
+              &#128190; Upload Image
+            </label>
+            <span class="upload-status" id="page-snell-bg-upload-status"></span>
+          </div>
+          <p class="field-hint mt-1">Recommended: 1920&times;1080px JPG/WebP. Used as hero background and OG share image.</p>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           SECTION: PAGE — COMMERCE
+           ======================================================== -->
+      <section class="section-panel" id="panel-page-commerce" aria-label="Page: Commerce">
+        <div class="panel-header">
+          <div class="panel-header-text">
+            <h1 class="panel-title"><span class="icon" aria-hidden="true">&#127970;</span> Page: Commerce</h1>
+            <p class="panel-subtitle">Hero content shown only on the Commerce location page. Use <code>&lt;em&gt;…&lt;/em&gt;</code> in headlines for the gold italic accent.</p>
+          </div>
+        </div>
+
+        <div class="content-card">
+          <div class="card-title"><span class="icon" aria-hidden="true">&#128293;</span> Hero</div>
+          <div class="form-grid single">
+            <div class="form-group">
+              <label class="form-label" for="page-comm-eyebrow">
+                Eyebrow
+                <span class="char-count" id="cc-page-comm-eyebrow"></span>
+              </label>
+              <input type="text" id="page-comm-eyebrow" class="field-input" maxlength="120"
+                data-field="pages.commerce.heroEyebrow"
+                placeholder="Commerce, GA · Licensed Georgia Dealer · Banks Crossing">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="page-comm-line1">
+                Headline Line 1 (HTML allowed)
+                <span class="char-count" id="cc-page-comm-line1"></span>
+              </label>
+              <input type="text" id="page-comm-line1" class="field-input" maxlength="120"
+                data-field="pages.commerce.heroLine1"
+                placeholder="SELL GOLD IN <em>COMMERCE</em>">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="page-comm-line2">
+                Headline Line 2 (HTML allowed)
+                <span class="char-count" id="cc-page-comm-line2"></span>
+              </label>
+              <input type="text" id="page-comm-line2" class="field-input" maxlength="120"
+                data-field="pages.commerce.heroLine2"
+                placeholder="Same-Day Cash, <em>Fair Prices</em>">
+            </div>
+          </div>
+        </div>
+
+        <div class="image-group">
+          <div class="image-group-title">
+            <span aria-hidden="true">&#129464;</span> Hero Background Image
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="page-comm-bg">Image URL</label>
+            <input type="url" id="page-comm-bg" class="field-input"
+              data-field="pages.commerce.heroBackgroundImage"
+              placeholder="https://...">
+          </div>
+          <div class="image-preview-wrap" id="page-comm-bg-preview-wrap">
+            <div class="no-image" id="page-comm-bg-no-img">
+              <span class="icon" aria-hidden="true">&#128444;&#65039;</span>
+              <span>No image set</span>
+            </div>
+            <img id="page-comm-bg-preview" src="" alt="Commerce hero background" style="display:none;" loading="lazy">
+          </div>
+          <div class="upload-row">
+            <label class="upload-label">
+              <input type="file" id="page-comm-bg-file" accept="image/*" aria-label="Upload Commerce hero image">
+              &#128190; Upload Image
+            </label>
+            <span class="upload-status" id="page-comm-bg-upload-status"></span>
+          </div>
+          <p class="field-hint mt-1">Recommended: 1920&times;1080px JPG/WebP. Used as hero background and OG share image.</p>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           SECTION: TRACKING (Meta Pixel, GTM, GA4, custom HEAD/BODY)
+           ======================================================== -->
+      <section class="section-panel" id="panel-tracking" aria-label="Tracking Codes">
+        <div class="panel-header">
+          <div class="panel-header-text">
+            <h1 class="panel-title"><span class="icon" aria-hidden="true">&#128202;</span> Tracking Codes</h1>
+            <p class="panel-subtitle">Paste your tracking IDs below. Scripts are injected automatically on every page after save &amp; deploy. Leave a field blank to disable that tracker.</p>
+          </div>
+        </div>
+
+        <div class="content-card">
+          <div class="card-title"><span class="icon" aria-hidden="true">&#128279;</span> Tracking IDs</div>
+          <div class="form-grid single">
+            <div class="form-group">
+              <label class="form-label" for="track-meta-pixel">Meta (Facebook) Pixel ID</label>
+              <input type="text" id="track-meta-pixel" class="field-input" maxlength="40"
+                data-field="tracking.metaPixelId"
+                placeholder="e.g., 1234567890123456">
+              <span class="field-hint">15–16 digit numeric ID from Facebook Events Manager. Loads <code>fbevents.js</code> and fires <code>PageView</code>.</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="track-gtm">Google Tag Manager Container ID</label>
+              <input type="text" id="track-gtm" class="field-input" maxlength="20"
+                data-field="tracking.gtmId"
+                placeholder="GTM-XXXXXXX">
+              <span class="field-hint">Format: <code>GTM-</code> followed by 6–8 alphanumeric chars. Loads GTM in &lt;head&gt; + noscript fallback in body.</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="track-ga4">Google Analytics 4 Measurement ID</label>
+              <input type="text" id="track-ga4" class="field-input" maxlength="20"
+                data-field="tracking.gaMeasurementId"
+                placeholder="G-XXXXXXXXXX">
+              <span class="field-hint">Format: <code>G-</code> followed by 10 alphanumeric chars. Skip if you load GA4 through GTM.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="content-card">
+          <div class="card-title"><span class="icon" aria-hidden="true">&#128295;</span> Custom Code (Advanced)</div>
+          <div class="form-grid single">
+            <div class="form-group">
+              <label class="form-label" for="track-custom-head">Custom HEAD Code</label>
+              <textarea id="track-custom-head" class="field-input" rows="6" style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:0.78rem;"
+                data-field="tracking.customHead"
+                placeholder="<!-- e.g., LinkedIn Insight Tag, Hotjar, Clarity, ahrefs verification -->"></textarea>
+              <span class="field-hint">Raw HTML/JS injected into <code>&lt;head&gt;</code> on every page. Use only for trusted code — runs on all visitors.</span>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="track-custom-body">Custom BODY Code (end of body)</label>
+              <textarea id="track-custom-body" class="field-input" rows="6" style="font-family:ui-monospace,'SF Mono',Menlo,Consolas,monospace;font-size:0.78rem;"
+                data-field="tracking.customBody"
+                placeholder="<!-- e.g., chat widgets, deferred scripts -->"></textarea>
+              <span class="field-hint">Raw HTML/JS injected at the end of <code>&lt;body&gt;</code>. Same trust caveat applies.</span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -2218,6 +2440,12 @@ function initCharCounts() {
     ['loc-sec-eyebrow',   'cc-loc-sec-eyebrow',      60],
     ['loc-sec-title',     'cc-loc-sec-title',        80],
     ['loc-sec-body',      'cc-loc-sec-body',        400],
+    ['page-snell-eyebrow','cc-page-snell-eyebrow',  120],
+    ['page-snell-line1',  'cc-page-snell-line1',    120],
+    ['page-snell-line2',  'cc-page-snell-line2',    120],
+    ['page-comm-eyebrow', 'cc-page-comm-eyebrow',   120],
+    ['page-comm-line1',   'cc-page-comm-line1',     120],
+    ['page-comm-line2',   'cc-page-comm-line2',     120],
   ];
   configs.forEach(([inputId, counterId, max]) => initCharCount(inputId, counterId, max));
 }
@@ -2241,6 +2469,9 @@ function initImagePreviews() {
   const updateImgHero = initImagePreview('img-hero-url', 'img-hero-preview', 'img-hero-no-img');
   // Images section — locations
   initImagePreview('img-loc-url', 'img-loc-preview', 'img-loc-no-img');
+  // Per-page hero previews
+  initImagePreview('page-snell-bg', 'page-snell-bg-preview', 'page-snell-bg-no-img');
+  initImagePreview('page-comm-bg', 'page-comm-bg-preview', 'page-comm-bg-no-img');
 
   // Sync hero URL between Hero panel and Images panel
   const heroBgInput = get('hero-bg-url');
@@ -2285,6 +2516,20 @@ function initImageUploads() {
   if (imgLocFile) {
     imgLocFile.addEventListener('change', () =>
       handleImageUpload('img-loc-file', 'img-loc-url', 'img-loc-upload-status', null)
+    );
+  }
+
+  // Per-page hero uploads
+  const snellBgFile = get('page-snell-bg-file');
+  if (snellBgFile) {
+    snellBgFile.addEventListener('change', () =>
+      handleImageUpload('page-snell-bg-file', 'page-snell-bg', 'page-snell-bg-upload-status', null)
+    );
+  }
+  const commBgFile = get('page-comm-bg-file');
+  if (commBgFile) {
+    commBgFile.addEventListener('change', () =>
+      handleImageUpload('page-comm-bg-file', 'page-comm-bg', 'page-comm-bg-upload-status', null)
     );
   }
 }
