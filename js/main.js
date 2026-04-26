@@ -144,32 +144,57 @@ function initMagneticCTAs() {
   });
 }
 
-function initCoinCenterpiece() {
-  // Preloader stays up for at least PRELOADER_MIN_MS so the stroke-draw +
-  // bar-fill CSS animation reads fully, even if the WebGL coin loads instantly.
+// Preloader is shown once per session (sessionStorage gate). On subsequent
+// page navigations within the same tab it's removed immediately so the user
+// isn't trapped behind it on every page change.
+const PRELOADER_SEEN_KEY = 'gk_preloader_seen';
+
+function initPreloader() {
+  const pre = document.getElementById('preloader');
+  if (!pre) return { skip: true };
+
+  const removeNow = () => pre.remove();
+  const slideOut = () => {
+    pre.classList.add('is-out');
+    setTimeout(removeNow, 1100);
+  };
+
+  // Returning visitor in this session: skip animation
+  if (sessionStorage.getItem(PRELOADER_SEEN_KEY) === '1') {
+    removeNow();
+    return { skip: true };
+  }
+
+  // First visit: keep preloader for at least PRELOADER_MIN_MS so the
+  // stroke-draw + bar-fill CSS animation reads fully.
   const PRELOADER_MIN_MS = 3200;
   const startedAt = performance.now();
-
-  const dismiss = () => {
-    const pre = document.getElementById('preloader');
-    if (!pre) return;
-    pre.classList.add('is-out');
-    setTimeout(() => pre.remove(), 1100);
-  };
+  let dismissed = false;
   const dismissWhenReady = () => {
+    if (dismissed) return;
+    dismissed = true;
     const remaining = Math.max(0, PRELOADER_MIN_MS - (performance.now() - startedAt));
-    setTimeout(dismiss, remaining);
+    setTimeout(() => {
+      slideOut();
+      sessionStorage.setItem(PRELOADER_SEEN_KEY, '1');
+    }, remaining);
   };
 
-  // Failsafe: always dismiss after min duration so a stuck WebGL load never traps the page.
+  // Failsafe: always dismiss after min duration so a stuck load never traps the page.
   setTimeout(dismissWhenReady, PRELOADER_MIN_MS);
+  return { skip: false, dismissWhenReady };
+}
 
+function initCoinCenterpiece(preloader) {
   if (REDUCED_MOTION || window.matchMedia('(max-width: 900px)').matches) return;
   const coinCanvas = document.getElementById('coin-canvas');
   if (!coinCanvas) return;
 
   import('./coin3d.js')
-    .then(m => m.initCoin3D({ canvas: coinCanvas, onReady: dismissWhenReady }))
+    .then(m => m.initCoin3D({
+      canvas: coinCanvas,
+      onReady: preloader?.dismissWhenReady
+    }))
     .catch(err => {
       console.warn('Coin3D init failed', err);
       coinCanvas.style.display = 'none';
@@ -416,13 +441,14 @@ function aboutParallax() {
    ============================================================================ */
 
 async function boot() {
+  const preloader = initPreloader();
   initCursor();
   initSmoothScroll();
   initNavScroll();
   initParallax();
   initTiltCards();
   initMagneticCTAs();
-  initCoinCenterpiece();
+  initCoinCenterpiece(preloader);
 
   const heroCanvas = document.getElementById('hero-canvas');
   if (heroCanvas) {

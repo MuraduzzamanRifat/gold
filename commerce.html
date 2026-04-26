@@ -73,6 +73,17 @@
 </head>
 <body>
 
+  <!-- PRELOADER — gold logo stroke-draw + progress bar (skipped on return visits) -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <svg class="preloader__logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <path class="draw" d="M22 64 V44 L36 56 L50 26 L64 56 L78 44 V64 Z" stroke-linecap="round"/>
+      <rect class="draw-2" x="22" y="62" width="56" height="8" rx="2"/>
+      <circle class="draw-3" cx="50" cy="30" r="4"/>
+    </svg>
+    <div class="preloader__brand">Gold Kings</div>
+    <div class="preloader__bar"><div class="preloader__bar-fill"></div></div>
+  </div>
+
   <!-- CURSOR -->
   <div class="cursor" id="cursor">
     <div class="cursor__dot"></div>
