@@ -982,6 +982,31 @@ a:focus-visible {
     scroll-behavior: auto !important;
   }
 }
+
+/* Clear (×) button next to image upload — empties the URL field */
+.btn-clear {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.45rem 0.7rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--fg2);
+  font-size: 0.78rem;
+  cursor: pointer;
+}
+.btn-clear:hover {
+  border-color: var(--error);
+  color: var(--error);
+  background: var(--error-bg);
+}
+
+/* Persistent post-upload reminder — replaces the auto-fading "Uploaded" text */
+.upload-status.done {
+  color: var(--gold);
+  font-weight: 600;
+}
 </style>
 </head>
 <body>
@@ -1362,6 +1387,7 @@ a:focus-visible {
               <input type="file" id="hero-bg-file" accept="image/*" aria-label="Upload hero background image">
               &#128190; Upload Image
             </label>
+            <button type="button" class="btn-clear" data-clear-target="hero-bg-url" aria-label="Clear image">&#10005; Clear</button>
             <span class="upload-status" id="hero-bg-upload-status"></span>
           </div>
           <p class="field-hint mt-1">Recommended: 1920&times;1080px or wider. JPG/WebP preferred.</p>
@@ -1521,6 +1547,7 @@ a:focus-visible {
               <input type="file" id="img-hero-file" accept="image/*" aria-label="Upload hero image">
               &#128190; Upload Image
             </label>
+            <button type="button" class="btn-clear" data-clear-target="img-hero-url" aria-label="Clear image">&#10005; Clear</button>
             <span class="upload-status" id="img-hero-upload-status"></span>
           </div>
           <p class="field-hint mt-1">Recommended: 1920&times;1080px. JPG/WebP for best performance.</p>
@@ -1549,6 +1576,7 @@ a:focus-visible {
               <input type="file" id="img-loc-file" accept="image/*" aria-label="Upload locations section image">
               &#128190; Upload Image
             </label>
+            <button type="button" class="btn-clear" data-clear-target="img-loc-url" aria-label="Clear image">&#10005; Clear</button>
             <span class="upload-status" id="img-loc-upload-status"></span>
           </div>
           <p class="field-hint mt-1">Recommended: 1200&times;800px.</p>
@@ -1621,6 +1649,7 @@ a:focus-visible {
               <input type="file" id="page-snell-bg-file" accept="image/*" aria-label="Upload Snellville hero image">
               &#128190; Upload Image
             </label>
+            <button type="button" class="btn-clear" data-clear-target="page-snell-bg" aria-label="Clear image">&#10005; Clear</button>
             <span class="upload-status" id="page-snell-bg-upload-status"></span>
           </div>
           <p class="field-hint mt-1">Recommended: 1920&times;1080px JPG/WebP. Used as hero background and OG share image.</p>
@@ -1693,6 +1722,7 @@ a:focus-visible {
               <input type="file" id="page-comm-bg-file" accept="image/*" aria-label="Upload Commerce hero image">
               &#128190; Upload Image
             </label>
+            <button type="button" class="btn-clear" data-clear-target="page-comm-bg" aria-label="Clear image">&#10005; Clear</button>
             <span class="upload-status" id="page-comm-bg-upload-status"></span>
           </div>
           <p class="field-hint mt-1">Recommended: 1920&times;1080px JPG/WebP. Used as hero background and OG share image.</p>
@@ -2279,14 +2309,11 @@ async function handleImageUpload(fileInputId, urlInputId, statusId, mirrorInputI
       mirrorInput.dispatchEvent(new Event('input'));
     }
 
-    statusEl.textContent = 'Uploaded successfully';
+    statusEl.textContent = 'Uploaded — click Save above to publish';
     statusEl.className = 'upload-status done';
     markDirty();
-
-    setTimeout(() => {
-      statusEl.textContent = '';
-      statusEl.className = 'upload-status';
-    }, 4000);
+    showToast('success', 'Image uploaded', 'Click the Save button (top-right) to publish to your live site.');
+    // Persistent — message stays until next user action so they don't miss the Save step
 
   } catch (err) {
     statusEl.textContent = `Upload failed: ${err.message}`;
@@ -2397,9 +2424,13 @@ function renderImageList(opts) {
           <div class="no-image" id="${idPfx}-noimg"><span class="icon" aria-hidden="true">&#128444;&#65039;</span><span>No image set</span></div>
           <img id="${idPfx}-preview" src="" alt="" style="display:none;" loading="lazy">
         </div>
-        <div class="upload-row"><label class="upload-label">
-          <input type="file" id="${idPfx}-file" accept="image/*"> &#128190; Upload Image
-        </label><span class="upload-status" id="${idPfx}-status"></span></div>`;
+        <div class="upload-row">
+          <label class="upload-label">
+            <input type="file" id="${idPfx}-file" accept="image/*"> &#128190; Upload Image
+          </label>
+          <button type="button" class="btn-clear" data-clear-target="${idPfx}-image" aria-label="Clear image">&#10005; Clear</button>
+          <span class="upload-status" id="${idPfx}-status"></span>
+        </div>`;
     }
     block.innerHTML = `
       <div class="image-group-title"><span aria-hidden="true">${opts.headerIcon || ''}</span> ${opts.headerLabel} ${i+1}</div>
@@ -2924,6 +2955,27 @@ function initImageUploads() {
   }
 }
 
+// Single delegated handler for all .btn-clear buttons (static + dynamic)
+function initClearButtons() {
+  document.addEventListener('click', e => {
+    const btn = e.target.closest('.btn-clear');
+    if (!btn) return;
+    const targetId = btn.dataset.clearTarget;
+    const input = get(targetId);
+    if (!input) return;
+    if (input.value && !confirm('Clear this image URL? You’ll need to click Save to publish.')) return;
+    input.value = '';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    markDirty();
+    // Find the sibling status span (inside the same .upload-row) and reset it
+    const row = btn.closest('.upload-row');
+    if (row) {
+      const status = row.querySelector('.upload-status');
+      if (status) { status.textContent = 'Cleared — click Save above to publish'; status.className = 'upload-status done'; }
+    }
+  });
+}
+
 /* ============================================================
    DIRTY TRACKING ON ALL SIMPLE INPUTS
    ============================================================ */
@@ -3202,6 +3254,7 @@ function init() {
   initValidation();
   initImagePreviews();
   initImageUploads();
+  initClearButtons();
   initDirtyTracking();
   initAddTestimonial();
 
