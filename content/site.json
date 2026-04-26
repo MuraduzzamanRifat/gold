@@ -194,7 +194,29 @@
       "heroEyebrow": "◆ How Selling Your Gold Works",
       "heroTitle": "Five steps,<br><em>about ten minutes.</em>",
       "heroSub": "Walk in. Watch us test and weigh. Hear how the offer is calculated. Decide. That's the whole process.",
-      "heroBackgroundImage": ""
+      "heroBackgroundImage": "",
+      "steps": [
+        {
+          "title": "Step 01 · <em>Bring your items in</em>",
+          "body": "Bring any gold, silver, coins, jewelry, or bullion to either Georgia counter for evaluation. Items can be broken, damaged, outdated, or mismatched — none of that affects the metal weight value. No appointment is needed; walk-ins are always welcome during business hours."
+        },
+        {
+          "title": "Step 02 · <em>We test &amp; weigh in front of you</em>",
+          "body": "Items stay visible on the counter the entire time. We use professional testing equipment to verify purity (karat for gold, fineness for silver) and a calibrated digital scale for weight. You can ask questions at any point — we'll explain anything you're not sure about."
+        },
+        {
+          "title": "Step 03 · <em>We show you the live market price</em>",
+          "body": "Gold and silver prices change throughout the day. We pull the current spot rate at the moment of evaluation and apply it to the metal we measured. No fixed charts, no outdated rates — the number reflects the actual market that day."
+        },
+        {
+          "title": "Step 04 · <em>You receive a clear cash offer</em>",
+          "body": "The offer is one number. No hidden fees, no surprise deductions, no confusing line items. We walk you through how the offer was calculated — purity × weight × current spot price × payout percentage — and answer any question."
+        },
+        {
+          "title": "Step 05 · <em>You decide — no pressure</em>",
+          "body": "Accept the offer and we settle on the spot — cash, check, Zelle, CashApp, Venmo, PayPal, or wire. Your choice. Or take your items home and think it over. We never push."
+        }
+      ]
     },
     "prices": {
       "seoTitle": "Live Gold & Silver Prices — Gold Kings Georgia",
@@ -262,7 +284,25 @@
       "heroEyebrow": "◆ About Gold Kings · Established 2008",
       "heroTitle": "A local buyer<br><em>worth trusting.</em>",
       "heroSub": "Selling gold and silver should be honest, transparent, and fair. That's the principle the business was built on. Two Georgia counters, one promise.",
-      "heroBackgroundImage": ""
+      "heroBackgroundImage": "",
+      "sections": [
+        {
+          "title": "Our <em>promise</em>",
+          "body": "The business runs on three commitments — the same three, every visit, every customer:"
+        },
+        {
+          "title": "How we <em>work</em>",
+          "body": "We're not chasing fast turnover. We'd rather build a relationship that brings you back next time you have something to sell — or sends a friend our way."
+        },
+        {
+          "title": "Where we <em>are</em>",
+          "body": "We operate two physical counters in Georgia:"
+        },
+        {
+          "title": "What sets us <em>apart</em>",
+          "body": "We're a precious-metals dealer, not a pawn shop. That means our entire business is built around evaluating metal accurately and paying live spot rates — not loaning against items or marking up for resale. The model is simpler, and so is the price."
+        }
+      ]
     },
     "whyChoose": {
       "seoTitle": "Why Choose Gold Kings — Transparent, Licensed, No Pressure",
@@ -271,7 +311,33 @@
       "heroEyebrow": "◆ Why Choose Gold Kings",
       "heroTitle": "Transparent dealings,<br><em>real comfort.</em>",
       "heroSub": "Six reasons customers come back, send friends, and trust us with the items that matter to them.",
-      "heroBackgroundImage": ""
+      "heroBackgroundImage": "",
+      "reasons": [
+        {
+          "title": "01 · <em>Transparent testing</em>",
+          "body": "Your items never leave your sight. Testing and weighing happen openly on the counter using professional equipment. Watch the test happen. Read the scale. Ask any question at any stage. We'd rather take an extra minute to explain than have you wondering what just happened."
+        },
+        {
+          "title": "02 · <em>No-pressure environment</em>",
+          "body": "Every evaluation is free and carries no obligation. You can decline an offer and walk out with your items, no awkwardness, no guilt-trip, no follow-up call. The right answer is whatever's right for you."
+        },
+        {
+          "title": "03 · <em>Immediate payment</em>",
+          "body": "If you accept the offer, you're paid on the spot. No waiting period. No \"come back tomorrow.\" No follow-up appointment. Cash, check, Zelle, CashApp, Venmo, PayPal, or wire — your choice."
+        },
+        {
+          "title": "04 · <em>Licensed local operation</em>",
+          "body": "We're a licensed Georgia precious-metals dealer operating two physical counters in Snellville and Commerce. Our license, our reputation, and our two doors all depend on treating people the way we'd want to be treated."
+        },
+        {
+          "title": "05 · <em>Better than a pawn shop</em>",
+          "body": "We're not a pawn shop. Pawns make money on loan margins and resale markups, which means lower payouts to you. We specialize in metal evaluation against live spot — that's the entire business — which usually translates to a better number on your side of the counter."
+        },
+        {
+          "title": "06 · <em>Professional experience</em>",
+          "body": "Clear communication. Fair, market-based pricing. Respect for your time and the items you're bringing in. A calm, professional setting. The whole point is to build the kind of trust that makes you happy you came — and ready to come back."
+        }
+      ]
     },
     "churchFundraising": {
       "seoTitle": "Church Gold Fundraising Program — Gold Kings | Faith-Based Stewardship",

@@ -1909,6 +1909,12 @@ a:focus-visible {
             <span class="upload-status" id="page-howItWorks-heroBg-status"></span>
           </div>
         </div>
+        <div class="content-card">
+          <div class="card-title"><span class="icon" aria-hidden="true">&#9881;&#65039;</span> 5 Process Steps</div>
+          <p class="field-hint mb-2">Each item is a heading + body paragraph. Title supports inline HTML (&lt;em&gt; for italic). Use Add/Remove to grow the list.</p>
+          <div id="howItWorks-steps-list" data-rendered-list></div>
+        </div>
+      
       
       </section>
 
@@ -2050,6 +2056,12 @@ a:focus-visible {
             <span class="upload-status" id="page-about-heroBg-status"></span>
           </div>
         </div>
+        <div class="content-card">
+          <div class="card-title"><span class="icon" aria-hidden="true">&#128218;</span> 4 Body Sections</div>
+          <p class="field-hint mb-2">Each item is a heading + body paragraph. Title supports inline HTML (&lt;em&gt; for italic). Use Add/Remove to grow the list.</p>
+          <div id="about-sections-list" data-rendered-list></div>
+        </div>
+      
       
       </section>
 
@@ -2084,6 +2096,12 @@ a:focus-visible {
             <span class="upload-status" id="page-whyChoose-heroBg-status"></span>
           </div>
         </div>
+        <div class="content-card">
+          <div class="card-title"><span class="icon" aria-hidden="true">&#127942;</span> 6 Reasons (body content)</div>
+          <p class="field-hint mb-2">Each item is a heading + body paragraph. Title supports inline HTML (&lt;em&gt; for italic). Use Add/Remove to grow the list.</p>
+          <div id="whyChoose-reasons-list" data-rendered-list></div>
+        </div>
+      
       
       </section>
 
@@ -2544,6 +2562,13 @@ const SITE_SCHEMA = [
   { path: 'pages.privacy.heroBackgroundImage',        type: 'url' },
   { path: 'pages.refundReturns.heroBackgroundImage',  type: 'url' },
   { path: 'pages.whatWeBuy.heroBackgroundImage',      type: 'url' },
+  // Body-content arrays (title + body) on text-heavy pages
+  { path: 'pages.whyChoose.reasons.#.title',          type: 'string', max: 200 },
+  { path: 'pages.whyChoose.reasons.#.body',           type: 'string', max: 1500 },
+  { path: 'pages.howItWorks.steps.#.title',           type: 'string', max: 200 },
+  { path: 'pages.howItWorks.steps.#.body',            type: 'string', max: 1500 },
+  { path: 'pages.about.sections.#.title',             type: 'string', max: 200 },
+  { path: 'pages.about.sections.#.body',              type: 'string', max: 1500 },
 ];
 
 const URL_RE = /^https?:\/\/[^\s]+$/;
@@ -2849,6 +2874,9 @@ function populateForms(data) {
   renderJewelryCards((pages.jewelry && pages.jewelry.cards) || []);
   renderWwbStats((pages.whatWeBuy && pages.whatWeBuy.stats) || []);
   renderWwbEditorial((pages.whatWeBuy && pages.whatWeBuy.editorial) || []);
+  renderWhyChooseReasons((pages.whyChoose && pages.whyChoose.reasons) || []);
+  renderHowItWorksSteps((pages.howItWorks && pages.howItWorks.steps) || []);
+  renderAboutSections((pages.about && pages.about.sections) || []);
   window.__populating = false;
 }
 
@@ -2987,6 +3015,21 @@ function renderWwbEditorial(items) {
     ]
   });
 }
+
+// Body-content list editors for text-heavy pages
+function renderTitleBodyList(containerId, basePath, items, label, icon) {
+  renderImageList({
+    containerId, basePath, items,
+    headerLabel: label, headerIcon: icon, hasImage: false,
+    fields: [
+      { key: 'title', label: 'Title (HTML: &lt;em&gt; allowed)', maxlength: 200 },
+      { key: 'body',  label: 'Body paragraph',                   maxlength: 1500, type: 'textarea', rows: 4 }
+    ]
+  });
+}
+function renderWhyChooseReasons(items) { renderTitleBodyList('whyChoose-reasons-list', 'pages.whyChoose.reasons',  items, 'Reason', '&#127942;'); }
+function renderHowItWorksSteps(items)  { renderTitleBodyList('howItWorks-steps-list',  'pages.howItWorks.steps',   items, 'Step',   '&#9881;&#65039;'); }
+function renderAboutSections(items)    { renderTitleBodyList('about-sections-list',    'pages.about.sections',     items, 'Section','&#128218;'); }
 
 /* ============================================================
    COLLECT FORM DATA INTO JSON
