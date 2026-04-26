@@ -60,17 +60,11 @@
       });
     }
 
-    // ── Hero ────────────────────────────────────────────────────────────────
+    // ── Hero (recursive — same binder as pages.*) ───────────────────────────
     if (c.hero) {
-      setText('[data-cms="hero.eyebrow"]', c.hero.eyebrow);
-      set('[data-cms="hero.headline1"]', c.hero.headline1);
-      set('[data-cms="hero.headline2"]', c.hero.headline2);
-      setText('[data-cms="hero.ctaText"]', c.hero.ctaText);
-      if (c.hero.backgroundImage) {
-        // webgl hero reads heroImage from data.js — patch window global so
-        // initHero() uses the CMS image if called after this runs.
-        window.__cmsHeroImage = c.hero.backgroundImage;
-      }
+      walkAndBind(c.hero, 'hero');
+      // WebGL hero (initHero in webgl.js) reads from window global, not DOM
+      if (c.hero.backgroundImage) window.__cmsHeroImage = c.hero.backgroundImage;
     }
 
     // ── CTA section ─────────────────────────────────────────────────────────

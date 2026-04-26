@@ -925,6 +925,21 @@ body::before {
   display: block;
   width: 100%;
   height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* CMS-controlled background image. Sits behind the WebGL canvas so it
+   shows immediately on page load and acts as a fallback if the canvas
+   fails to render. */
+.hero__bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 0;
 }
 
 .hero__scrim {
