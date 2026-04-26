@@ -40,50 +40,50 @@
     {
       "id": "t01",
       "name": "Jerry Vaughan",
-      "quote": "Awsome salesman to work with. He's extremely fast and holds a conversation while checking coins. He made sure to keep everything organized and separated also!. If silver was not so low he had it.",
-      "category": "Service"
+      "category": "Service",
+      "quote": "Awsome salesman to work with. He's extremely fast and holds a conversation while checking coins. He made sure to keep everything organized and separated also!. If silver was not so low he had it."
     },
     {
       "id": "t02",
       "name": "Jaime Lee",
-      "quote": "Super professional, knowledgeable, and fair. Would definitely recommend. If for whatever reason you don't like the owner (which I don't see how you wouldnt) his dog Champ will steal your heart!",
-      "category": "Professional"
+      "category": "Professional",
+      "quote": "Super professional, knowledgeable, and fair. Would definitely recommend. If for whatever reason you don't like the owner (which I don't see how you wouldnt) his dog Champ will steal your heart!"
     },
     {
       "id": "t03",
       "name": "Brandon Coots",
-      "quote": "Not only did I have a great experience I was going to be there after they closed. I have a quick call and not only did he start his process over the phone he also waited on me and stayed open almost an hour after his advertised close time to wait on me. Then made the best deal I've been offered out of 30 different places I went too. Very friendly professional and knowledgeable. Blew all competitors out of the water by a long shot. All it took was a simple call letting him know I was on the way. Will go here for all of my future needs and will recommend to everyone. Great customer service skills. A+++",
-      "category": "Premium"
+      "category": "Premium",
+      "quote": "Not only did I have a great experience I was going to be there after they closed. I have a quick call and not only did he start his process over the phone he also waited on me and stayed open almost an hour after his advertised close time to wait on me. Then made the best deal I've been offered out of 30 different places I went too. Very friendly professional and knowledgeable. Blew all competitors out of the water by a long shot. All it took was a simple call letting him know I was on the way. Will go here for all of my future needs and will recommend to everyone. Great customer service skills. A+++"
     },
     {
       "id": "t04",
       "name": "Luis Elias",
-      "quote": "Bery please to do business here everything straight forward. Precious Metals and jewelry.",
-      "category": "Professional"
+      "category": "Professional",
+      "quote": "Bery please to do business here everything straight forward. Precious Metals and jewelry."
     },
     {
       "id": "t05",
       "name": "Taylor Dodson",
-      "quote": "Had a fantastic time – fair prices, incredibly helpful and knowledgeable. This was my second visit and I'm definitely planning to return. I highly recommend checking this store out.",
-      "category": "Premium"
+      "category": "Premium",
+      "quote": "Had a fantastic time – fair prices, incredibly helpful and knowledgeable. This was my second visit and I'm definitely planning to return. I highly recommend checking this store out."
     },
     {
       "id": "t06",
       "name": "Chad Usher",
-      "quote": "I've been to this store numerous times and they are always helpful! Adam is more than willing to share his knowledge about gold and jewelry prices and what the market is doing. I've been more than happy with everything I've purchased from them!",
-      "category": "Service"
+      "category": "Service",
+      "quote": "I've been to this store numerous times and they are always helpful! Adam is more than willing to share his knowledge about gold and jewelry prices and what the market is doing. I've been more than happy with everything I've purchased from them!"
     },
     {
       "id": "t07",
       "name": "Debbie Meadow",
-      "quote": "This was a great experience. I'm happy, their happy, in and out and that day they even could pay in cash. Thanks",
-      "category": "Professional"
+      "category": "Professional",
+      "quote": "This was a great experience. I'm happy, their happy, in and out and that day they even could pay in cash. Thanks"
     },
     {
       "id": "t08",
       "name": "Herb James",
-      "quote": "Bought some 20 Franc Gold coins here last week. Very personable owner and great value, nice looking coins. Very satisfied with my purchase, wish I could have bought them all. : )",
-      "category": "Premium"
+      "category": "Premium",
+      "quote": "Bought some 20 Franc Gold coins here last week. Very personable owner and great value, nice looking coins. Very satisfied with my purchase, wish I could have bought them all. : )"
     }
   ],
   "locationsSection": {
@@ -110,7 +110,7 @@
       "heroEyebrow": "Snellville, GA · Est. 2008 · Licensed Georgia Dealer",
       "heroLine1": "SELL GOLD IN <em>SNELLVILLE</em>",
       "heroLine2": "Same-Day Cash, <em>Fair Prices</em>",
-      "heroBackgroundImage": "https://images.pexels.com/photos/5632390/pexels-photo-5632390.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"
+      "heroBackgroundImage": "https://raw.githubusercontent.com/MuraduzzamanRifat/gold/main/img/uploads/1777180724824-ChatGPT_Image_Apr_26__2026__10_34_21_AM__1_.png"
     },
     "commerce": {
       "heroEyebrow": "Commerce, GA · Licensed Georgia Dealer · Banks Crossing",
