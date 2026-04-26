@@ -1152,6 +1152,11 @@ a:focus-visible {
           <span class="nav-label">Images</span>
         </div>
 
+        <div class="nav-item" data-section="library" role="button" tabindex="0" aria-label="Image Library">
+          <span class="nav-icon" aria-hidden="true">&#128193;</span>
+          <span class="nav-label">Image Library</span>
+        </div>
+
         <div class="sidebar-section-label" style="margin-top:1.25rem;">Locations</div>
 
         <div class="nav-item" data-section="page-snellville" role="button" tabindex="0" aria-label="Page: Snellville">
@@ -1580,6 +1585,24 @@ a:focus-visible {
             <span class="upload-status" id="img-loc-upload-status"></span>
           </div>
           <p class="field-hint mt-1">Recommended: 1200&times;800px.</p>
+        </div>
+      </section>
+
+      <!-- ========================================================
+           SECTION: IMAGE LIBRARY
+           Lists every file in img/uploads/. Click-to-copy URL.
+           ======================================================== -->
+      <section class="section-panel" id="panel-library" aria-label="Image Library">
+        <div class="panel-header">
+          <div class="panel-header-text">
+            <h1 class="panel-title"><span class="icon" aria-hidden="true">&#128193;</span> Image Library</h1>
+            <p class="panel-subtitle">Every image you've uploaded to <code>img/uploads/</code>. Click an image to copy its URL, or paste it directly into any URL field on another panel.</p>
+          </div>
+          <button class="btn btn-ghost btn-sm" id="library-refresh" type="button">&#8635; Refresh</button>
+        </div>
+        <div class="content-card">
+          <div id="library-status" style="padding:1rem;color:var(--fg2);font-size:0.85rem;">Loading library…</div>
+          <div id="library-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem;padding:0.5rem;"></div>
         </div>
       </section>
 
@@ -2070,6 +2093,31 @@ class GH {
     if (!r.ok) throw new Error('Invalid token or insufficient permissions.');
     return r.json();
   }
+
+  // Lists files in a directory. Returns [] for non-existent dir.
+  async listDir(path) {
+    const r = await fetch(
+      `${this.base}/repos/${this.owner}/${this.repo}/contents/${path}?ref=${this.branch}&_=${Date.now()}`,
+      { headers: this.headers() }
+    );
+    if (r.status === 404) return [];
+    if (!r.ok) throw new Error(`GitHub: ${r.status} ${r.statusText}`);
+    return r.json();
+  }
+
+  // Deletes a file. Requires its current SHA.
+  async deleteFile(path, sha, message) {
+    const r = await fetch(`${this.base}/repos/${this.owner}/${this.repo}/contents/${path}`, {
+      method: 'DELETE',
+      headers: this.headers(),
+      body: JSON.stringify({ message, sha, branch: this.branch })
+    });
+    if (!r.ok) {
+      const e = await r.json().catch(() => ({ message: r.statusText }));
+      throw new Error(e.message || r.statusText);
+    }
+    return r.json();
+  }
 }
 
 /* ============================================================
@@ -2083,18 +2131,19 @@ let isDirty = false;
 /* ============================================================
    TOAST SYSTEM
    ============================================================ */
-function showToast(type, title, message, duration = 4500) {
+function showToast(type, title, message, duration = 4500, allowHtml = false) {
   const icons = { success: '&#10003;', error: '&#33;', info: 'i', warn: '&#9888;' };
   const container = document.getElementById('toast-container');
 
   const toast = document.createElement('div');
   toast.className = `toast ${type}`;
   toast.setAttribute('role', 'alert');
+  const msgHtml = allowHtml ? message : escHtml(message);
   toast.innerHTML = `
     <span class="toast-icon" aria-hidden="true">${icons[type] || 'i'}</span>
     <div class="toast-content">
       <div class="toast-title">${escHtml(title)}</div>
-      ${message ? `<div class="toast-message">${escHtml(message)}</div>` : ''}
+      ${message ? `<div class="toast-message">${msgHtml}</div>` : ''}
     </div>
   `;
 
@@ -2106,7 +2155,10 @@ function showToast(type, title, message, duration = 4500) {
   };
 
   const timer = setTimeout(remove, duration);
-  toast.addEventListener('click', () => { clearTimeout(timer); remove(); });
+  toast.addEventListener('click', e => {
+    if (e.target.closest('a')) return; // let links through; don't dismiss toast yet
+    clearTimeout(timer); remove();
+  });
 }
 
 /* ============================================================
@@ -2404,47 +2456,73 @@ function fieldHtml(f, item, idPrefix, dataPath) {
 function renderImageList(opts) {
   const wrap = get(opts.containerId); if (!wrap) return;
   wrap.innerHTML = '';
-  opts.items.forEach((item, i) => {
-    const idPfx = `${opts.containerId}-${i}`;
-    const dataPfx = `${opts.basePath}.${i}`;
-    const fieldsHtml = (opts.fields || []).map(f => fieldHtml(f, item, idPfx, dataPfx)).join('');
-    const block = document.createElement('div');
-    block.className = 'image-group';
-    block.style.marginBottom = '1.25rem';
-    let imageHtml = '';
-    if (opts.hasImage !== false) {
-      const altVal = escHtml(item.alt || '');
-      const imgVal = escHtml(item.image || '');
-      imageHtml = `
-        <div class="form-group"><label class="form-label" for="${idPfx}-image">Image URL</label>
-          <input type="url" id="${idPfx}-image" class="field-input" data-field="${dataPfx}.image" placeholder="https://..." value="${imgVal}"></div>
-        <div class="form-group"><label class="form-label" for="${idPfx}-alt">Image alt text (a11y)</label>
-          <input type="text" id="${idPfx}-alt" class="field-input" maxlength="120" data-field="${dataPfx}.alt" value="${altVal}"></div>
-        <div class="image-preview-wrap">
-          <div class="no-image" id="${idPfx}-noimg"><span class="icon" aria-hidden="true">&#128444;&#65039;</span><span>No image set</span></div>
-          <img id="${idPfx}-preview" src="" alt="" style="display:none;" loading="lazy">
-        </div>
-        <div class="upload-row">
-          <label class="upload-label">
-            <input type="file" id="${idPfx}-file" accept="image/*"> &#128190; Upload Image
-          </label>
-          <button type="button" class="btn-clear" data-clear-target="${idPfx}-image" aria-label="Clear image">&#10005; Clear</button>
-          <span class="upload-status" id="${idPfx}-status"></span>
-        </div>`;
-    }
-    block.innerHTML = `
-      <div class="image-group-title"><span aria-hidden="true">${opts.headerIcon || ''}</span> ${opts.headerLabel} ${i+1}</div>
-      ${fieldsHtml}
-      ${imageHtml}
-    `;
-    wrap.appendChild(block);
-    if (opts.hasImage !== false) {
-      const update = initImagePreview(`${idPfx}-image`, `${idPfx}-preview`, `${idPfx}-noimg`);
-      if (update) update(item.image || '');
-      const fi = get(`${idPfx}-file`);
-      if (fi) fi.addEventListener('change', () => handleImageUpload(`${idPfx}-file`, `${idPfx}-image`, `${idPfx}-status`, null));
-    }
-    block.querySelectorAll('[data-field]').forEach(el => el.addEventListener('input', markDirty));
+  opts.items.forEach((item, i) => renderImageListItem(opts, item, i, wrap));
+
+  // "+ Add" button: appends a fresh blank item, re-renders all
+  const add = document.createElement('button');
+  add.type = 'button';
+  add.className = 'add-row';
+  add.style.cssText = 'width:100%;margin-top:0.5rem;padding:0.75rem;background:transparent;border:1px dashed var(--border);border-radius:var(--radius);color:var(--gold);cursor:pointer;font-size:0.85rem;';
+  add.innerHTML = `<span style="font-size:1.1em;">+</span> Add ${opts.headerLabel.toLowerCase()}`;
+  add.addEventListener('click', () => {
+    const blank = (opts.fields || []).reduce((acc, f) => (acc[f.key] = '', acc), {});
+    if (opts.hasImage !== false) { blank.image = ''; blank.alt = ''; }
+    opts.items.push(blank);
+    markDirty();
+    renderImageList(opts); // full re-render to renumber
+  });
+  wrap.appendChild(add);
+}
+
+function renderImageListItem(opts, item, i, wrap) {
+  const idPfx = `${opts.containerId}-${i}`;
+  const dataPfx = `${opts.basePath}.${i}`;
+  const fieldsHtml = (opts.fields || []).map(f => fieldHtml(f, item, idPfx, dataPfx)).join('');
+  const block = document.createElement('div');
+  block.className = 'image-group';
+  block.style.cssText = 'margin-bottom:1.25rem;position:relative;';
+  let imageHtml = '';
+  if (opts.hasImage !== false) {
+    const altVal = escHtml(item.alt || '');
+    const imgVal = escHtml(item.image || '');
+    imageHtml = `
+      <div class="form-group"><label class="form-label" for="${idPfx}-image">Image URL</label>
+        <input type="url" id="${idPfx}-image" class="field-input" data-field="${dataPfx}.image" placeholder="https://..." value="${imgVal}"></div>
+      <div class="form-group"><label class="form-label" for="${idPfx}-alt">Image alt text (a11y)</label>
+        <input type="text" id="${idPfx}-alt" class="field-input" maxlength="120" data-field="${dataPfx}.alt" value="${altVal}"></div>
+      <div class="image-preview-wrap">
+        <div class="no-image" id="${idPfx}-noimg"><span class="icon" aria-hidden="true">&#128444;&#65039;</span><span>No image set</span></div>
+        <img id="${idPfx}-preview" src="" alt="" style="display:none;" loading="lazy">
+      </div>
+      <div class="upload-row">
+        <label class="upload-label">
+          <input type="file" id="${idPfx}-file" accept="image/*"> &#128190; Upload Image
+        </label>
+        <button type="button" class="btn-clear" data-clear-target="${idPfx}-image" aria-label="Clear image">&#10005; Clear</button>
+        <span class="upload-status" id="${idPfx}-status"></span>
+      </div>`;
+  }
+  block.innerHTML = `
+    <div class="image-group-title" style="display:flex;align-items:center;justify-content:space-between;">
+      <span><span aria-hidden="true">${opts.headerIcon || ''}</span> ${opts.headerLabel} ${i+1}</span>
+      <button type="button" class="btn-clear" data-action="remove-list-item" style="padding:0.3rem 0.6rem;">&#10005; Remove</button>
+    </div>
+    ${fieldsHtml}
+    ${imageHtml}
+  `;
+  wrap.appendChild(block);
+  if (opts.hasImage !== false) {
+    const update = initImagePreview(`${idPfx}-image`, `${idPfx}-preview`, `${idPfx}-noimg`);
+    if (update) update(item.image || '');
+    const fi = get(`${idPfx}-file`);
+    if (fi) fi.addEventListener('change', () => handleImageUpload(`${idPfx}-file`, `${idPfx}-image`, `${idPfx}-status`, null));
+  }
+  block.querySelectorAll('[data-field]').forEach(el => el.addEventListener('input', markDirty));
+  block.querySelector('[data-action="remove-list-item"]').addEventListener('click', () => {
+    if (!confirm(`Remove ${opts.headerLabel} ${i+1}? You'll need to click Save to publish.`)) return;
+    opts.items.splice(i, 1);
+    markDirty();
+    renderImageList(opts);
   });
 }
 
@@ -2784,6 +2862,9 @@ function initNav() {
         panel.scrollIntoView({ block: 'start', behavior: 'instant' });
       }
 
+      // Lazy-load image library on first activation
+      if (section === 'library') loadImageLibrary();
+
       // Auto-close sidebar on mobile
       if (window.innerWidth <= 700) closeSidebar();
     }
@@ -2955,6 +3036,88 @@ function initImageUploads() {
   }
 }
 
+/* ============================================================
+   IMAGE LIBRARY — gallery of img/uploads/ via GitHub Contents API
+   ============================================================ */
+async function loadImageLibrary() {
+  const grid = get('library-grid');
+  const status = get('library-status');
+  if (!grid || !status) return;
+  if (!gh) { status.textContent = 'Login required.'; grid.innerHTML = ''; return; }
+  status.textContent = 'Loading…';
+  grid.innerHTML = '';
+  try {
+    const items = await gh.listDir('img/uploads');
+    const images = items.filter(it => it.type === 'file' && /\.(png|jpe?g|webp|gif|avif)$/i.test(it.name));
+    if (images.length === 0) {
+      status.textContent = 'No uploaded images yet. Upload one from any image field.';
+      return;
+    }
+    status.textContent = `${images.length} image${images.length === 1 ? '' : 's'} in library`;
+    images.sort((a, b) => b.name.localeCompare(a.name)); // newest first (filename starts with timestamp)
+    images.forEach(it => grid.appendChild(buildLibraryTile(it)));
+  } catch (e) {
+    status.textContent = 'Error loading library: ' + e.message;
+    status.style.color = 'var(--error)';
+  }
+}
+
+function buildLibraryTile(item) {
+  const tile = document.createElement('div');
+  tile.style.cssText = 'background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;display:flex;flex-direction:column;';
+  const rawUrl = item.download_url || `https://raw.githubusercontent.com/${REPO_OWNER}/${REPO_NAME}/${REPO_BRANCH}/${item.path}`;
+  const sizeKb = Math.round(item.size / 1024);
+  tile.innerHTML = `
+    <div style="aspect-ratio:1;background:var(--bg);overflow:hidden;cursor:pointer;" data-action="copy" title="Click to copy URL">
+      <img src="${escHtml(rawUrl)}" alt="${escHtml(item.name)}" loading="lazy" style="width:100%;height:100%;object-fit:cover;display:block;">
+    </div>
+    <div style="padding:0.6rem 0.7rem;display:flex;flex-direction:column;gap:0.4rem;">
+      <div style="font-size:0.72rem;color:var(--fg2);word-break:break-all;line-height:1.3;">${escHtml(item.name)}</div>
+      <div style="display:flex;gap:0.3rem;align-items:center;justify-content:space-between;font-size:0.7rem;color:var(--fg3);">
+        <span>${sizeKb >= 1024 ? (sizeKb/1024).toFixed(1) + ' MB' : sizeKb + ' KB'}</span>
+        <div style="display:flex;gap:0.3rem;">
+          <button type="button" class="btn-clear" data-action="copy" data-url="${escHtml(rawUrl)}" style="padding:0.3rem 0.5rem;">Copy</button>
+          <button type="button" class="btn-clear" data-action="delete" data-path="${escHtml(item.path)}" data-sha="${escHtml(item.sha)}" style="padding:0.3rem 0.5rem;">Delete</button>
+        </div>
+      </div>
+    </div>
+  `;
+  // Click on image OR Copy button copies URL to clipboard
+  tile.querySelectorAll('[data-action="copy"]').forEach(el => {
+    el.addEventListener('click', e => {
+      e.stopPropagation();
+      navigator.clipboard.writeText(rawUrl).then(() =>
+        showToast('success', 'Copied!', 'Image URL copied to clipboard. Paste into any image URL field.')
+      ).catch(() => showToast('error', 'Copy failed', 'Try Ctrl+L on the URL field instead.'));
+    });
+  });
+  // Delete removes the file from img/uploads/ via the GitHub API
+  tile.querySelector('[data-action="delete"]').addEventListener('click', async e => {
+    e.stopPropagation();
+    if (!confirm(`Delete ${item.name}?\n\nThis removes the file from the repo permanently. Any pages still pointing to it will break.`)) return;
+    try {
+      await gh.deleteFile(item.path, item.sha, `CMS: Delete ${item.name}`);
+      showToast('success', 'Deleted', `${item.name} removed from library.`);
+      tile.remove();
+    } catch (err) {
+      showToast('error', 'Delete failed', err.message);
+    }
+  });
+  return tile;
+}
+
+// Ctrl/Cmd+S triggers save. Only when authenticated and form is dirty.
+function initKeyboardShortcuts() {
+  document.addEventListener('keydown', e => {
+    const isSave = (e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's';
+    if (!isSave) return;
+    e.preventDefault();
+    if (!gh) { showToast('warn', 'Not connected', 'Login first.'); return; }
+    if (!isDirty) { showToast('info', 'No changes', 'Nothing to save.'); return; }
+    saveAll();
+  });
+}
+
 // Single delegated handler for all .btn-clear buttons (static + dynamic)
 function initClearButtons() {
   document.addEventListener('click', e => {
@@ -3059,7 +3222,27 @@ async function saveAll() {
     siteData = data;
     markClean();
 
-    showToast('success', 'Saved!', 'Site will update in ~2 minutes as GitHub Actions deploys.');
+    // Build a "View live" URL based on the active panel (defaults to homepage)
+    const liveBase = `https://${REPO_OWNER.toLowerCase()}.github.io/${REPO_NAME}`;
+    const activeSection = document.querySelector('.nav-item.active')?.dataset.section || '';
+    const sectionToPath = {
+      'page-snellville': '/snellville.html',
+      'page-commerce': '/commerce.html',
+      'page-whatWeBuy': '/what-we-buy.html',
+      'page-howItWorks': '/how-it-works.html',
+      'page-prices': '/prices.html',
+      'page-jewelry': '/jewelry.html',
+      'page-faqs': '/faqs.html',
+      'page-about': '/about.html',
+      'page-whyChoose': '/why-choose-gold-kings.html',
+      'page-churchFundraising': '/church-fundraising.html',
+      'page-terms': '/terms-conditions.html',
+      'page-privacy': '/privacy-policy.html',
+      'page-refundReturns': '/refund-returns.html'
+    };
+    const livePath = sectionToPath[activeSection] || '/';
+    const viewUrl = `${liveBase}${livePath}?cms=fresh`;
+    showToast('success', 'Saved!', `Live in ~3 seconds. <a href="${viewUrl}" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:underline;">View live &rarr;</a>`, 8000, true);
   } catch (err) {
     console.error('Save error:', err);
     showToast('error', 'Save failed', err.message || 'Unknown error. Check console for details.');
@@ -3257,6 +3440,10 @@ function init() {
   initClearButtons();
   initDirtyTracking();
   initAddTestimonial();
+  initKeyboardShortcuts();
+
+  const libraryRefresh = get('library-refresh');
+  if (libraryRefresh) libraryRefresh.addEventListener('click', loadImageLibrary);
 
   // Save button
   const saveBtn = get('save-btn');
