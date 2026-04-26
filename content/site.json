@@ -184,7 +184,8 @@
           "body": "Large collections, inherited pieces, and luxury watches including Rolex. Estate evaluations handled with care. Each piece assessed individually so nothing of value is overlooked. Bring the full collection — we work through it properly.",
           "list": "<li>Inherited jewelry collections</li>\n          <li>Luxury watches including Rolex</li>\n          <li>Antique and Victorian-era pieces</li>\n          <li>Estate lots of mixed jewelry</li>\n          <li>Church and fundraising gold donations</li>"
         }
-      ]
+      ],
+      "heroBackgroundImage": ""
     },
     "howItWorks": {
       "seoTitle": "How Selling Your Gold Works — Gold Kings | 5-Step Process",
@@ -192,7 +193,8 @@
       "heroMark": "PROCESS",
       "heroEyebrow": "◆ How Selling Your Gold Works",
       "heroTitle": "Five steps,<br><em>about ten minutes.</em>",
-      "heroSub": "Walk in. Watch us test and weigh. Hear how the offer is calculated. Decide. That's the whole process."
+      "heroSub": "Walk in. Watch us test and weigh. Hear how the offer is calculated. Decide. That's the whole process.",
+      "heroBackgroundImage": ""
     },
     "prices": {
       "seoTitle": "Live Gold & Silver Prices — Gold Kings Georgia",
@@ -200,7 +202,8 @@
       "heroMark": "PRICES",
       "heroEyebrow": "◆ Gold & Silver Prices",
       "heroTitle": "Transparent Pricing.<br><em>Live Market Rates.</em>",
-      "heroSub": "We don't guess. We don't use outdated charts. We use the live spot price at the moment you walk in — and we show you every step of the calculation."
+      "heroSub": "We don't guess. We don't use outdated charts. We use the live spot price at the moment you walk in — and we show you every step of the calculation.",
+      "heroBackgroundImage": ""
     },
     "jewelry": {
       "seoTitle": "Jewelry by Weight — Gold Kings | Market-Rate Gold & Silver",
@@ -240,7 +243,8 @@
           "alt": "Silver jewelry collection",
           "label": "Silver Jewelry"
         }
-      ]
+      ],
+      "heroBackgroundImage": ""
     },
     "faqs": {
       "seoTitle": "FAQs — Gold Kings | Selling Gold in Georgia",
@@ -248,7 +252,8 @@
       "heroMark": "ASK",
       "heroEyebrow": "◆ Frequently Asked Questions",
       "heroTitle": "Questions,<br><em>Answered Honestly.</em>",
-      "heroSub": "Everything you need to know before you walk in. No fine print. No surprises."
+      "heroSub": "Everything you need to know before you walk in. No fine print. No surprises.",
+      "heroBackgroundImage": ""
     },
     "about": {
       "seoTitle": "About Gold Kings — Honest, Transparent, Fair | Snellville & Commerce, GA",
@@ -256,7 +261,8 @@
       "heroMark": "ABOUT",
       "heroEyebrow": "◆ About Gold Kings · Established 2008",
       "heroTitle": "A local buyer<br><em>worth trusting.</em>",
-      "heroSub": "Selling gold and silver should be honest, transparent, and fair. That's the principle the business was built on. Two Georgia counters, one promise."
+      "heroSub": "Selling gold and silver should be honest, transparent, and fair. That's the principle the business was built on. Two Georgia counters, one promise.",
+      "heroBackgroundImage": ""
     },
     "whyChoose": {
       "seoTitle": "Why Choose Gold Kings — Transparent, Licensed, No Pressure",
@@ -264,7 +270,8 @@
       "heroMark": "TRUST",
       "heroEyebrow": "◆ Why Choose Gold Kings",
       "heroTitle": "Transparent dealings,<br><em>real comfort.</em>",
-      "heroSub": "Six reasons customers come back, send friends, and trust us with the items that matter to them."
+      "heroSub": "Six reasons customers come back, send friends, and trust us with the items that matter to them.",
+      "heroBackgroundImage": ""
     },
     "churchFundraising": {
       "seoTitle": "Church Gold Fundraising Program — Gold Kings | Faith-Based Stewardship",
@@ -272,7 +279,8 @@
       "heroMark": "FAITH",
       "heroEyebrow": "◆ Church Gold Fundraising Program",
       "heroTitle": "Stewardship,<br><em>handled with care.</em>",
-      "heroSub": "Help your congregation turn unused gold and silver into real funding for ministry — through a transparent process you can show your members."
+      "heroSub": "Help your congregation turn unused gold and silver into real funding for ministry — through a transparent process you can show your members.",
+      "heroBackgroundImage": ""
     },
     "terms": {
       "seoTitle": "Terms & Conditions — Gold Kings | Snellville & Commerce, GA",
@@ -280,7 +288,8 @@
       "heroMark": "TERMS",
       "heroEyebrow": "◆ Legal · Terms & Conditions",
       "heroTitle": "The fine print,<br><em>plainly written.</em>",
-      "heroSub": "By visiting our website or one of our Georgia counters, you agree to the terms below. We've kept them as direct as we can."
+      "heroSub": "By visiting our website or one of our Georgia counters, you agree to the terms below. We've kept them as direct as we can.",
+      "heroBackgroundImage": ""
     },
     "privacy": {
       "seoTitle": "Privacy Policy — Gold Kings | Snellville & Commerce, GA",
@@ -288,7 +297,8 @@
       "heroMark": "PRIVACY",
       "heroEyebrow": "◆ Legal · Privacy Policy",
       "heroTitle": "Your information,<br><em>handled with care.</em>",
-      "heroSub": "What we collect, what we do with it, and what you can ask us to do about it."
+      "heroSub": "What we collect, what we do with it, and what you can ask us to do about it.",
+      "heroBackgroundImage": ""
     },
     "refundReturns": {
       "seoTitle": "Refund & Returns Policy — Gold Kings | All Sales Are Final",
@@ -296,7 +306,8 @@
       "heroMark": "FINAL",
       "heroEyebrow": "◆ Legal · Refund & Returns",
       "heroTitle": "All sales<br><em>are final.</em>",
-      "heroSub": "We're a precious-metals dealer, not a pawn shop. Make sure you're comfortable with the offer before accepting payment."
+      "heroSub": "We're a precious-metals dealer, not a pawn shop. Make sure you're comfortable with the offer before accepting payment.",
+      "heroBackgroundImage": ""
     }
   }
 }

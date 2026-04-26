@@ -3359,6 +3359,33 @@ body::before {
 }
 .page-hero__content { position: relative; z-index: 1; }
 
+/* Optional CMS-controlled background image for any page-hero section.
+   Empty src (default) → display:none, page stays text-only as designed.
+   When admin uploads an image → fills the hero with a subtle 35% overlay,
+   gold-tinted gradient on top so text + giant mark stay readable. */
+.page-hero__bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  display: none;
+}
+.page-hero__bg-img[src^="http"] {
+  display: block;
+  opacity: 0.35;
+}
+/* Readability scrim only when bg image is present */
+.page-hero:has(.page-hero__bg-img[src^="http"])::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 8, 4, 0.45) 0%, rgba(10, 8, 4, 0.78) 100%);
+  z-index: 0;
+  pointer-events: none;
+}
+
 @media (max-width: 700px) {
   .page-hero__mark {
     font-size: 28vw;
