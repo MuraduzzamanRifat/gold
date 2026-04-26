@@ -3384,16 +3384,21 @@ body::before {
 }
 .page-hero__bg-img[src^="http"] {
   display: block;
-  opacity: 0.35;
+  opacity: 0.95;
 }
-/* Readability scrim only when bg image is present */
+/* Readability scrim only when bg image is present — light enough that the
+   uploaded image is obviously visible, dark enough that hero text still reads. */
 .page-hero:has(.page-hero__bg-img[src^="http"])::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(10, 8, 4, 0.45) 0%, rgba(10, 8, 4, 0.78) 100%);
+  background: linear-gradient(180deg, rgba(10, 8, 4, 0.20) 0%, rgba(10, 8, 4, 0.55) 100%);
   z-index: 0;
   pointer-events: none;
+}
+/* Hide the giant outline mark when a bg image is set — they fight visually */
+.page-hero:has(.page-hero__bg-img[src^="http"]) .page-hero__mark {
+  opacity: 0.12;
 }
 
 @media (max-width: 700px) {
