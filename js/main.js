@@ -257,16 +257,19 @@ async function buildShowcase() {
    ============================================================================ */
 
 function editorialReveals() {
-  gsap.from('[data-reveal]', {
-    y: 40,
-    opacity: 0,
-    duration: 1.0,
-    ease: 'power3.out',
-    stagger: 0.1,
-    scrollTrigger: {
-      trigger: '[data-reveal]',
-      start: 'top 85%'
-    }
+  // Per-element reveal so each one triggers when it enters its own viewport zone
+  document.querySelectorAll('[data-reveal]').forEach(el => {
+    gsap.from(el, {
+      y: 40,
+      opacity: 0,
+      duration: 1.0,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 88%',
+        once: true
+      }
+    });
   });
 
   gsap.from('.gallery__title, .about__title', {
@@ -280,6 +283,30 @@ function editorialReveals() {
       start: 'top 85%'
     }
   });
+
+  // Page-mark slow drift in
+  const mark = document.querySelector('.page-hero__mark');
+  if (mark) {
+    gsap.from(mark, {
+      x: -80,
+      opacity: 0,
+      duration: 1.6,
+      ease: 'expo.out',
+      delay: 0.2
+    });
+  }
+}
+
+/* Nav scroll behavior — adds .scrolled class for backdrop blur */
+function initNavScroll() {
+  const nav = document.querySelector('.nav');
+  if (!nav) return;
+  const onScroll = () => {
+    if (window.scrollY > 40) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 }
 
 /* ============================================================================
@@ -307,19 +334,22 @@ function aboutParallax() {
 async function boot() {
   initCursor();
   initSmoothScroll();
+  initNavScroll();
 
   const heroCanvas = document.getElementById('hero-canvas');
-  if (!window.matchMedia('(max-width: 900px)').matches) {
-    initHero({ canvas: heroCanvas, imageUrl: heroImage }).catch(() => {
-      if (heroCanvas) heroCanvas.style.cssText = `background:url('${heroImage}') center/cover;`;
-    });
-  } else {
-    const stage = document.querySelector('.hero__stage');
-    if (stage) stage.style.cssText = `background:url('${heroImage}') center/cover no-repeat;min-height:100vh;`;
-    if (heroCanvas) heroCanvas.remove();
+  if (heroCanvas) {
+    if (!window.matchMedia('(max-width: 900px)').matches) {
+      initHero({ canvas: heroCanvas, imageUrl: heroImage }).catch(() => {
+        heroCanvas.style.cssText = `background:url('${heroImage}') center/cover;`;
+      });
+    } else {
+      const stage = document.querySelector('.hero__stage');
+      if (stage) stage.style.cssText = `background:url('${heroImage}') center/cover no-repeat;min-height:100vh;`;
+      heroCanvas.remove();
+    }
   }
-
-  revealHero();
+  // Reveal hero on any page that has one (including image-based hero on location pages)
+  if (document.querySelector('.hero__title .line')) revealHero();
 
   requestAnimationFrame(async () => {
     try {

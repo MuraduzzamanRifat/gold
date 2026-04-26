@@ -3405,3 +3405,202 @@ body::before {
   color: var(--fg-3);
   margin-bottom: 6px;
 }
+
+/* ============================================================================
+   PREMIUM SUB-PAGE UPLIFT — page-mark, micro-interactions, dividers
+   ============================================================================ */
+
+/* Giant faint serif word behind .page-hero — editorial weight */
+.page-hero {
+  --mark-opacity: 0.045;
+}
+.page-hero__mark {
+  position: absolute;
+  left: 50%;
+  bottom: -8%;
+  transform: translateX(-50%);
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(140px, 24vw, 380px);
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  color: var(--gold-light);
+  opacity: var(--mark-opacity);
+  pointer-events: none;
+  white-space: nowrap;
+  user-select: none;
+  z-index: 0;
+}
+.page-hero__content { position: relative; z-index: 1; }
+
+@media (max-width: 700px) {
+  .page-hero__mark {
+    font-size: 28vw;
+    bottom: -3%;
+    opacity: 0.06;
+  }
+}
+
+/* Reveal animation init state — GSAP toggles opacity/y */
+[data-reveal] {
+  will-change: transform, opacity;
+}
+
+/* Editorial underline reveal — Pentagram pattern */
+.editorial__list a,
+.faq-section__category a,
+.detail-link,
+.footer__col a {
+  background: linear-gradient(currentColor, currentColor) bottom left / 0% 1px no-repeat;
+  transition: background-size 0.35s var(--ease, cubic-bezier(0.65, 0, 0.35, 1)), color 0.2s;
+  padding-bottom: 2px;
+}
+.editorial__list a:hover,
+.faq-section__category a:hover,
+.detail-link:hover,
+.footer__col a:hover {
+  background-size: 100% 1px;
+}
+
+/* Card hover micro-interaction */
+.jewelry-card,
+.benefit-card {
+  transition: transform 0.4s var(--ease, cubic-bezier(0.65, 0, 0.35, 1)),
+              border-color 0.3s, box-shadow 0.4s;
+}
+.jewelry-card:hover,
+.benefit-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--gold);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45),
+              0 0 0 1px rgba(200, 164, 90, 0.20);
+}
+.jewelry-card img,
+.benefit-card img {
+  transition: transform 0.6s var(--ease, cubic-bezier(0.65, 0, 0.35, 1));
+}
+.jewelry-card:hover img,
+.benefit-card:hover img {
+  transform: scale(1.04);
+}
+
+/* Process step hover — number lifts and gilds */
+.process-step {
+  transition: transform 0.3s ease-out;
+  position: relative;
+}
+.process-step::after {
+  content: '';
+  position: absolute;
+  bottom: -16px;
+  left: 50%;
+  transform: translateX(-50%) scaleX(0);
+  width: 32px;
+  height: 1px;
+  background: var(--gold);
+  transition: transform 0.4s var(--ease, cubic-bezier(0.65, 0, 0.35, 1));
+  transform-origin: center;
+}
+.process-step:hover::after {
+  transform: translateX(-50%) scaleX(1);
+}
+.process-step__num {
+  transition: color 0.3s, transform 0.3s;
+  display: inline-block;
+}
+.process-step:hover .process-step__num {
+  color: var(--gold-light);
+  transform: scale(1.06);
+}
+
+/* FAQ item summary marker rotates on hover (before open) */
+.faq-item summary {
+  transition: color 0.25s;
+  position: relative;
+}
+.faq-item summary::marker { display: none; }
+.faq-item summary:hover { color: var(--gold-light); }
+
+/* Stat strip — entries fade in with stagger via data-reveal */
+.stat-strip .stat-item {
+  position: relative;
+}
+.stat-strip .stat-item::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--gold);
+  transition: width 0.5s var(--ease, cubic-bezier(0.65, 0, 0.35, 1));
+}
+.stat-strip .stat-item:hover::after {
+  width: 100%;
+}
+
+/* Section atmospheric corner gradient — variation across sections */
+.editorial,
+.dont-buy,
+.process-strip,
+.page-cta,
+.prices-how-section,
+.prices-expect-section,
+.price-silver-section,
+.how-steps,
+.jewelry-categories-section,
+.why-section,
+.faq-section,
+.benefits {
+  position: relative;
+  isolation: isolate;
+}
+.editorial::before,
+.dont-buy::before,
+.process-strip::before,
+.page-cta::before,
+.prices-how-section::before,
+.prices-expect-section::before,
+.price-silver-section::before,
+.how-steps::before,
+.jewelry-categories-section::before,
+.why-section::before,
+.faq-section::before,
+.benefits::before {
+  content: '';
+  position: absolute;
+  width: 60vw;
+  height: 60vw;
+  max-width: 900px;
+  max-height: 900px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200, 164, 90, 0.04) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: -1;
+  top: -20%;
+  left: -10%;
+}
+.dont-buy::before,
+.page-cta::before,
+.prices-expect-section::before,
+.jewelry-categories-section::before,
+.benefits::before {
+  left: auto;
+  right: -10%;
+  top: auto;
+  bottom: -20%;
+}
+
+/* Hairline divider between sections */
+.section-divider {
+  height: 1px;
+  background: var(--divider-gradient, linear-gradient(90deg, transparent, rgba(200,164,90,0.30), transparent));
+  margin: 0 var(--edge);
+}
+
+/* Sub-page nav — match index nav scroll behavior smoothly */
+.nav.scrolled {
+  background: rgba(10, 8, 4, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}

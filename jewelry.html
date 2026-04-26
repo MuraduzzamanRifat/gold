@@ -14,12 +14,41 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://images.pexels.com" crossorigin>
 
-  <link rel="stylesheet" href="./css/style.css?v=20260425b">
+  <!-- Async-load fonts -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
+
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js">
+
+  <link rel="stylesheet" href="./css/style.css?v=20260426c">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%91%91%3C/text%3E%3C/svg%3E">
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js"
+    }
+  }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+
+  <script type="module" src="./js/main.js?v=20260426c"></script>
 </head>
 <body>
+
+
+  <!-- CURSOR -->
+  <div class="cursor" id="cursor">
+    <div class="cursor__dot"></div>
+    <div class="cursor__ring"></div>
+    <div class="cursor__label"></div>
+  </div>
 
   <!-- TOPBAR -->
   <div class="topbar">
@@ -34,10 +63,7 @@
   <!-- NAVIGATION -->
   <header class="nav" id="nav" role="banner">
     <a href="index.html" class="nav__brand" aria-label="Gold Kings Home">
-      <div class="logo">
-        <span class="logo__crown">👑</span>
-        <span class="logo__text"><span class="logo__gold">Gold</span><span class="logo__kings">Kings</span></span>
-      </div>
+      <img src="./img/logo.png" alt="Gold Kings" class="nav__logo-img" width="164" height="40" fetchpriority="high" decoding="async">
       <span class="nav__tagline">ONLINE</span>
     </a>
     <nav class="nav__links" aria-label="Main navigation">
@@ -55,6 +81,7 @@
 
   <!-- PAGE HERO -->
   <section class="page-hero">
+    <span class="page-hero__mark" aria-hidden="true">WEIGHT</span>
     <div class="page-hero__content">
       <p class="page-hero__eyebrow">◆ Jewelry by Weight</p>
       <h1 class="page-hero__title">Jewelry <em>by Weight</em> —<br>Fair Market Pricing</h1>
@@ -64,22 +91,22 @@
 
   <!-- HOW IT WORKS STEPS -->
   <div class="how-steps" aria-label="How purchasing by weight works">
-    <div class="how-step">
+    <div class="how-step" data-reveal>
       <span class="how-step__num">01</span>
       <h2 class="how-step__title">Browse</h2>
       <p class="how-step__body">Explore available pieces in-store: chains, rings, bracelets, earrings, pendants, and coins. Our selection rotates as we acquire new pieces.</p>
     </div>
-    <div class="how-step">
+    <div class="how-step" data-reveal>
       <span class="how-step__num">02</span>
       <h2 class="how-step__title">Choose</h2>
       <p class="how-step__body">Select what you love. Take your time. There is no pressure and no sales pitch. Pick the pieces that matter to you.</p>
     </div>
-    <div class="how-step">
+    <div class="how-step" data-reveal>
       <span class="how-step__num">03</span>
       <h2 class="how-step__title">We Weigh</h2>
       <p class="how-step__body">In front of you, on a certified digital scale. The weight reading is final. No estimates, no approximations.</p>
     </div>
-    <div class="how-step">
+    <div class="how-step" data-reveal>
       <span class="how-step__num">04</span>
       <h2 class="how-step__title">You Pay</h2>
       <p class="how-step__body">Calculated at today's gold or silver market price. Fair. Transparent. No hidden fees, no retail premium, no negotiation theatre.</p>
@@ -93,7 +120,7 @@
       <h2 class="jewelry-categories-section__title">Find Something <em>Worth Wearing.</em></h2>
     </div>
     <div class="jewelry-grid" role="list" aria-label="Jewelry categories available">
-      <div class="jewelry-card" role="listitem">
+      <div class="jewelry-card" data-reveal role="listitem">
         <img
           src="https://images.pexels.com/photos/5632399/pexels-photo-5632399.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop"
           alt="Gold chains and necklaces"
@@ -103,7 +130,7 @@
         >
         <span class="jewelry-card__label">Gold Chains &amp; Necklaces</span>
       </div>
-      <div class="jewelry-card" role="listitem">
+      <div class="jewelry-card" data-reveal role="listitem">
         <img
           src="https://images.pexels.com/photos/1191531/pexels-photo-1191531.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop"
           alt="Gold rings and bands"
@@ -113,7 +140,7 @@
         >
         <span class="jewelry-card__label">Rings &amp; Bands</span>
       </div>
-      <div class="jewelry-card" role="listitem">
+      <div class="jewelry-card" data-reveal role="listitem">
         <img
           src="https://images.pexels.com/photos/3945683/pexels-photo-3945683.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop"
           alt="Gold bracelets and bangles"
@@ -123,7 +150,7 @@
         >
         <span class="jewelry-card__label">Bracelets &amp; Bangles</span>
       </div>
-      <div class="jewelry-card" role="listitem">
+      <div class="jewelry-card" data-reveal role="listitem">
         <img
           src="https://images.pexels.com/photos/1458867/pexels-photo-1458867.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop"
           alt="Gold earrings and pendants"
@@ -133,7 +160,7 @@
         >
         <span class="jewelry-card__label">Earrings &amp; Pendants</span>
       </div>
-      <div class="jewelry-card" role="listitem">
+      <div class="jewelry-card" data-reveal role="listitem">
         <img
           src="https://images.pexels.com/photos/4194857/pexels-photo-4194857.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop"
           alt="Gold and silver coins"
@@ -143,7 +170,7 @@
         >
         <span class="jewelry-card__label">Gold &amp; Silver Coins</span>
       </div>
-      <div class="jewelry-card" role="listitem">
+      <div class="jewelry-card" data-reveal role="listitem">
         <img
           src="https://images.pexels.com/photos/3998365/pexels-photo-3998365.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop"
           alt="Silver jewelry collection"
@@ -187,19 +214,19 @@
 
   <!-- STAT STRIP -->
   <div class="stat-strip" aria-label="Key facts about buying jewelry by weight">
-    <div class="stat-item">
+    <div class="stat-item" data-reveal>
       <span class="stat-item__val">Live</span>
       <span class="stat-item__label">Market Pricing</span>
     </div>
-    <div class="stat-item">
+    <div class="stat-item" data-reveal>
       <span class="stat-item__val">0%</span>
       <span class="stat-item__label">Retail Markup</span>
     </div>
-    <div class="stat-item">
+    <div class="stat-item" data-reveal>
       <span class="stat-item__val">In Store</span>
       <span class="stat-item__label">Weighed Before You</span>
     </div>
-    <div class="stat-item">
+    <div class="stat-item" data-reveal>
       <span class="stat-item__val">2 Stores</span>
       <span class="stat-item__label">Snellville &amp; Commerce</span>
     </div>
@@ -229,10 +256,7 @@
   <footer class="footer">
     <div class="footer__top">
       <div class="footer__brand">
-        <div class="logo logo--footer">
-          <span class="logo__crown">👑</span>
-          <span class="logo__text"><span class="logo__gold">Gold</span><span class="logo__kings">Kings</span></span>
-        </div>
+        <img src="./img/logo.png" alt="Gold Kings" class="footer__logo-img" width="148" height="36" loading="lazy" decoding="async">
         <span class="footer__sub">ONLINE</span>
       </div>
       <p class="footer__desc">Licensed Georgia precious-metals dealer. We buy gold, silver, jewelry, coins, and valuables. Transparent pricing, same-day payment, no pressure.</p>

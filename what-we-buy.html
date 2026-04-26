@@ -14,9 +14,16 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://images.pexels.com" crossorigin>
 
-  <link rel="stylesheet" href="./css/style.css?v=20260425b">
+  <!-- Async-load fonts -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
+
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js">
+
+  <link rel="stylesheet" href="./css/style.css?v=20260426c">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%91%91%3C/text%3E%3C/svg%3E">
 
   <script type="application/ld+json">
@@ -28,8 +35,30 @@
     "url": "https://muraduzzamanrifat.github.io/gold/what-we-buy.html"
   }
   </script>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js"
+    }
+  }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+
+  <script type="module" src="./js/main.js?v=20260426c"></script>
 </head>
 <body>
+
+
+  <!-- CURSOR -->
+  <div class="cursor" id="cursor">
+    <div class="cursor__dot"></div>
+    <div class="cursor__ring"></div>
+    <div class="cursor__label"></div>
+  </div>
 
   <!-- TOPBAR -->
   <div class="topbar">
@@ -44,10 +73,7 @@
   <!-- NAVIGATION -->
   <header class="nav" id="nav" role="banner">
     <a href="index.html" class="nav__brand" aria-label="Gold Kings Home">
-      <div class="logo">
-        <span class="logo__crown">👑</span>
-        <span class="logo__text"><span class="logo__gold">Gold</span><span class="logo__kings">Kings</span></span>
-      </div>
+      <img src="./img/logo.png" alt="Gold Kings" class="nav__logo-img" width="164" height="40" fetchpriority="high" decoding="async">
       <span class="nav__tagline">ONLINE</span>
     </a>
     <nav class="nav__links" aria-label="Main navigation">
@@ -65,6 +91,7 @@
 
   <!-- PAGE HERO -->
   <section class="page-hero">
+    <span class="page-hero__mark" aria-hidden="true">BUY</span>
     <div class="page-hero__content">
       <p class="page-hero__eyebrow">◆ What We Buy</p>
       <h1 class="page-hero__title">We Buy <em>Everything</em> Precious</h1>
@@ -74,26 +101,26 @@
 
   <!-- STAT STRIP -->
   <div class="stat-strip" aria-label="Key facts">
-    <div class="stat-item">
+    <div class="stat-item" data-reveal>
       <span class="stat-item__val">10K–24K</span>
       <span class="stat-item__label">All Gold Karats</span>
     </div>
-    <div class="stat-item">
+    <div class="stat-item" data-reveal>
       <span class="stat-item__val">70–90%</span>
       <span class="stat-item__label">Of Spot Price Paid</span>
     </div>
-    <div class="stat-item">
+    <div class="stat-item" data-reveal>
       <span class="stat-item__val">10 min</span>
       <span class="stat-item__label">Average Transaction</span>
     </div>
-    <div class="stat-item">
+    <div class="stat-item" data-reveal>
       <span class="stat-item__val">Same Day</span>
       <span class="stat-item__label">Payment</span>
     </div>
   </div>
 
   <!-- EDITORIAL: GOLD JEWELRY -->
-  <section class="editorial">
+  <section class="editorial" data-reveal>
     <div class="editorial__grid">
       <div class="editorial__visual">
         <img
@@ -120,7 +147,7 @@
   </section>
 
   <!-- EDITORIAL: SILVER JEWELRY & FLATWARE -->
-  <section class="editorial editorial--alt editorial--reverse">
+  <section class="editorial editorial--alt editorial--reverse" data-reveal>
     <div class="editorial__grid">
       <div class="editorial__visual">
         <img
@@ -147,7 +174,7 @@
   </section>
 
   <!-- EDITORIAL: COINS & BULLION -->
-  <section class="editorial">
+  <section class="editorial" data-reveal>
     <div class="editorial__grid">
       <div class="editorial__visual">
         <img
@@ -174,7 +201,7 @@
   </section>
 
   <!-- EDITORIAL: SCRAP & DENTAL GOLD -->
-  <section class="editorial editorial--alt editorial--reverse">
+  <section class="editorial editorial--alt editorial--reverse" data-reveal>
     <div class="editorial__grid">
       <div class="editorial__visual">
         <img
@@ -201,7 +228,7 @@
   </section>
 
   <!-- EDITORIAL: ESTATE JEWELRY & WATCHES -->
-  <section class="editorial">
+  <section class="editorial" data-reveal>
     <div class="editorial__grid">
       <div class="editorial__visual">
         <img
@@ -244,27 +271,27 @@
 
   <!-- PROCESS STRIP -->
   <div class="process-strip" aria-label="Our process">
-    <div class="process-step">
+    <div class="process-step" data-reveal>
       <span class="process-step__num">01</span>
       <span class="process-step__label">WALK IN</span>
       <span class="process-step__sub">No appointment. No forms. Just bring your items.</span>
     </div>
-    <div class="process-step">
+    <div class="process-step" data-reveal>
       <span class="process-step__num">02</span>
       <span class="process-step__label">FREE TEST</span>
       <span class="process-step__sub">We verify purity and weight in front of you.</span>
     </div>
-    <div class="process-step">
+    <div class="process-step" data-reveal>
       <span class="process-step__num">03</span>
       <span class="process-step__label">LIVE PRICE</span>
       <span class="process-step__sub">We calculate based on today's live spot price.</span>
     </div>
-    <div class="process-step">
+    <div class="process-step" data-reveal>
       <span class="process-step__num">04</span>
       <span class="process-step__label">CLEAR OFFER</span>
       <span class="process-step__sub">A single, honest number. No hidden deductions.</span>
     </div>
-    <div class="process-step">
+    <div class="process-step" data-reveal>
       <span class="process-step__num">05</span>
       <span class="process-step__label">SAME-DAY PAYMENT</span>
       <span class="process-step__sub">Cash, check, Zelle, CashApp, PayPal, Venmo, or wire.</span>
@@ -295,10 +322,7 @@
   <footer class="footer">
     <div class="footer__top">
       <div class="footer__brand">
-        <div class="logo logo--footer">
-          <span class="logo__crown">👑</span>
-          <span class="logo__text"><span class="logo__gold">Gold</span><span class="logo__kings">Kings</span></span>
-        </div>
+        <img src="./img/logo.png" alt="Gold Kings" class="footer__logo-img" width="148" height="36" loading="lazy" decoding="async">
         <span class="footer__sub">ONLINE</span>
       </div>
       <p class="footer__desc">Licensed Georgia precious-metals dealer. We buy gold, silver, jewelry, coins, and valuables. Transparent pricing, same-day payment, no pressure.</p>

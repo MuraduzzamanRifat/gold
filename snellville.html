@@ -14,9 +14,16 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://images.pexels.com" crossorigin>
 
-  <link rel="stylesheet" href="./css/style.css?v=20260425b">
+  <!-- Async-load fonts -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
+
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js">
+
+  <link rel="stylesheet" href="./css/style.css?v=20260426c">
   <link rel="canonical" href="https://muraduzzamanrifat.github.io/gold/snellville.html">
   <meta property="og:url" content="https://muraduzzamanrifat.github.io/gold/snellville.html">
   <meta name="twitter:card" content="summary_large_image">
@@ -49,6 +56,20 @@
     ]
   }
   </script>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js"
+    }
+  }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+
+  <script type="module" src="./js/main.js?v=20260426c"></script>
 </head>
 <body>
 
@@ -72,10 +93,7 @@
   <!-- NAVIGATION -->
   <header class="nav" id="nav" role="banner">
     <a href="index.html" class="nav__brand" aria-label="Gold Kings Home">
-      <div class="logo">
-        <span class="logo__crown">👑</span>
-        <span class="logo__text"><span class="logo__gold">Gold</span><span class="logo__kings">Kings</span></span>
-      </div>
+      <img src="./img/logo.png" alt="Gold Kings" class="nav__logo-img" width="164" height="40" fetchpriority="high" decoding="async">
       <span class="nav__tagline">ONLINE</span>
     </a>
     <nav class="nav__links" aria-label="Main navigation">
@@ -142,12 +160,12 @@
   <!-- LOCATION DETAILS SECTION -->
   <section class="location-hero" id="contact">
     <div class="location-container">
-      <div class="location-info">
+      <div class="location-info" data-reveal>
         <span class="t-eyebrow">◆ Snellville Location</span>
         <h2 class="location-title">Visit Our <em>Snellville Store</em></h2>
 
         <div class="location-details">
-          <div class="detail-group">
+          <div class="detail-group" data-reveal>
             <h3 class="detail-label">Address</h3>
             <p class="detail-value">
               <a href="https://maps.google.com/?q=3635+Stone+Mountain+Hwy,Snellville,GA+30039" target="_blank" rel="noopener noreferrer" class="detail-link">
@@ -156,21 +174,21 @@
             </p>
           </div>
 
-          <div class="detail-group">
+          <div class="detail-group" data-reveal>
             <h3 class="detail-label">Phone</h3>
             <p class="detail-value">
               <a href="tel:+17707714650" class="detail-link">770-771-4650</a>
             </p>
           </div>
 
-          <div class="detail-group">
+          <div class="detail-group" data-reveal>
             <h3 class="detail-label">Email</h3>
             <p class="detail-value">
               <a href="mailto:Dan@goldntreasures.co" class="detail-link">Dan@goldntreasures.co</a>
             </p>
           </div>
 
-          <div class="detail-group">
+          <div class="detail-group" data-reveal>
             <h3 class="detail-label">Store Hours</h3>
             <ul class="hours-list">
               <li><span>Monday – Saturday</span><span>10:00 AM – 6:00 PM</span></li>
@@ -178,7 +196,7 @@
             </ul>
           </div>
 
-          <div class="detail-group">
+          <div class="detail-group" data-reveal>
             <h3 class="detail-label">We Buy</h3>
             <ul class="accept-list">
               <li>Gold Jewelry (10K–24K)</li>
@@ -248,37 +266,37 @@
       <h2 class="benefits-title">Your Trusted <em>Local Partner</em></h2>
 
       <div class="benefits-grid">
-        <div class="benefit-card">
+        <div class="benefit-card" data-reveal>
           <div class="benefit-icon">💎</div>
           <h3>Transparent Testing</h3>
           <p>Purity verified with professional equipment, in front of you. You watch every step of the process.</p>
         </div>
 
-        <div class="benefit-card">
+        <div class="benefit-card" data-reveal>
           <div class="benefit-icon">⚡</div>
           <h3>Same-Day Payment</h3>
           <p>Cash, check, Zelle, CashApp, PayPal, Venmo, or wire. You leave with your money the same day.</p>
         </div>
 
-        <div class="benefit-card">
+        <div class="benefit-card" data-reveal>
           <div class="benefit-icon">🔒</div>
           <h3>Licensed &amp; Compliant</h3>
           <p>Fully licensed Georgia precious-metals dealer under O.C.G.A. § 10-1-350. Professional and secure.</p>
         </div>
 
-        <div class="benefit-card">
+        <div class="benefit-card" data-reveal>
           <div class="benefit-icon">👥</div>
           <h3>No Pressure</h3>
           <p>Review the offer. Walk away if you want. We'd rather earn your trust than rush a transaction.</p>
         </div>
 
-        <div class="benefit-card">
+        <div class="benefit-card" data-reveal>
           <div class="benefit-icon">📍</div>
           <h3>Walk-Ins Welcome</h3>
           <p>No appointment needed. Come in anytime Monday through Saturday, 10AM to 6PM.</p>
         </div>
 
-        <div class="benefit-card">
+        <div class="benefit-card" data-reveal>
           <div class="benefit-icon">✅</div>
           <h3>Live Market Rates</h3>
           <p>We pay based on the current spot price — the same number you can verify on your phone right now.</p>
@@ -303,10 +321,7 @@
   <footer class="footer">
     <div class="footer__top">
       <div class="footer__brand">
-        <div class="logo logo--footer">
-          <span class="logo__crown">👑</span>
-          <span class="logo__text"><span class="logo__gold">Gold</span><span class="logo__kings">Kings</span></span>
-        </div>
+        <img src="./img/logo.png" alt="Gold Kings" class="footer__logo-img" width="148" height="36" loading="lazy" decoding="async">
         <span class="footer__sub">ONLINE</span>
       </div>
       <p class="footer__desc">Licensed Georgia precious-metals dealer. We buy gold, silver, jewelry, coins, and valuables. Transparent pricing, same-day payment, no pressure.</p>
@@ -345,6 +360,5 @@
     </div>
   </footer>
 
-  <script src="./js/location-page.js" type="module"></script>
 </body>
 </html>

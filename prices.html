@@ -14,12 +14,41 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://images.pexels.com" crossorigin>
 
-  <link rel="stylesheet" href="./css/style.css?v=20260425b">
+  <!-- Async-load fonts -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
+
+  <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js">
+
+  <link rel="stylesheet" href="./css/style.css?v=20260426c">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%91%91%3C/text%3E%3C/svg%3E">
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js"
+    }
+  }
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
+
+  <script type="module" src="./js/main.js?v=20260426c"></script>
 </head>
 <body>
+
+
+  <!-- CURSOR -->
+  <div class="cursor" id="cursor">
+    <div class="cursor__dot"></div>
+    <div class="cursor__ring"></div>
+    <div class="cursor__label"></div>
+  </div>
 
   <!-- TOPBAR -->
   <div class="topbar">
@@ -34,10 +63,7 @@
   <!-- NAVIGATION -->
   <header class="nav" id="nav" role="banner">
     <a href="index.html" class="nav__brand" aria-label="Gold Kings Home">
-      <div class="logo">
-        <span class="logo__crown">👑</span>
-        <span class="logo__text"><span class="logo__gold">Gold</span><span class="logo__kings">Kings</span></span>
-      </div>
+      <img src="./img/logo.png" alt="Gold Kings" class="nav__logo-img" width="164" height="40" fetchpriority="high" decoding="async">
       <span class="nav__tagline">ONLINE</span>
     </a>
     <nav class="nav__links" aria-label="Main navigation">
@@ -55,6 +81,7 @@
 
   <!-- PAGE HERO -->
   <section class="page-hero">
+    <span class="page-hero__mark" aria-hidden="true">PRICES</span>
     <div class="page-hero__content">
       <p class="page-hero__eyebrow">◆ Gold &amp; Silver Prices</p>
       <h1 class="page-hero__title">Transparent Pricing.<br><em>Live Market Rates.</em></h1>
@@ -97,12 +124,12 @@
       <p class="prices-how-section__eyebrow">◆ HOW PRICING WORKS</p>
       <h2 class="prices-how-section__title">Three Factors.<br><em>One Honest Number.</em></h2>
       <div class="price-factors">
-        <div class="price-factor">
+        <div class="price-factor" data-reveal>
           <div class="price-factor__icon">◆</div>
           <h3 class="price-factor__title">Spot Price</h3>
           <p class="price-factor__body">The global market price of gold or silver per troy ounce, updated in real time. This is the same number you can look up on any financial site while standing at our counter. We use no proprietary or adjusted rates.</p>
         </div>
-        <div class="price-factor">
+        <div class="price-factor" data-reveal>
           <div class="price-factor__icon">◆</div>
           <h3 class="price-factor__title">Purity (Karat)</h3>
           <p class="price-factor__body">Your offer is based on the actual gold content of your item — not the total weight including alloy metals.</p>
@@ -116,7 +143,7 @@
             </tbody>
           </table>
         </div>
-        <div class="price-factor">
+        <div class="price-factor" data-reveal>
           <div class="price-factor__icon">◆</div>
           <h3 class="price-factor__title">Weight</h3>
           <p class="price-factor__body">Measured on certified digital scales in grams or troy ounces — you watch every step. We do not use estimated or "trade" weights. The scale reading is the weight we calculate from.</p>
@@ -191,10 +218,7 @@
   <footer class="footer">
     <div class="footer__top">
       <div class="footer__brand">
-        <div class="logo logo--footer">
-          <span class="logo__crown">👑</span>
-          <span class="logo__text"><span class="logo__gold">Gold</span><span class="logo__kings">Kings</span></span>
-        </div>
+        <img src="./img/logo.png" alt="Gold Kings" class="footer__logo-img" width="148" height="36" loading="lazy" decoding="async">
         <span class="footer__sub">ONLINE</span>
       </div>
       <p class="footer__desc">Licensed Georgia precious-metals dealer. We buy gold, silver, jewelry, coins, and valuables. Transparent pricing, same-day payment, no pressure.</p>
