@@ -1347,6 +1347,9 @@ body::before {
   gap: var(--gap);
   max-width: 1600px;
   margin: 0 auto;
+  /* Cards size to their content; don't stretch short cards to match the
+     tallest in the row. Eliminates the huge empty-bottom gaps. */
+  align-items: start;
 }
 
 @media (max-width: 1200px) {
@@ -1482,7 +1485,9 @@ body::before {
    TESTIMONIAL CARDS
    ============================================================================ */
 
-.testimonial-card { min-height: 320px; }
+/* min-height removed — cards now size to content. Combined with
+   align-items:start on .gallery__grid, eliminates dead-space gaps below
+   short testimonials. */
 .testimonial-card:focus-visible {
   outline: 2px solid var(--gold-light);
   outline-offset: -2px;
