@@ -1,14 +1,24 @@
 // Gold Kings CMS — runtime content injector
 // Fetches content/site.json from GitHub raw CDN and patches the DOM.
 // Fallback: if fetch fails or field missing, hardcoded HTML stays intact.
-// Caches in sessionStorage for 5 minutes to avoid redundant fetches.
 
 (function () {
-  const RAW = 'https://raw.githubusercontent.com/MuraduzzamanRifat/gold/main/content/site.json';
-  const CACHE_KEY = 'gk_cms_v1';
-  const CACHE_TTL = 5 * 60 * 1000; // 5 minutes
+  const RAW_BASE = 'https://raw.githubusercontent.com/MuraduzzamanRifat/gold/main/content/site.json';
+  const CACHE_KEY = 'gk_cms_v3';
+  const CACHE_TTL = 30 * 1000; // 30s — admin saves visible within half a minute
+  // ?cms=fresh in the URL bypasses both JS and CDN cache (force-refresh escape hatch)
+  const FORCE_FRESH = /[?&]cms=fresh\b/.test(location.search);
+
+  // Bucket-based CDN buster: stable for 30s, changes after — defeats Fastly cache
+  // without making every page-load a unique URL.
+  function rawUrl() {
+    const bucket = Math.floor(Date.now() / CACHE_TTL);
+    const buster = FORCE_FRESH ? Date.now() : bucket;
+    return `${RAW_BASE}?_=${buster}`;
+  }
 
   function readCache() {
+    if (FORCE_FRESH) return null;
     try {
       const raw = sessionStorage.getItem(CACHE_KEY);
       if (!raw) return null;
@@ -258,7 +268,7 @@
     window.__cmsContent = cached;
     applyContent(cached);
   } else {
-    fetch(RAW)
+    fetch(rawUrl())
       .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(c => {
         window.__cmsContent = c;
