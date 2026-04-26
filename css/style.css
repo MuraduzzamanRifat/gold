@@ -3846,3 +3846,476 @@ body::before {
   transform-origin: center;
   transition: background-color 0.3s, color 0.3s, border-color 0.3s;
 }
+
+/* ============================================================================
+   PRICE CINEMA — premium editorial CTA right after hero
+   ============================================================================ */
+
+.price-cine {
+  position: relative;
+  padding: clamp(80px, 12vh, 160px) 0 clamp(100px, 14vh, 180px);
+  background: linear-gradient(180deg, #050402 0%, #0E0A05 50%, #050402 100%);
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.price-cine__bg { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.price-cine__bg-grain {
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+}
+.price-cine__bg-glow {
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80vw; height: 80vw; max-width: 1100px; max-height: 1100px;
+  background: radial-gradient(circle, rgba(212, 160, 23, 0.16) 0%, transparent 55%);
+  pointer-events: none; filter: blur(40px);
+}
+
+.price-cine__inner {
+  max-width: 1280px; margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 80px);
+  text-align: center; position: relative;
+}
+
+.price-cine__eyebrow {
+  display: inline-block;
+  font-family: var(--mono, "JetBrains Mono", monospace);
+  font-size: 11px; letter-spacing: 0.5em; text-transform: uppercase;
+  color: var(--gold);
+  padding: 8px 18px;
+  border: 1px solid rgba(200, 164, 90, 0.30);
+  border-radius: 999px;
+  margin-bottom: 36px;
+}
+
+.price-cine__ticker {
+  display: flex; align-items: baseline; justify-content: center; gap: 8px;
+  margin-bottom: 32px;
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-weight: 300; line-height: 0.9; letter-spacing: -0.04em;
+  color: var(--gold-light);
+  flex-wrap: wrap;
+}
+.price-cine__currency {
+  font-size: clamp(40px, 5vw, 72px);
+  color: var(--fg-2, rgba(253,250,245,0.7));
+  font-weight: 300;
+}
+.price-cine__amount {
+  font-size: clamp(80px, 14vw, 180px);
+  background: linear-gradient(180deg, #FFE9A8 0%, #C8A45A 50%, #8B7240 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 60px rgba(212, 160, 23, 0.3);
+}
+.price-cine__unit {
+  font-size: clamp(20px, 2.4vw, 32px);
+  color: var(--fg-3, rgba(253,250,245,0.4));
+  font-style: italic; letter-spacing: 0.04em;
+}
+.price-cine__delta {
+  margin-left: 18px;
+  font-family: var(--mono, monospace);
+  font-size: 12px; letter-spacing: 0.15em;
+  color: #5BD56F; font-weight: 500;
+  align-self: center;
+  padding: 4px 10px;
+  background: rgba(91, 213, 111, 0.12);
+  border-radius: 4px;
+}
+
+.price-cine__title {
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-weight: 300;
+  font-size: clamp(40px, 6vw, 92px);
+  line-height: 0.95; letter-spacing: -0.025em;
+  color: var(--fg); margin-bottom: 24px;
+}
+.price-cine__title em { font-style: italic; color: var(--gold-light); }
+
+.price-cine__sub {
+  font-size: clamp(15px, 1.4vw, 18px);
+  color: var(--fg-2, rgba(253,250,245,0.7));
+  max-width: 600px; margin: 0 auto 64px; line-height: 1.7;
+}
+
+/* Location cards — depth-shadowed glass with 3D tilt */
+.price-cine__locs {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+  max-width: 920px; margin: 0 auto;
+  perspective: 1200px;
+}
+
+.loc-card {
+  position: relative; display: block;
+  padding: 36px 32px;
+  text-align: left;
+  background: linear-gradient(160deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
+  border: 1px solid rgba(200, 164, 90, 0.18);
+  border-radius: 20px;
+  text-decoration: none; color: var(--fg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.5s, box-shadow 0.5s, background 0.5s;
+  transform-style: preserve-3d; will-change: transform;
+  overflow: hidden;
+}
+.loc-card::before {
+  content: ""; position: absolute;
+  top: 0; left: 50%; transform: translateX(-50%);
+  width: 70%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(226, 192, 107, 0.5), transparent);
+}
+.loc-card::after {
+  content: ""; position: absolute;
+  bottom: -50%; right: -30%;
+  width: 80%; height: 100%;
+  background: radial-gradient(ellipse at center, rgba(212, 160, 23, 0.18) 0%, transparent 60%);
+  opacity: 0; transition: opacity 0.6s; pointer-events: none;
+}
+.loc-card:hover {
+  border-color: rgba(226, 192, 107, 0.55);
+  background: linear-gradient(160deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02));
+  box-shadow:
+    0 30px 60px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(226, 192, 107, 0.30),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+.loc-card:hover::after { opacity: 1; }
+
+.loc-card__head {
+  display: flex; justify-content: space-between; align-items: center;
+  font-family: var(--mono, monospace);
+  font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+  margin-bottom: 28px; padding-bottom: 18px;
+  border-bottom: 1px solid rgba(200, 164, 90, 0.18);
+}
+.loc-card__num { color: var(--gold); }
+.loc-card__live { color: #5BD56F; font-weight: 500; }
+
+.loc-card__city {
+  font-family: var(--serif);
+  font-weight: 300; font-style: italic;
+  font-size: clamp(36px, 4.5vw, 56px);
+  line-height: 1.0; letter-spacing: -0.01em;
+  margin-bottom: 16px; color: var(--fg);
+}
+.loc-card__addr {
+  font-size: 14px; color: var(--fg-3, rgba(253,250,245,0.45));
+  line-height: 1.6; margin-bottom: 20px;
+}
+.loc-card__phone {
+  font-family: var(--serif);
+  font-size: 28px; font-weight: 500;
+  color: var(--gold-light); letter-spacing: 0.02em;
+  margin-bottom: 24px;
+}
+.loc-card__cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--mono, monospace);
+  font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--gold);
+  padding-top: 18px;
+  border-top: 1px solid rgba(200, 164, 90, 0.14);
+  transition: gap 0.3s, color 0.3s;
+}
+.loc-card:hover .loc-card__cta { gap: 16px; color: var(--gold-light); }
+
+@media (max-width: 768px) {
+  .price-cine__locs { grid-template-columns: 1fr; }
+  .price-cine__delta { margin-left: 0; }
+}
+
+/* ============================================================================
+   LOCX — cinematic locations/about with deep parallax + giant year mark
+   ============================================================================ */
+
+.locx {
+  position: relative;
+  padding: clamp(100px, 14vh, 200px) 0;
+  background: linear-gradient(180deg, #050402 0%, #0A0804 100%);
+  overflow: hidden; isolation: isolate;
+}
+
+.locx__mark {
+  position: absolute; bottom: -8%; left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(140px, 22vw, 380px);
+  line-height: 0.85; letter-spacing: -0.04em;
+  color: var(--gold-light); opacity: 0.04;
+  pointer-events: none; white-space: nowrap; user-select: none;
+  z-index: 0;
+}
+
+.locx__grid {
+  max-width: 1400px; margin: 0 auto;
+  padding: 0 clamp(20px, 5vw, 80px);
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 100px); align-items: center;
+  position: relative; z-index: 1;
+}
+
+.locx__media {
+  position: relative; aspect-ratio: 4/5;
+  perspective: 1200px;
+}
+.locx__media-frame {
+  position: relative; width: 100%; height: 100%;
+  overflow: hidden;
+  border: 1px solid rgba(200, 164, 90, 0.18);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.55), 0 0 0 8px rgba(0, 0, 0, 0.4);
+  transform-style: preserve-3d; will-change: transform;
+}
+.locx__media-frame img {
+  width: 100%; height: 110%;
+  object-fit: cover; object-position: center;
+  transition: transform 1.2s cubic-bezier(0.65, 0, 0.35, 1);
+  will-change: transform;
+}
+.locx__media-frame:hover img { transform: scale(1.06); }
+.locx__media-scrim {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, transparent 50%, rgba(7, 5, 3, 0.65) 100%),
+    radial-gradient(circle at 70% 30%, transparent 60%, rgba(7, 5, 3, 0.4));
+  pointer-events: none;
+}
+.locx__media-tag {
+  position: absolute;
+  bottom: -32px; right: -32px;
+  background: var(--gold); color: #0A0804;
+  padding: 18px 28px;
+  display: flex; align-items: baseline; gap: 12px;
+  font-family: var(--mono, monospace);
+  font-size: 10px; letter-spacing: 0.4em; text-transform: uppercase;
+  z-index: 2;
+  box-shadow: 0 12px 32px rgba(212, 160, 23, 0.35);
+}
+.locx__media-tag strong {
+  font-family: var(--serif);
+  font-weight: 500; font-size: 36px; letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.locx__text { padding: clamp(20px, 3vw, 40px) 0; }
+.locx__eyebrow {
+  display: inline-block;
+  font-family: var(--mono, monospace);
+  font-size: 11px; letter-spacing: 0.5em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 24px;
+}
+.locx__title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(44px, 5.5vw, 84px);
+  line-height: 0.98; letter-spacing: -0.02em;
+  margin-bottom: 28px;
+}
+.locx__title em { font-style: italic; color: var(--gold-light); }
+.locx__body {
+  font-size: clamp(15px, 1.3vw, 18px);
+  color: var(--fg-2, rgba(253,250,245,0.7));
+  line-height: 1.75; margin-bottom: 48px; max-width: 540px;
+}
+
+.locx__list {
+  display: flex; flex-direction: column; gap: 16px;
+  perspective: 1200px;
+}
+.locx__item {
+  display: block; padding: 28px 28px 24px;
+  background: linear-gradient(160deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  border: 1px solid rgba(200, 164, 90, 0.18);
+  border-radius: 14px;
+  text-decoration: none; color: var(--fg);
+  position: relative;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.5s, background 0.5s;
+  transform-style: preserve-3d; will-change: transform;
+  overflow: hidden;
+}
+.locx__item::before {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(226, 192, 107, 0.1), transparent 50%);
+  opacity: 0; transition: opacity 0.5s; pointer-events: none;
+}
+.locx__item:hover {
+  border-color: rgba(226, 192, 107, 0.45);
+  background: linear-gradient(160deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+}
+.locx__item:hover::before { opacity: 1; }
+
+.locx__item-num {
+  font-family: var(--mono, monospace);
+  font-size: 10px; letter-spacing: 0.4em;
+  color: var(--gold); display: block; margin-bottom: 10px;
+}
+.locx__item-city {
+  font-family: var(--serif);
+  font-weight: 300; font-style: italic;
+  font-size: 36px; line-height: 1.0; letter-spacing: -0.01em;
+  margin-bottom: 8px; color: var(--fg);
+}
+.locx__item-addr {
+  font-size: 13px; color: var(--fg-3, rgba(253,250,245,0.5));
+  line-height: 1.5; margin-bottom: 18px;
+}
+.locx__item-row {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 14px;
+  border-top: 1px solid rgba(200, 164, 90, 0.14);
+}
+.locx__item-phone {
+  font-family: var(--serif);
+  font-size: 22px; color: var(--gold-light);
+  font-weight: 500; letter-spacing: 0.02em;
+}
+.locx__item-arrow {
+  color: var(--gold); font-size: 18px;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.locx__item:hover .locx__item-arrow { transform: translateX(8px); }
+
+@media (max-width: 900px) {
+  .locx__grid { grid-template-columns: 1fr; }
+  .locx__media-tag { right: 20px; bottom: -20px; padding: 12px 18px; }
+  .locx__media-tag strong { font-size: 24px; }
+}
+
+/* ============================================================================
+   PREMIUM TESTIMONIALS — depth cards with magazine numbering
+   ============================================================================ */
+
+.gallery__head {
+  text-align: center;
+  padding: 0 clamp(20px, 5vw, 80px);
+}
+.gallery__sub {
+  color: var(--fg-3, rgba(253,250,245,0.5));
+  max-width: 480px; margin: 12px auto 0;
+}
+
+.testimonial-card {
+  position: relative;
+  background: linear-gradient(160deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+  border: 1px solid rgba(200, 164, 90, 0.14);
+  border-radius: 18px;
+  padding: 36px 32px 28px;
+  overflow: hidden;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.5s, background 0.5s, box-shadow 0.5s;
+  transform-style: preserve-3d;
+  will-change: transform;
+  cursor: pointer;
+}
+.testimonial-card::before {
+  content: "“";
+  position: absolute;
+  top: 8px; left: 16px;
+  font-family: var(--serif);
+  font-size: 120px;
+  line-height: 1;
+  color: var(--gold-light);
+  opacity: 0.10;
+  font-style: italic;
+}
+.testimonial-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 0% 0%, rgba(226, 192, 107, 0.10), transparent 50%);
+  opacity: 0;
+  transition: opacity 0.6s;
+  pointer-events: none;
+}
+.testimonial-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(226, 192, 107, 0.45);
+  background: linear-gradient(160deg, rgba(255,255,255,0.07) 0%, rgba(255,255,255,0.015) 100%);
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.45),
+    0 0 0 1px rgba(226, 192, 107, 0.20);
+}
+.testimonial-card:hover::after { opacity: 1; }
+
+.testimonial__content { position: relative; z-index: 1; }
+
+.testimonial__quote {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--fg);
+  margin: 0 0 28px;
+  position: relative;
+}
+
+.testimonial__footer {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-top: 20px;
+  border-top: 1px solid rgba(200, 164, 90, 0.18);
+}
+.testimonial__name {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-style: normal;
+  font-size: 16px;
+  color: var(--gold-light);
+  letter-spacing: 0.01em;
+}
+.testimonial__tag {
+  font-family: var(--mono, monospace);
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: 4px 10px;
+  border: 1px solid rgba(200, 164, 90, 0.30);
+  border-radius: 999px;
+}
+
+/* ============================================================================
+   FOOTER — premium with giant brand wordmark
+   ============================================================================ */
+
+.footer {
+  position: relative;
+  background: linear-gradient(180deg, #050402 0%, #000 100%);
+  padding: clamp(80px, 10vh, 120px) clamp(20px, 5vw, 80px) 32px;
+  overflow: hidden;
+  isolation: isolate;
+}
+.footer::before {
+  content: "GOLD KINGS";
+  position: absolute;
+  bottom: -6%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(120px, 22vw, 360px);
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  color: var(--gold-light);
+  opacity: 0.04;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 0;
+}
+.footer::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 60%; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200, 164, 90, 0.4), transparent);
+}
+.footer > * { position: relative; z-index: 1; }

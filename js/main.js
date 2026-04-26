@@ -397,6 +397,61 @@ function editorialReveals() {
   });
 }
 
+/* Scroll-driven parallax — elements with [data-parallax="N"] translate at N×scroll */
+function initParallax() {
+  if (REDUCED_MOTION) return;
+  const els = Array.from(document.querySelectorAll('[data-parallax]'));
+  if (!els.length) return;
+
+  const cache = els.map(el => ({
+    el,
+    factor: parseFloat(el.dataset.parallax) || 0.1,
+    base: 0
+  }));
+
+  const update = () => {
+    const sy = window.scrollY;
+    const vh = window.innerHeight;
+    cache.forEach(({ el, factor }) => {
+      const rect = el.getBoundingClientRect();
+      // only animate while in/near viewport
+      if (rect.bottom < -200 || rect.top > vh + 200) return;
+      const fromCenter = (rect.top + rect.height / 2) - vh / 2;
+      el.style.transform = `translate3d(0, ${-fromCenter * factor}px, 0)`;
+    });
+  };
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+}
+
+/* 3D tilt cards — pointermove rotates element on perspective parent */
+function initTiltCards() {
+  if (REDUCED_MOTION) return;
+  document.querySelectorAll('[data-tilt]').forEach(card => {
+    const max = 8; // max degrees
+    let raf = null;
+
+    const onMove = e => {
+      const rect = card.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width;  // 0..1
+      const py = (e.clientY - rect.top)  / rect.height;
+      const rx = (0.5 - py) * max;   // tilt up when mouse low
+      const ry = (px - 0.5) * max;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(8px)`;
+      });
+    };
+    const onLeave = () => {
+      cancelAnimationFrame(raf);
+      card.style.transform = '';
+    };
+    card.addEventListener('pointermove', onMove);
+    card.addEventListener('pointerleave', onLeave);
+  });
+}
+
 /* Nav scroll behavior — adds .scrolled class for backdrop blur */
 function initNavScroll() {
   const nav = document.querySelector('.nav');
@@ -435,6 +490,8 @@ async function boot() {
   initCursor();
   initSmoothScroll();
   initNavScroll();
+  initParallax();
+  initTiltCards();
   initMagneticCTAs();
   initCoinCenterpiece();
 

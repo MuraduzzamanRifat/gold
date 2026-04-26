@@ -32,7 +32,7 @@
   <!-- Preload Three.js module so it's ready when main.js imports it -->
   <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js">
 
-  <link rel="stylesheet" href="./css/style.css?v=20260426h">
+  <link rel="stylesheet" href="./css/style.css?v=20260426i">
 
   <link rel="canonical" href="https://muraduzzamanrifat.github.io/gold/">
   <meta property="og:url" content="https://muraduzzamanrifat.github.io/gold/">
@@ -81,8 +81,8 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
 
-  <script src="./js/cms.js?v=20260426h" defer></script>
-  <script type="module" src="./js/main.js?v=20260426h"></script>
+  <script src="./js/cms.js?v=20260426i" defer></script>
+  <script type="module" src="./js/main.js?v=20260426i"></script>
 </head>
 <body>
   <!-- PRELOADER — gold logo stroke-draw + progress bar -->
@@ -381,27 +381,52 @@
     </div>
   </section>
 
-  <!-- CONTACT / GET QUOTE SECTION — right after hero for max conversion -->
-  <section class="cta-section" id="contact" aria-labelledby="contact-heading">
-    <div class="cta-content">
-      <span class="t-eyebrow" data-cms="cta.eyebrow">◆ Ready to Sell?</span>
-      <h2 class="cta-title" id="contact-heading" data-cms="cta.title">Get Your <em>Free Evaluation</em> Today</h2>
-      <p class="cta-subtitle" data-cms="cta.subtitle">Walk in during store hours — no appointment needed. We'll test your gold on the spot and give you a fair offer based on today's live market price.</p>
-      <div class="cta-locations">
-        <div class="cta-location">
-          <strong data-cms="loc.0.city">Snellville, GA</strong>
-          <span data-cms="loc.0.address">3635 Stone Mountain Hwy, Snellville GA 30039</span>
-          <span data-cms="loc.0.hours">Mon–Sat 10AM–6PM · Sunday Closed</span>
-          <a href="tel:+17707714650" class="btn btn-primary" data-cms="loc.0.callBtn">Call 770-771-4650</a>
-          <a href="snellville.html" class="btn btn-secondary">Store Details</a>
-        </div>
-        <div class="cta-location">
-          <strong data-cms="loc.1.city">Commerce, GA</strong>
-          <span data-cms="loc.1.address">480 Banks Crossing Dr, Commerce GA 30529</span>
-          <span data-cms="loc.1.hours">Mon–Sat 10AM–6PM · Sunday Closed</span>
-          <a href="tel:+17063360043" class="btn btn-primary" data-cms="loc.1.callBtn">Call (706) 336-0043</a>
-          <a href="commerce.html" class="btn btn-secondary">Store Details</a>
-        </div>
+  <!-- LIVE PRICE CINEMA — premium editorial moment with depth + parallax -->
+  <section class="price-cine" id="contact" aria-labelledby="contact-heading">
+    <div class="price-cine__bg" aria-hidden="true">
+      <div class="price-cine__bg-grain"></div>
+      <div class="price-cine__bg-glow"></div>
+    </div>
+
+    <div class="price-cine__inner">
+      <span class="price-cine__eyebrow">◆ Live Spot Price · Today</span>
+
+      <div class="price-cine__ticker" data-parallax="0.15">
+        <span class="price-cine__currency">$</span>
+        <span class="price-cine__amount" id="live-spot">2,634</span>
+        <span class="price-cine__unit">/oz</span>
+        <span class="price-cine__delta">▲ 0.42%</span>
+      </div>
+
+      <h2 class="price-cine__title" id="contact-heading">
+        Walk in.<br>
+        <em>Walk out richer.</em>
+      </h2>
+
+      <p class="price-cine__sub">No appointment. We test in front of you, calculate against today's live spot, settle the same day in cash, check, Zelle, CashApp, Venmo, PayPal or wire.</p>
+
+      <div class="price-cine__locs">
+        <a href="tel:+17707714650" class="loc-card" data-tilt>
+          <div class="loc-card__head">
+            <span class="loc-card__num">01 / GA</span>
+            <span class="loc-card__live">● OPEN</span>
+          </div>
+          <h3 class="loc-card__city">Snellville</h3>
+          <p class="loc-card__addr">3635 Stone Mountain Hwy<br>Snellville, GA 30039</p>
+          <div class="loc-card__phone">770-771-4650</div>
+          <div class="loc-card__cta">Call now <span aria-hidden="true">→</span></div>
+        </a>
+
+        <a href="tel:+17063360043" class="loc-card" data-tilt>
+          <div class="loc-card__head">
+            <span class="loc-card__num">02 / GA</span>
+            <span class="loc-card__live">● OPEN</span>
+          </div>
+          <h3 class="loc-card__city">Commerce</h3>
+          <p class="loc-card__addr">480 Banks Crossing Dr<br>Commerce, GA 30529</p>
+          <div class="loc-card__phone">(706) 336-0043</div>
+          <div class="loc-card__cta">Call now <span aria-hidden="true">→</span></div>
+        </a>
       </div>
     </div>
   </section>
@@ -440,39 +465,46 @@
     </div>
   </section>
 
-  <!-- LOCATIONS SECTION -->
-  <section class="about" id="locations">
-    <div class="about__grid">
-      <div class="about__visual" data-reveal>
-        <img src="https://images.pexels.com/photos/3945683/pexels-photo-3945683.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop" alt="Gold Kings professional gold buying service" loading="lazy" width="1200" height="800" data-cms="ls.image">
-        <span class="about__caption" data-cms="ls.imageCaption">Professional Gold Buying Service</span>
+  <!-- LOCATIONS / ABOUT — cinematic split with deep parallax + giant editorial mark -->
+  <section class="locx" id="locations">
+    <span class="locx__mark" aria-hidden="true">SINCE 2008</span>
+
+    <div class="locx__grid">
+      <div class="locx__media" data-reveal>
+        <div class="locx__media-frame" data-parallax="0.12">
+          <img src="https://images.pexels.com/photos/3945683/pexels-photo-3945683.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop" alt="Gold Kings professional gold buying service" loading="lazy" width="1200" height="800">
+          <div class="locx__media-scrim"></div>
+        </div>
+        <div class="locx__media-tag">
+          <span>EST.</span>
+          <strong>2008</strong>
+        </div>
       </div>
 
-      <div class="about__text">
-        <span class="t-eyebrow" data-cms="ls.eyebrow">◆ Our Locations</span>
-        <h2 class="about__title" data-cms="ls.title">Find Your Nearest <em>Store</em></h2>
-        <p class="about__body" data-cms="ls.body">
-          Two Georgia locations. Licensed precious-metals dealers. We buy gold, silver, jewelry, coins, and valuables — with transparent pricing, same-day payment, and no pressure. We also serve church gold fundraising programs. Walk in anytime, Mon–Sat 10AM–6PM.
-        </p>
-        <div class="locations-list" role="list">
-          <div class="location-item" role="listitem">
-            <h3 class="location-city" data-cms="loc.0.city">Snellville, GA</h3>
-            <p class="location-addr" data-cms="loc.0.address">3635 Stone Mountain Hwy, Snellville GA 30039</p>
-            <a href="tel:+17707714650" class="location-phone" data-cms="loc.0.phone">770-771-4650</a>
-            <div class="location-actions">
-              <a href="snellville.html" class="location-call" aria-label="Visit Snellville store">Visit Store</a>
-              <a href="tel:+17707714650" class="location-call" aria-label="Call Snellville store">Call Store</a>
+      <div class="locx__text">
+        <span class="locx__eyebrow">◆ Our Counters</span>
+        <h2 class="locx__title">Two doors,<br><em>same handshake.</em></h2>
+        <p class="locx__body">Two Georgia counters. Licensed precious-metals dealers. We buy gold, silver, jewelry, coins, and valuables — transparent pricing, same-day payment, no pressure. Walk in anytime, Mon–Sat 10AM–6PM.</p>
+
+        <div class="locx__list">
+          <a href="snellville.html" class="locx__item" data-tilt>
+            <span class="locx__item-num">— 01</span>
+            <h3 class="locx__item-city">Snellville</h3>
+            <p class="locx__item-addr">3635 Stone Mountain Hwy, Snellville GA 30039</p>
+            <div class="locx__item-row">
+              <span class="locx__item-phone">770-771-4650</span>
+              <span class="locx__item-arrow" aria-hidden="true">→</span>
             </div>
-          </div>
-          <div class="location-item" role="listitem">
-            <h3 class="location-city" data-cms="loc.1.city">Commerce, GA</h3>
-            <p class="location-addr" data-cms="loc.1.address">480 Banks Crossing Dr, Commerce GA 30529</p>
-            <a href="tel:+17063360043" class="location-phone" data-cms="loc.1.phone">(706) 336-0043</a>
-            <div class="location-actions">
-              <a href="commerce.html" class="location-call" aria-label="Visit Commerce store">Visit Store</a>
-              <a href="tel:+17063360043" class="location-call" aria-label="Call Commerce store">Call Store</a>
+          </a>
+          <a href="commerce.html" class="locx__item" data-tilt>
+            <span class="locx__item-num">— 02</span>
+            <h3 class="locx__item-city">Commerce</h3>
+            <p class="locx__item-addr">480 Banks Crossing Dr, Commerce GA 30529</p>
+            <div class="locx__item-row">
+              <span class="locx__item-phone">(706) 336-0043</span>
+              <span class="locx__item-arrow" aria-hidden="true">→</span>
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </div>
