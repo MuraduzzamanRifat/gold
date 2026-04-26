@@ -95,9 +95,8 @@
     }
 
     // ── Testimonials ─────────────────────────────────────────────────────────
-    if (Array.isArray(c.testimonials) && window.__cmsTestimonialsCallback) {
-      window.__cmsTestimonialsCallback(c.testimonials);
-    }
+    // Consumed by main.js's buildGallery via window.__cmsReady Promise +
+    // cms:ready CustomEvent (fired below in markReady).
 
     // ── Locations section ────────────────────────────────────────────────────
     if (c.locationsSection) {

@@ -2,8 +2,6 @@
 
 export const heroImage = 'https://images.pexels.com/photos/5632390/pexels-photo-5632390.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop';
 
-export const aboutImage = 'https://images.pexels.com/photos/5632399/pexels-photo-5632399.jpeg?auto=compress&cs=tinysrgb&w=1200&h=900&fit=crop';
-
 export const testimonials = [
   {
     id: 't01',

@@ -32,7 +32,7 @@
   <!-- Preload Three.js module so it's ready when main.js imports it -->
   <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.165.0/build/three.module.js">
 
-  <link rel="stylesheet" href="./css/style.css?v=20260426F">
+  <link rel="stylesheet" href="./css/style.css?v=20260426G">
 
   <link rel="canonical" href="https://muraduzzamanrifat.github.io/gold/">
   <meta property="og:url" content="https://muraduzzamanrifat.github.io/gold/">
@@ -81,8 +81,8 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
 
-  <script src="./js/cms.js?v=20260426F" defer></script>
-  <script type="module" src="./js/main.js?v=20260426F"></script>
+  <script src="./js/cms.js?v=20260426G" defer></script>
+  <script type="module" src="./js/main.js?v=20260426G"></script>
 </head>
 <body>
   <!-- PRELOADER — gold logo stroke-draw + progress bar -->
@@ -393,7 +393,7 @@
     </div>
 
     <div class="price-cine__inner">
-      <span class="price-cine__eyebrow">◆ Live Spot Price · Today</span>
+      <span class="price-cine__eyebrow" data-cms="cta.eyebrow">◆ Live Spot Price · Today</span>
 
       <div class="price-cine__ticker" data-parallax="0.15">
         <span class="price-cine__currency">$</span>
@@ -402,12 +402,12 @@
         <span class="price-cine__delta">▲ 0.42%</span>
       </div>
 
-      <h2 class="price-cine__title" id="contact-heading">
+      <h2 class="price-cine__title" id="contact-heading" data-cms="cta.title">
         Walk in.<br>
         <em>Walk out richer.</em>
       </h2>
 
-      <p class="price-cine__sub">No appointment. We test in front of you, calculate against today's live spot, settle the same day in cash, check, Zelle, CashApp, Venmo, PayPal or wire.</p>
+      <p class="price-cine__sub" data-cms="cta.subtitle">No appointment. We test in front of you, calculate against today's live spot, settle the same day in cash, check, Zelle, CashApp, Venmo, PayPal or wire.</p>
 
       <div class="price-cine__locs">
         <a href="tel:+17707714650" class="loc-card" data-tilt>
@@ -476,7 +476,7 @@
     <div class="locx__grid">
       <div class="locx__media" data-reveal>
         <div class="locx__media-frame" data-parallax="0.12">
-          <img src="https://images.pexels.com/photos/3945683/pexels-photo-3945683.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop" alt="Gold Kings professional gold buying service" loading="lazy" width="1200" height="800">
+          <img src="https://images.pexels.com/photos/3945683/pexels-photo-3945683.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop" alt="Gold Kings professional gold buying service" loading="lazy" width="1200" height="800" data-cms="ls.image">
           <div class="locx__media-scrim"></div>
         </div>
         <div class="locx__media-tag">
@@ -486,9 +486,9 @@
       </div>
 
       <div class="locx__text">
-        <span class="locx__eyebrow">◆ Our Counters</span>
-        <h2 class="locx__title">Two doors,<br><em>same handshake.</em></h2>
-        <p class="locx__body">Two Georgia counters. Licensed precious-metals dealers. We buy gold, silver, jewelry, coins, and valuables — transparent pricing, same-day payment, no pressure. Walk in anytime, Mon–Sat 10AM–6PM.</p>
+        <span class="locx__eyebrow" data-cms="ls.eyebrow">◆ Our Counters</span>
+        <h2 class="locx__title" data-cms="ls.title">Two doors,<br><em>same handshake.</em></h2>
+        <p class="locx__body" data-cms="ls.body">Two Georgia counters. Licensed precious-metals dealers. We buy gold, silver, jewelry, coins, and valuables — transparent pricing, same-day payment, no pressure. Walk in anytime, Mon–Sat 10AM–6PM.</p>
 
         <div class="locx__list">
           <a href="snellville.html" class="locx__item" data-tilt>
@@ -545,6 +545,7 @@
         <a href="snellville.html">Snellville: 770-771-4650</a>
         <a href="commerce.html">Commerce: (706) 336-0043</a>
         <a href="church-fundraising.html">Church Fundraising</a>
+        <a href="mailto:Dan@goldntreasures.co" data-cms="footer.email">Dan@goldntreasures.co</a>
       </div>
       <div class="footer__col">
         <h4>Legal</h4>

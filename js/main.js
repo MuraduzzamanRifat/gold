@@ -213,28 +213,44 @@ async function buildGallery() {
   const grid = document.getElementById('gallery-grid');
   if (!grid) return;
 
-  testimonials.forEach((item, i) => {
-    const el = document.createElement('article');
-    el.className = 'gcard testimonial-card';
-    el.setAttribute('data-category', item.category);
-    el.setAttribute('role', 'listitem');
-    el.setAttribute('tabindex', '0');
-    el.innerHTML = `
-      <div class="testimonial__content">
-        <blockquote class="testimonial__quote">"${item.quote}"</blockquote>
-        <footer class="testimonial__footer">
-          <cite class="testimonial__name">${item.name}</cite>
-          <span class="testimonial__tag" aria-label="Category: ${item.category}">${item.category}</span>
-        </footer>
-      </div>
-    `;
-    el.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        el.click();
-      }
+  // Resolve testimonials from CMS first (admin-controlled), fall back to
+  // hardcoded data.js if CMS is slow/unreachable. 800ms guard.
+  const cmsTestimonials = await Promise.race([
+    (window.__cmsReady || Promise.resolve(null)).then(c => Array.isArray(c?.testimonials) ? c.testimonials : null),
+    new Promise(r => setTimeout(() => r(null), 800))
+  ]);
+  const items = cmsTestimonials || testimonials;
+
+  function renderCards(arr) {
+    grid.innerHTML = '';
+    arr.forEach(item => {
+      const el = document.createElement('article');
+      el.className = 'gcard testimonial-card';
+      el.setAttribute('data-category', item.category);
+      el.setAttribute('role', 'listitem');
+      el.setAttribute('tabindex', '0');
+      el.innerHTML = `
+        <div class="testimonial__content">
+          <blockquote class="testimonial__quote">"${item.quote}"</blockquote>
+          <footer class="testimonial__footer">
+            <cite class="testimonial__name">${item.name}</cite>
+            <span class="testimonial__tag" aria-label="Category: ${item.category}">${item.category}</span>
+          </footer>
+        </div>
+      `;
+      el.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.click(); }
+      });
+      grid.appendChild(el);
     });
-    grid.appendChild(el);
+  }
+
+  renderCards(items);
+
+  // Late-arriving CMS data (post-render) replaces the cards in place.
+  document.addEventListener('cms:ready', e => {
+    const arr = Array.isArray(e.detail?.testimonials) ? e.detail.testimonials : null;
+    if (arr) renderCards(arr);
   });
 
   if (!REDUCED_MOTION) {
