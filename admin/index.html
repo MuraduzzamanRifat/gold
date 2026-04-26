@@ -2336,11 +2336,15 @@ const SITE_SCHEMA = [
 const URL_RE = /^https?:\/\/[^\s]+$/;
 const EMAIL_RE = /^[a-z0-9._+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
 
+// Empty strings are permitted for url/email types — the user's × Clear
+// button intentionally produces empty values, and cms.js treats empty
+// as "no value, keep the hardcoded HTML fallback". The URL/email format
+// check only runs on non-empty values (to catch typos in actual URLs).
 function checkType(val, type) {
   if (type === 'string') return typeof val === 'string';
   if (type === 'array')  return Array.isArray(val);
-  if (type === 'url')    return typeof val === 'string' && URL_RE.test(val);
-  if (type === 'email')  return typeof val === 'string' && EMAIL_RE.test(val);
+  if (type === 'url')    return typeof val === 'string' && (val === '' || URL_RE.test(val));
+  if (type === 'email')  return typeof val === 'string' && (val === '' || EMAIL_RE.test(val));
   return false;
 }
 
