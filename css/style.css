@@ -4622,3 +4622,585 @@ a.locx__item {
 @media (max-width: 640px) {
   .legal__contact { grid-template-columns: 1fr; gap: 24px; padding: 24px 20px; }
 }
+
+/* ============================================================================
+   SNELLVILLE LANDING — premium conversion-focused location page
+   ============================================================================ */
+
+/* Trust strip — 4 stat blocks under hero */
+.trust-strip {
+  background: linear-gradient(180deg, #050402 0%, #0E0A05 100%);
+  padding: clamp(40px, 6vh, 80px) clamp(20px, 5vw, 80px);
+  border-bottom: 1px solid rgba(200, 164, 90, 0.18);
+}
+.trust-strip__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(200, 164, 90, 0.18);
+  border: 1px solid rgba(200, 164, 90, 0.18);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.trust-item {
+  background: #0A0804;
+  padding: 32px 24px;
+  text-align: center;
+  transition: background 0.4s;
+}
+.trust-item:hover {
+  background: linear-gradient(160deg, rgba(255,255,255,0.04), #0A0804);
+}
+.trust-item__big {
+  display: block;
+  font-family: var(--serif, "Cormorant Garamond", serif);
+  font-weight: 300;
+  font-size: clamp(28px, 3.6vw, 44px);
+  line-height: 1.0;
+  letter-spacing: -0.015em;
+  color: var(--gold-light);
+  margin-bottom: 8px;
+}
+.trust-item__lbl {
+  display: block;
+  font-family: var(--mono, "JetBrains Mono", monospace);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--fg-3, rgba(253,250,245,0.5));
+}
+@media (max-width: 768px) {
+  .trust-strip__inner { grid-template-columns: 1fr 1fr; }
+  .trust-item__big { font-size: 24px; }
+}
+
+/* What We Buy here — 3x2 grid of category cards */
+.snell-grid {
+  max-width: 1280px;
+  margin: 56px auto 0;
+  padding: 0 clamp(20px, 5vw, 80px);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  perspective: 1200px;
+}
+.snell-card {
+  background: linear-gradient(160deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  border: 1px solid rgba(200, 164, 90, 0.18);
+  border-radius: 18px;
+  padding: 36px 32px;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.5s, background 0.5s;
+  transform-style: preserve-3d;
+  position: relative;
+  overflow: hidden;
+}
+.snell-card::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(226, 192, 107, 0.4), transparent);
+}
+.snell-card:hover {
+  border-color: rgba(226, 192, 107, 0.45);
+  background: linear-gradient(160deg, rgba(255,255,255,0.07), rgba(255,255,255,0.02));
+}
+.snell-card__num {
+  display: block;
+  font-family: var(--mono, monospace);
+  font-size: 11px;
+  letter-spacing: 0.4em;
+  color: var(--gold);
+  margin-bottom: 18px;
+}
+.snell-card__title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: 30px;
+  line-height: 1.05;
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+  color: var(--fg);
+}
+.snell-card__title em { font-style: italic; color: var(--gold-light); }
+.snell-card__desc {
+  font-size: 14px;
+  color: var(--fg-3, rgba(253,250,245,0.5));
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+.snell-card__rate {
+  display: inline-block;
+  font-family: var(--mono, monospace);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding-top: 16px;
+  border-top: 1px solid rgba(200, 164, 90, 0.18);
+  width: 100%;
+}
+@media (max-width: 900px) {
+  .snell-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .snell-grid { grid-template-columns: 1fr; }
+}
+
+/* Visit Snellville — split: info + hours card */
+.visit-snell {
+  background: linear-gradient(180deg, #0A0804 0%, #050402 100%);
+  padding: clamp(80px, 12vh, 140px) clamp(20px, 5vw, 80px);
+  position: relative;
+  overflow: hidden;
+}
+.visit-snell::before {
+  content: "VISIT";
+  position: absolute;
+  top: -8%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(140px, 22vw, 380px);
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  color: var(--gold-light);
+  opacity: 0.04;
+  pointer-events: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.visit-snell__grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 5vw, 80px);
+  position: relative;
+  z-index: 1;
+}
+.visit-snell__chap {
+  font-family: var(--mono, monospace);
+  font-size: 11px;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 24px;
+}
+.visit-snell__title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(40px, 5vw, 72px);
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+}
+.visit-snell__title em { font-style: italic; color: var(--gold-light); }
+.visit-snell__intro {
+  font-size: 17px;
+  color: var(--fg-2, rgba(253,250,245,0.7));
+  line-height: 1.7;
+  margin-bottom: 40px;
+  max-width: 480px;
+}
+.visit-snell__detail {
+  margin-bottom: 32px;
+}
+.visit-snell__detail h4 {
+  font-family: var(--mono, monospace);
+  font-size: 10px;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 12px;
+}
+.visit-snell__addr {
+  font-family: var(--serif);
+  font-size: 22px;
+  font-weight: 400;
+  color: var(--fg);
+  text-decoration: none;
+  line-height: 1.4;
+  display: inline-block;
+  margin-bottom: 8px;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s, color 0.3s;
+}
+.visit-snell__addr:hover {
+  color: var(--gold-light);
+  border-bottom-color: var(--gold);
+}
+.visit-snell__phone {
+  font-family: var(--serif);
+  font-size: 36px;
+  font-weight: 500;
+  color: var(--gold-light);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  display: block;
+  margin-bottom: 8px;
+}
+.visit-snell__phone:hover { color: var(--gold-2, #FFE9A8); }
+.visit-snell__sublabel {
+  font-size: 13px;
+  color: var(--fg-3, rgba(253,250,245,0.45));
+  margin-bottom: 4px;
+}
+.visit-snell__sublabel a { color: var(--gold-light); text-decoration: underline; text-underline-offset: 3px; }
+.visit-snell__cta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+/* Hours card — premium */
+.hours-card {
+  background: linear-gradient(160deg, rgba(255,255,255,0.06), rgba(255,255,255,0.01));
+  border: 1px solid rgba(226, 192, 107, 0.30);
+  border-radius: 24px;
+  padding: 40px 36px;
+  position: relative;
+  overflow: hidden;
+  align-self: start;
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+}
+.hours-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 70%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(226, 192, 107, 0.6), transparent);
+}
+.hours-card__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--mono, monospace);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(200, 164, 90, 0.18);
+}
+.hours-card__chap { color: var(--gold); }
+.hours-card__live { color: #5BD56F; font-weight: 500; }
+.hours-card__title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: 44px;
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  color: var(--fg);
+  margin-bottom: 32px;
+}
+.hours-card__title em { font-style: italic; color: var(--gold-light); }
+.hours-card__list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px 0;
+}
+.hours-card__list li {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-family: var(--sans, "Montserrat", sans-serif);
+  font-size: 14px;
+  color: var(--fg);
+}
+.hours-card__list li:last-child { border-bottom: none; }
+.hours-card__list li span:first-child {
+  font-family: var(--mono, monospace);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg-3, rgba(253,250,245,0.55));
+}
+.hours-card__list li span:last-child {
+  color: var(--gold-light);
+  font-weight: 500;
+}
+.hours-card__list li.closed span:last-child {
+  color: var(--fg-3, rgba(253,250,245,0.4));
+  font-style: italic;
+  font-weight: 400;
+}
+.hours-card__note {
+  font-size: 12px;
+  color: var(--fg-3, rgba(253,250,245,0.4));
+  font-style: italic;
+  text-align: center;
+  margin: 0;
+}
+@media (max-width: 900px) {
+  .visit-snell__grid { grid-template-columns: 1fr; gap: 32px; }
+  .visit-snell__title { font-size: 40px; }
+  .hours-card { padding: 28px 24px; }
+  .hours-card__title { font-size: 32px; }
+}
+
+/* Map embed — full width, framed */
+.snell-map {
+  background: var(--bg);
+  padding: 0 clamp(20px, 5vw, 80px);
+}
+.snell-map iframe {
+  filter: grayscale(0.6) brightness(0.85) contrast(1.05);
+  border: 1px solid rgba(200, 164, 90, 0.18);
+  border-radius: 16px;
+  margin: 0 auto;
+  display: block;
+  max-width: 1280px;
+  width: 100%;
+  transition: filter 0.5s;
+}
+.snell-map iframe:hover { filter: none; }
+
+/* Service area — neighborhoods */
+.service-area {
+  padding: clamp(80px, 10vh, 120px) clamp(20px, 5vw, 80px);
+  background: linear-gradient(180deg, #050402 0%, #0A0804 100%);
+}
+.service-area__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: center;
+}
+.service-area__chap {
+  font-family: var(--mono, monospace);
+  font-size: 11px;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: inline-block;
+  margin-bottom: 20px;
+  padding: 8px 18px;
+  border: 1px solid rgba(200, 164, 90, 0.30);
+  border-radius: 999px;
+}
+.service-area__title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(32px, 4.5vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+  margin-bottom: 18px;
+}
+.service-area__title em { font-style: italic; color: var(--gold-light); }
+.service-area__sub {
+  color: var(--fg-2, rgba(253,250,245,0.7));
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 40px;
+}
+.service-area__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.service-area__pills li {
+  font-family: var(--mono, monospace);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--fg);
+  padding: 10px 18px;
+  border: 1px solid rgba(200, 164, 90, 0.30);
+  border-radius: 999px;
+  background: rgba(255,255,255,0.02);
+  transition: border-color 0.3s, color 0.3s, background 0.3s;
+}
+.service-area__pills li:hover {
+  border-color: var(--gold-light);
+  color: var(--gold-light);
+  background: rgba(226, 192, 107, 0.08);
+}
+
+/* Local reviews — 4-card grid */
+.snell-reviews {
+  padding: clamp(80px, 10vh, 120px) clamp(20px, 5vw, 80px);
+  background: var(--bg, #0A0804);
+}
+.snell-reviews__head {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 56px;
+}
+.snell-reviews__title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(36px, 5vw, 60px);
+  line-height: 1.0;
+  letter-spacing: -0.02em;
+  margin-top: 12px;
+}
+.snell-reviews__title em { font-style: italic; color: var(--gold-light); }
+.snell-reviews__grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+.snell-review {
+  background: linear-gradient(160deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  border: 1px solid rgba(200, 164, 90, 0.18);
+  border-radius: 18px;
+  padding: 36px 32px;
+  position: relative;
+}
+.snell-review::before {
+  content: "“";
+  position: absolute;
+  top: 4px;
+  left: 18px;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 110px;
+  line-height: 1;
+  color: var(--gold-light);
+  opacity: 0.10;
+}
+.snell-review__stars {
+  font-size: 14px;
+  color: var(--gold-light);
+  letter-spacing: 0.3em;
+  margin-bottom: 18px;
+  position: relative;
+}
+.snell-review__quote {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--fg);
+  margin: 0 0 24px 0;
+  position: relative;
+}
+.snell-review__name {
+  font-family: var(--serif);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--gold-light);
+  letter-spacing: 0.02em;
+  padding-top: 18px;
+  border-top: 1px solid rgba(200, 164, 90, 0.18);
+  display: block;
+  position: relative;
+}
+@media (max-width: 768px) {
+  .snell-reviews__grid { grid-template-columns: 1fr; }
+}
+
+/* Final CTA — massive conversion close */
+.final-cta {
+  padding: clamp(100px, 14vh, 180px) clamp(20px, 5vw, 80px);
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(212, 160, 23, 0.12) 0%, transparent 60%),
+    linear-gradient(180deg, #0A0804 0%, #050402 100%);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.final-cta::before {
+  content: "CALL";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: 32vw;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  color: var(--gold-light);
+  opacity: 0.03;
+  pointer-events: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.final-cta__inner {
+  position: relative;
+  max-width: 880px;
+  margin: 0 auto;
+}
+.final-cta__chap {
+  font-family: var(--mono, monospace);
+  font-size: 11px;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 28px;
+}
+.final-cta__title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(48px, 8vw, 120px);
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  margin-bottom: 24px;
+}
+.final-cta__title em { font-style: italic; color: var(--gold-light); }
+.final-cta__sub {
+  color: var(--fg-2, rgba(253,250,245,0.7));
+  font-size: 17px;
+  line-height: 1.6;
+  margin-bottom: 48px;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.final-cta__phone {
+  display: block;
+  font-family: var(--serif);
+  font-size: clamp(40px, 7vw, 88px);
+  font-weight: 500;
+  color: var(--gold-light);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  margin-bottom: 40px;
+  transition: color 0.3s;
+  font-feature-settings: "lnum";
+}
+.final-cta__phone:hover {
+  color: var(--gold-2, #FFE9A8);
+}
+.final-cta__buttons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+}
+.final-cta__hours {
+  font-family: var(--mono, monospace);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--fg-3, rgba(253,250,245,0.5));
+}
+@media (max-width: 768px) {
+  .final-cta__title { font-size: clamp(40px, 11vw, 64px); }
+  .final-cta__phone { font-size: clamp(36px, 11vw, 56px); }
+}
