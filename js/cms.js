@@ -4,8 +4,8 @@
 
 (function () {
   const RAW_BASE = 'https://raw.githubusercontent.com/MuraduzzamanRifat/gold/main/content/site.json';
-  const CACHE_KEY = 'gk_cms_v3';
-  const CACHE_TTL = 30 * 1000; // 30s — admin saves visible within half a minute
+  const CACHE_KEY = 'gk_cms_v4';
+  const CACHE_TTL = 3 * 1000; // 3s — near-instant admin save propagation
   // ?cms=fresh in the URL bypasses both JS and CDN cache (force-refresh escape hatch)
   const FORCE_FRESH = /[?&]cms=fresh\b/.test(location.search);
 
