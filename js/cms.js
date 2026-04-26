@@ -120,30 +120,10 @@
       setText('[data-cms="footer.copyright"]', c.footer.copyright);
     }
 
-    // ── Per-page content (Snellville, Commerce, ...) ─────────────────────────
+    // ── Per-page content (recursive — supports nested arrays/objects) ────────
     if (c.pages && typeof c.pages === 'object') {
       Object.keys(c.pages).forEach(pageKey => {
-        const p = c.pages[pageKey];
-        if (!p || typeof p !== 'object') return;
-        Object.keys(p).forEach(field => {
-          const sel = `[data-cms="page.${pageKey}.${field}"]`;
-          const val = p[field];
-          if (val == null || val === '') return;
-          document.querySelectorAll(sel).forEach(el => {
-            // <meta> always uses content attribute, regardless of field name
-            if (el.tagName === 'META') { el.setAttribute('content', val); return; }
-            // Image fields: handle <img>, <link rel=preload>
-            if (/image|background/i.test(field)) {
-              if (el.tagName === 'IMG') el.src = val;
-              else if (el.tagName === 'LINK') el.href = val;
-              return;
-            }
-            // HTML-bearing fields (allow <em>, <br>): titles, headlines, sub-paragraphs
-            if (/title|headline|line\d|sub/i.test(field)) { el.innerHTML = val; return; }
-            // Default: plain text (covers <title>, eyebrow, mark, etc.)
-            el.textContent = val;
-          });
-        });
+        walkAndBind(c.pages[pageKey], `page.${pageKey}`);
       });
     }
 
@@ -213,6 +193,47 @@
     if (t.customBody && typeof t.customBody === 'string' && t.customBody.trim()) {
       if (document.body) injectRawHTML(t.customBody, document.body);
     }
+  }
+
+  // Recursively walks a JSON sub-tree applying values to [data-cms="<prefix>"] elements.
+  // Leaves can be string/number/bool. Objects → walk keys. Arrays → walk by index.
+  // Heuristics on the FULL prefix decide whether to write src/href/innerHTML/textContent.
+  function walkAndBind(obj, prefix) {
+    if (obj == null) return;
+    if (Array.isArray(obj)) {
+      obj.forEach((item, i) => walkAndBind(item, `${prefix}.${i}`));
+      return;
+    }
+    if (typeof obj === 'object') {
+      Object.keys(obj).forEach(k => walkAndBind(obj[k], `${prefix}.${k}`));
+      return;
+    }
+    // Leaf
+    const val = obj;
+    if (val === '' || val == null) return;
+
+    // .alt paths bind to the sibling .image's <img> (alt has no own data-cms in HTML)
+    if (/\.alt$/i.test(prefix)) {
+      const imgPath = prefix.replace(/\.alt$/, '.image');
+      document.querySelectorAll(`[data-cms="${imgPath}"]`).forEach(el => {
+        if (el.tagName === 'IMG') el.alt = val;
+      });
+      return;
+    }
+
+    document.querySelectorAll(`[data-cms="${prefix}"]`).forEach(el => {
+      if (el.tagName === 'META') { el.setAttribute('content', val); return; }
+      if (/\bimage\b|\bbackground\b|\.image$|\.bg$/i.test(prefix)) {
+        if (el.tagName === 'IMG') el.src = val;
+        else if (el.tagName === 'LINK') el.href = val;
+        return;
+      }
+      if (/title|headline|line\d|\bsub\b|body|kicker|list/i.test(prefix)) {
+        el.innerHTML = val;
+        return;
+      }
+      el.textContent = val;
+    });
   }
 
   // Parses raw HTML string into nodes and re-creates <script> tags so they execute.

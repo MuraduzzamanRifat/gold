@@ -1680,6 +1680,16 @@ select.field-input {
           <div class="form-group"><label class="form-label" for="page-whatWeBuy-heroTitle">Title (HTML: &lt;em&gt;, &lt;br&gt;) <span class="char-count" id="cc-page-whatWeBuy-heroTitle"></span></label><input type="text" id="page-whatWeBuy-heroTitle" class="field-input" maxlength="200" data-field="pages.whatWeBuy.heroTitle"></div>
           <div class="form-group"><label class="form-label" for="page-whatWeBuy-heroSub">Subtitle <span class="char-count" id="cc-page-whatWeBuy-heroSub"></span></label><textarea id="page-whatWeBuy-heroSub" class="field-input" rows="3" maxlength="500" data-field="pages.whatWeBuy.heroSub"></textarea></div>
         </div></div>
+        <div class="content-card">
+          <div class="card-title"><span class="icon" aria-hidden="true">&#128202;</span> Stat Strip (4 fixed slots)</div>
+          <p class="field-hint" style="margin-bottom:1rem;">Big number + label pairs displayed in a row above the editorial sections.</p>
+          <div id="wwb-stats-list" data-rendered-list></div>
+        </div>
+        <div class="content-card">
+          <div class="card-title"><span class="icon" aria-hidden="true">&#128221;</span> Editorial Sections (5 fixed slots)</div>
+          <p class="field-hint" style="margin-bottom:1rem;">Each section is one numbered editorial block (image + kicker + title + body + bullet list). Title and body support inline HTML (&lt;em&gt;, &lt;br&gt;). The list field accepts raw &lt;li&gt; HTML.</p>
+          <div id="wwb-editorial-list" data-rendered-list></div>
+        </div>
       </section>
 
       <section class="section-panel" id="panel-page-howItWorks" aria-label="Page: How It Works">
@@ -1722,6 +1732,11 @@ select.field-input {
           <div class="form-group"><label class="form-label" for="page-jewelry-heroTitle">Title (HTML allowed) <span class="char-count" id="cc-page-jewelry-heroTitle"></span></label><input type="text" id="page-jewelry-heroTitle" class="field-input" maxlength="200" data-field="pages.jewelry.heroTitle"></div>
           <div class="form-group"><label class="form-label" for="page-jewelry-heroSub">Subtitle <span class="char-count" id="cc-page-jewelry-heroSub"></span></label><textarea id="page-jewelry-heroSub" class="field-input" rows="3" maxlength="500" data-field="pages.jewelry.heroSub"></textarea></div>
         </div></div>
+        <div class="content-card">
+          <div class="card-title"><span class="icon" aria-hidden="true">&#128206;</span> Product Cards (6 fixed slots)</div>
+          <p class="field-hint" style="margin-bottom:1rem;">Each card renders an image + label on the jewelry page. Use the upload button to replace the image, or paste a direct URL.</p>
+          <div id="jewelry-cards-list" data-rendered-list></div>
+        </div>
       </section>
 
       <section class="section-panel" id="panel-page-faqs" aria-label="Page: FAQs">
@@ -2291,6 +2306,125 @@ function populateForms(data) {
 
   // Update review count badge
   updateReviewCount(data.testimonials ? data.testimonials.length : 0);
+
+  // Render dynamic per-page lists (jewelry cards, what-we-buy stats + editorial)
+  renderJewelryCards((data.pages && data.pages.jewelry && data.pages.jewelry.cards) || []);
+  renderWwbStats((data.pages && data.pages.whatWeBuy && data.pages.whatWeBuy.stats) || []);
+  renderWwbEditorial((data.pages && data.pages.whatWeBuy && data.pages.whatWeBuy.editorial) || []);
+}
+
+/* ============================================================
+   DYNAMIC LISTS — Jewelry / What We Buy
+   ============================================================ */
+function renderJewelryCards(cards) {
+  const wrap = get('jewelry-cards-list'); if (!wrap) return;
+  wrap.innerHTML = '';
+  cards.forEach((c, i) => {
+    const fileId = `jw-card-${i}-file`;
+    const urlId = `jw-card-${i}-image`;
+    const labelId = `jw-card-${i}-label`;
+    const altId = `jw-card-${i}-alt`;
+    const previewId = `jw-card-${i}-preview`;
+    const noImgId = `jw-card-${i}-noimg`;
+    const statusId = `jw-card-${i}-status`;
+    const block = document.createElement('div');
+    block.className = 'image-group';
+    block.style.marginBottom = '1.25rem';
+    block.innerHTML = `
+      <div class="image-group-title"><span aria-hidden="true">&#128081;</span> Card ${i+1}</div>
+      <div class="form-grid two">
+        <div class="form-group"><label class="form-label" for="${labelId}">Label</label>
+          <input type="text" id="${labelId}" class="field-input" maxlength="60" data-field="pages.jewelry.cards.${i}.label" value="${escHtml(c.label || '')}"></div>
+        <div class="form-group"><label class="form-label" for="${altId}">Image alt text (a11y)</label>
+          <input type="text" id="${altId}" class="field-input" maxlength="120" data-field="pages.jewelry.cards.${i}.alt" value="${escHtml(c.alt || '')}"></div>
+      </div>
+      <div class="form-group"><label class="form-label" for="${urlId}">Image URL</label>
+        <input type="url" id="${urlId}" class="field-input" data-field="pages.jewelry.cards.${i}.image" placeholder="https://..." value="${escHtml(c.image || '')}"></div>
+      <div class="image-preview-wrap" id="${previewId}-wrap">
+        <div class="no-image" id="${noImgId}"><span class="icon" aria-hidden="true">&#128444;&#65039;</span><span>No image set</span></div>
+        <img id="${previewId}" src="" alt="" style="display:none;" loading="lazy">
+      </div>
+      <div class="upload-row"><label class="upload-label">
+        <input type="file" id="${fileId}" accept="image/*"> &#128190; Upload Image
+      </label><span class="upload-status" id="${statusId}"></span></div>
+    `;
+    wrap.appendChild(block);
+    const update = initImagePreview(urlId, previewId, noImgId);
+    if (update) update(c.image || '');
+    block.querySelectorAll('[data-field]').forEach(input => input.addEventListener('input', markDirty));
+    const fileInput = get(fileId);
+    if (fileInput) fileInput.addEventListener('change', () => handleImageUpload(fileId, urlId, statusId, null));
+  });
+}
+
+function renderWwbStats(stats) {
+  const wrap = get('wwb-stats-list'); if (!wrap) return;
+  wrap.innerHTML = '';
+  stats.forEach((s, i) => {
+    const valId = `wwb-stat-${i}-val`;
+    const labelId = `wwb-stat-${i}-label`;
+    const block = document.createElement('div');
+    block.style.cssText = 'padding:0.75rem 1rem; background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius); margin-bottom:0.5rem;';
+    block.innerHTML = `
+      <div style="font-size:0.7rem; color:var(--gold); letter-spacing:0.1em; margin-bottom:0.5rem;">STAT ${i+1}</div>
+      <div class="form-grid two">
+        <div class="form-group"><label class="form-label" for="${valId}">Value</label>
+          <input type="text" id="${valId}" class="field-input" maxlength="20" data-field="pages.whatWeBuy.stats.${i}.val" placeholder="e.g., 70–90%" value="${escHtml(s.val || '')}"></div>
+        <div class="form-group"><label class="form-label" for="${labelId}">Label</label>
+          <input type="text" id="${labelId}" class="field-input" maxlength="40" data-field="pages.whatWeBuy.stats.${i}.label" placeholder="e.g., Of Spot Price Paid" value="${escHtml(s.label || '')}"></div>
+      </div>
+    `;
+    wrap.appendChild(block);
+    block.querySelectorAll('[data-field]').forEach(input => input.addEventListener('input', markDirty));
+  });
+}
+
+function renderWwbEditorial(items) {
+  const wrap = get('wwb-editorial-list'); if (!wrap) return;
+  wrap.innerHTML = '';
+  items.forEach((it, i) => {
+    const fileId = `wwb-ed-${i}-file`;
+    const urlId = `wwb-ed-${i}-image`;
+    const altId = `wwb-ed-${i}-alt`;
+    const kickerId = `wwb-ed-${i}-kicker`;
+    const titleId = `wwb-ed-${i}-title`;
+    const bodyId = `wwb-ed-${i}-body`;
+    const listId = `wwb-ed-${i}-list`;
+    const previewId = `wwb-ed-${i}-preview`;
+    const noImgId = `wwb-ed-${i}-noimg`;
+    const statusId = `wwb-ed-${i}-status`;
+    const block = document.createElement('div');
+    block.className = 'image-group';
+    block.style.marginBottom = '1.25rem';
+    block.innerHTML = `
+      <div class="image-group-title"><span aria-hidden="true">&#128209;</span> Section ${i+1}</div>
+      <div class="form-group"><label class="form-label" for="${kickerId}">Kicker (small label)</label>
+        <input type="text" id="${kickerId}" class="field-input" maxlength="80" data-field="pages.whatWeBuy.editorial.${i}.kicker" placeholder="◆ 01 — GOLD JEWELRY" value="${escHtml(it.kicker || '')}"></div>
+      <div class="form-group"><label class="form-label" for="${titleId}">Title (HTML: &lt;em&gt;, &lt;br&gt;)</label>
+        <input type="text" id="${titleId}" class="field-input" maxlength="160" data-field="pages.whatWeBuy.editorial.${i}.title" placeholder="Every Karat.<br><em>Every Form.</em>" value="${escHtml(it.title || '')}"></div>
+      <div class="form-group"><label class="form-label" for="${bodyId}">Body paragraph</label>
+        <textarea id="${bodyId}" class="field-input" rows="3" maxlength="600" data-field="pages.whatWeBuy.editorial.${i}.body">${escHtml(it.body || '')}</textarea></div>
+      <div class="form-group"><label class="form-label" for="${listId}">Bullet list (raw HTML — &lt;li&gt;item&lt;/li&gt; per row)</label>
+        <textarea id="${listId}" class="field-input" rows="6" style="font-family:ui-monospace,Consolas,monospace; font-size:0.78rem;" data-field="pages.whatWeBuy.editorial.${i}.list">${escHtml(it.list || '')}</textarea></div>
+      <div class="form-group"><label class="form-label" for="${urlId}">Image URL</label>
+        <input type="url" id="${urlId}" class="field-input" data-field="pages.whatWeBuy.editorial.${i}.image" placeholder="https://..." value="${escHtml(it.image || '')}"></div>
+      <div class="form-group"><label class="form-label" for="${altId}">Image alt text</label>
+        <input type="text" id="${altId}" class="field-input" maxlength="120" data-field="pages.whatWeBuy.editorial.${i}.alt" value="${escHtml(it.alt || '')}"></div>
+      <div class="image-preview-wrap" id="${previewId}-wrap">
+        <div class="no-image" id="${noImgId}"><span class="icon" aria-hidden="true">&#128444;&#65039;</span><span>No image set</span></div>
+        <img id="${previewId}" src="" alt="" style="display:none;" loading="lazy">
+      </div>
+      <div class="upload-row"><label class="upload-label">
+        <input type="file" id="${fileId}" accept="image/*"> &#128190; Upload Image
+      </label><span class="upload-status" id="${statusId}"></span></div>
+    `;
+    wrap.appendChild(block);
+    const update = initImagePreview(urlId, previewId, noImgId);
+    if (update) update(it.image || '');
+    block.querySelectorAll('[data-field]').forEach(input => input.addEventListener('input', markDirty));
+    const fileInput = get(fileId);
+    if (fileInput) fileInput.addEventListener('change', () => handleImageUpload(fileId, urlId, statusId, null));
+  });
 }
 
 /* ============================================================

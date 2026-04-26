@@ -9,7 +9,7 @@
     "headline1": "WE BUY GOLD",
     "headline2": "Fast Cash, Fair Prices",
     "ctaText": "Get a Quote Now",
-    "backgroundImage": "https://images.pexels.com/photos/5632390/pexels-photo-5632390.jpeg?auto=compress&cs=tinysrgb&w=1920&h=1080&fit=crop"
+    "backgroundImage": "https://raw.githubusercontent.com/MuraduzzamanRifat/gold/main/img/uploads/1777178091297-ChatGPT_Image_Apr_26__2026__10_34_21_AM__1_.png"
   },
   "cta": {
     "eyebrow": "◆ Ready to Sell?",
@@ -124,7 +124,67 @@
       "heroMark": "BUY",
       "heroEyebrow": "◆ What We Buy",
       "heroTitle": "We Buy <em>Everything</em> Precious",
-      "heroSub": "Gold, silver, coins, watches — any karat, any condition, any quantity. Walk in. Walk out with cash."
+      "heroSub": "Gold, silver, coins, watches — any karat, any condition, any quantity. Walk in. Walk out with cash.",
+      "stats": [
+        {
+          "val": "10K–24K",
+          "label": "All Gold Karats"
+        },
+        {
+          "val": "70–90%",
+          "label": "Of Spot Price Paid"
+        },
+        {
+          "val": "10 min",
+          "label": "Average Transaction"
+        },
+        {
+          "val": "Same Day",
+          "label": "Payment"
+        }
+      ],
+      "editorial": [
+        {
+          "image": "https://images.pexels.com/photos/5632399/pexels-photo-5632399.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop",
+          "alt": "Gold jewelry collection including chains, rings and bracelets",
+          "kicker": "◆ 01 — GOLD JEWELRY",
+          "title": "Every Karat.<br><em>Every Form.</em>",
+          "body": "Any karat from 10K to 24K. Yellow, white, and rose gold. Chains, rings, bracelets, earrings, and pendants. Even broken or mismatched pieces carry full metal value — condition does not reduce your payout.",
+          "list": "<li>10K, 14K, 18K, 22K, 24K gold</li>\n          <li>Yellow, white, and rose gold</li>\n          <li>Chains, rings, bracelets, earrings, pendants</li>\n          <li>Broken, bent, or incomplete pieces</li>\n          <li>Single earrings and mismatched sets</li>"
+        },
+        {
+          "image": "https://images.pexels.com/photos/3737618/pexels-photo-3737618.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop",
+          "alt": "Sterling silver flatware and serving pieces",
+          "kicker": "◆ 02 — SILVER JEWELRY & FLATWARE",
+          "title": "Sterling Silver,<br><em>Any Form.</em>",
+          "body": "Sterling silver (.925) in any form — flatware, serving trays, bowls, creamers, candelabras, and jewelry. Priced on live silver market rates at the moment you walk in. No guesswork, no estimates from outdated price sheets.",
+          "list": "<li>Sterling silver (.925) flatware sets</li>\n          <li>Serving trays and bowls</li>\n          <li>Silver jewelry of all styles</li>\n          <li>Candlesticks and decorative pieces</li>\n          <li>Mixed-silver lots and collections</li>"
+        },
+        {
+          "image": "https://images.pexels.com/photos/4194857/pexels-photo-4194857.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop",
+          "alt": "Gold and silver coins and bullion bars",
+          "kicker": "◆ 03 — COINS & BULLION",
+          "title": "Investment Grade<br><em>&amp; Collectible.</em>",
+          "body": "Investment-grade bullion coins, collectible U.S. and international coins, gold and silver bars, ingots, and rounds. Whether you have a single American Eagle or a full estate collection, we evaluate each piece individually.",
+          "list": "<li>American Gold &amp; Silver Eagles</li>\n          <li>Canadian Maple Leafs, Krugerrands</li>\n          <li>Pre-1933 U.S. gold coins</li>\n          <li>Gold and silver bars and ingots</li>\n          <li>International and commemorative coins</li>"
+        },
+        {
+          "image": "https://images.pexels.com/photos/1458867/pexels-photo-1458867.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop",
+          "alt": "Scrap gold pieces and broken jewelry",
+          "kicker": "◆ 04 — SCRAP & DENTAL GOLD",
+          "title": "Condition<br><em>Is Irrelevant.</em>",
+          "body": "Broken clasps, bent chains, single earrings, dental crowns and bridges. What looks like junk to others is pure metal value to us. Dental gold is often 16K or higher — some of the most valuable scrap you'll bring in.",
+          "list": "<li>Broken chains, clasps, and findings</li>\n          <li>Bent or crushed pieces</li>\n          <li>Dental crowns, bridges, and fillings</li>\n          <li>Gold from removed orthodontic work</li>\n          <li>Loose settings and mountings</li>"
+        },
+        {
+          "image": "https://images.pexels.com/photos/190819/pexels-photo-190819.jpeg?auto=compress&cs=tinysrgb&w=1200&h=800&fit=crop",
+          "alt": "Luxury watches and estate jewelry",
+          "kicker": "◆ 05 — ESTATE JEWELRY & WATCHES",
+          "title": "Collections &amp;<br><em>Heirlooms.</em>",
+          "body": "Large collections, inherited pieces, and luxury watches including Rolex. Estate evaluations handled with care. Each piece assessed individually so nothing of value is overlooked. Bring the full collection — we work through it properly.",
+          "list": "<li>Inherited jewelry collections</li>\n          <li>Luxury watches including Rolex</li>\n          <li>Antique and Victorian-era pieces</li>\n          <li>Estate lots of mixed jewelry</li>\n          <li>Church and fundraising gold donations</li>"
+        }
+      ]
     },
     "howItWorks": {
       "seoTitle": "How Selling Your Gold Works — Gold Kings | 5-Step Process",
@@ -148,7 +208,39 @@
       "heroMark": "WEIGHT",
       "heroEyebrow": "◆ Jewelry by Weight",
       "heroTitle": "Jewelry <em>by Weight</em> —<br>Fair Market Pricing",
-      "heroSub": "Choose from our curated selection of gold and silver jewelry. Priced at current market value — not retail markup. What you pay is what the metal is worth."
+      "heroSub": "Choose from our curated selection of gold and silver jewelry. Priced at current market value — not retail markup. What you pay is what the metal is worth.",
+      "cards": [
+        {
+          "image": "https://images.pexels.com/photos/5632399/pexels-photo-5632399.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop",
+          "alt": "Gold chains and necklaces",
+          "label": "Gold Chains & Necklaces"
+        },
+        {
+          "image": "https://images.pexels.com/photos/1191531/pexels-photo-1191531.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop",
+          "alt": "Gold rings and bands",
+          "label": "Rings & Bands"
+        },
+        {
+          "image": "https://images.pexels.com/photos/3945683/pexels-photo-3945683.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop",
+          "alt": "Gold bracelets and bangles",
+          "label": "Bracelets & Bangles"
+        },
+        {
+          "image": "https://images.pexels.com/photos/1458867/pexels-photo-1458867.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop",
+          "alt": "Gold earrings and pendants",
+          "label": "Earrings & Pendants"
+        },
+        {
+          "image": "https://images.pexels.com/photos/4194857/pexels-photo-4194857.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop",
+          "alt": "Gold and silver coins",
+          "label": "Gold & Silver Coins"
+        },
+        {
+          "image": "https://images.pexels.com/photos/3998365/pexels-photo-3998365.jpeg?auto=compress&cs=tinysrgb&w=800&h=1000&fit=crop",
+          "alt": "Silver jewelry collection",
+          "label": "Silver Jewelry"
+        }
+      ]
     },
     "faqs": {
       "seoTitle": "FAQs — Gold Kings | Selling Gold in Georgia",
