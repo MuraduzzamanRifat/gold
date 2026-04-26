@@ -2686,6 +2686,16 @@ body::before {
   border-bottom: 1px solid var(--rule);
 }
 .editorial--alt { background: var(--bg-2); }
+
+/* When editorial sections render dynamically into a container, alternate
+   their visual layout via :nth-child instead of explicit modifier classes.
+   Index 0/2/4 (1st/3rd/5th) → default; index 1/3 (2nd/4th) → alt+reverse. */
+[data-cms-list*="editorial"] > .editorial:nth-child(even):not(template) {
+  background: var(--bg-2);
+}
+[data-cms-list*="editorial"] > .editorial:nth-child(even):not(template) .editorial__grid { direction: rtl; }
+[data-cms-list*="editorial"] > .editorial:nth-child(even):not(template) .editorial__text { direction: ltr; }
+[data-cms-list*="editorial"] > .editorial:nth-child(even):not(template) .editorial__visual { direction: ltr; }
 .editorial__grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
