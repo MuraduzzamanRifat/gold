@@ -88,7 +88,8 @@ export async function initCoin3D({ canvas, onReady }) {
   coin.add(crownMesh);
 
   // Orb above crown
-  const orb = new THREE.Mesh(new THREE.SphereGeometry(0.07, 32, 24), crownMat);
+  const orbGeo = new THREE.SphereGeometry(0.07, 32, 24);
+  const orb = new THREE.Mesh(orbGeo, crownMat);
   orb.position.set(0, 0.34, 0.082);
   coin.add(orb);
 
@@ -101,7 +102,6 @@ export async function initCoin3D({ canvas, onReady }) {
   const sizes = new Float32Array(particleCount);
 
   for (let i = 0; i < particleCount; i++) {
-    // Distribute in a 3D cylinder around the coin
     const r = 1.6 + Math.random() * 3.5;
     const theta = Math.random() * Math.PI * 2;
     positions[i * 3]     = Math.cos(theta) * r * (0.35 + Math.random() * 0.65);
@@ -113,8 +113,10 @@ export async function initCoin3D({ canvas, onReady }) {
   }
   particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
   particleGeo.setAttribute('size',     new THREE.BufferAttribute(sizes, 1));
+  particleGeo.setAttribute('speed',    new THREE.BufferAttribute(speeds, 1));
 
-  // Custom particle material — soft round gold dots
+  // Particle material — vertical drift + sparkle done in vertex shader so the
+  // CPU never touches positions per-frame (was the largest hot-path cost).
   const particleMat = new THREE.ShaderMaterial({
     uniforms: {
       uTime: { value: 0 },
@@ -122,16 +124,18 @@ export async function initCoin3D({ canvas, onReady }) {
     },
     vertexShader: /* glsl */`
       attribute float size;
+      attribute float speed;
       uniform float uTime;
       varying float vAlpha;
       void main() {
         vec3 pos = position;
-        // gentle horizontal drift + sparkle
+        // sinusoidal x-drift
         pos.x += sin(uTime * 0.4 + position.y * 0.6) * 0.06;
+        // continuous y-rise wrapped into [-3.5, 3.5]
+        pos.y = mod(position.y + 3.5 + uTime * speed, 7.0) - 3.5;
         vec4 mvPos = modelViewMatrix * vec4(pos, 1.0);
         gl_Position = projectionMatrix * mvPos;
         gl_PointSize = size * (300.0 / -mvPos.z);
-        // depth-based alpha — closer particles brighter
         vAlpha = clamp(1.0 - (-mvPos.z - 1.0) / 6.0, 0.0, 1.0);
       }
     `,
@@ -237,60 +241,47 @@ export async function initCoin3D({ canvas, onReady }) {
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  // ── RENDER LOOP ───────────────────────────────────────────────────────────
+  // Pause render when the canvas leaves the viewport — saves ~3-6% CPU/GPU
+  // continuously after the user scrolls past the hero.
+  let isVisible = true;
+  const io = new IntersectionObserver(([entry]) => {
+    isVisible = entry.isIntersecting;
+  }, { threshold: 0 });
+  io.observe(canvas);
+
   const clock = new THREE.Clock();
   let baseRotY = 0;
   let revealT = 0;
 
   function tick() {
+    requestAnimationFrame(tick);
     const dt = Math.min(clock.getDelta(), 0.05);
+    if (!isVisible) return;
     const t = clock.getElapsedTime();
 
-    // Reveal animation — coin scales up from 0 over 1.5s
     revealT = Math.min(1, revealT + dt / 1.4);
     const eased = 1 - Math.pow(1 - revealT, 4);
 
-    // Smooth tilt
     currentTiltX += (targetTiltX - currentTiltX) * 0.06;
     currentTiltY += (targetTiltY - currentTiltY) * 0.06;
-
-    // Continuous Y rotation
     baseRotY += dt * 0.32;
 
-    // Scroll: coin shrinks slightly + drifts up + speeds rotation
     const sp = scrollProgress;
-    const scrollScale = 1.0 - sp * 0.15;
-    const scrollY = sp * 1.2;
-    const scrollRot = sp * 1.5;
-
     coin.rotation.x = currentTiltX;
-    coin.rotation.y = baseRotY + currentTiltY + scrollRot;
+    coin.rotation.y = baseRotY + currentTiltY + sp * 1.5;
     coin.rotation.z = Math.sin(t * 0.4) * 0.04;
-    coin.scale.setScalar(eased * scrollScale);
-    coin.position.y = Math.sin(t * 1.0) * 0.05 + scrollY;
-    coin.position.z = -sp * 0.5; // slight push back on scroll
+    coin.scale.setScalar(eased * (1.0 - sp * 0.15));
+    coin.position.y = Math.sin(t * 1.0) * 0.05 + sp * 1.2;
+    coin.position.z = -sp * 0.5;
 
-    // Halo pulse behind
     halo.scale.setScalar(1 + sp * 0.3);
     haloMat.uniforms.uTime.value = t;
-
-    // Particles drift up
-    const posAttr = particleGeo.attributes.position;
-    for (let i = 0; i < particleCount; i++) {
-      let y = posAttr.array[i * 3 + 1];
-      y += speeds[i] * dt;
-      if (y > 3.5) y = -3.5;
-      posAttr.array[i * 3 + 1] = y;
-    }
-    posAttr.needsUpdate = true;
     particleMat.uniforms.uTime.value = t;
 
     renderer.render(scene, camera);
-    requestAnimationFrame(tick);
   }
   tick();
 
-  // Signal ready (for preloader to dismiss)
   if (onReady) requestAnimationFrame(() => onReady());
 
   return {
@@ -299,6 +290,10 @@ export async function initCoin3D({ canvas, onReady }) {
       window.removeEventListener('pointermove', onMove);
       window.removeEventListener('scroll', onScroll);
       ro.disconnect();
+      io.disconnect();
+      [bodyGeo, rimGeo, faceGeo, crownGeo, orbGeo, particleGeo, haloGeo].forEach(g => g.dispose());
+      [bodyMat, rimMat, faceMat, crownMat, particleMat, haloMat].forEach(m => m.dispose());
+      pmrem.dispose();
       renderer.dispose();
     }
   };

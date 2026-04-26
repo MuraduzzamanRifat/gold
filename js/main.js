@@ -1,10 +1,8 @@
-import { initHero, initCard, initShowcase } from './webgl.js';
-import { createNeuralField } from './neural.js';
-import { heroImage, aboutImage, testimonials, locations, services, showcaseSlides } from './data.js';
+import { initHero, initShowcase } from './webgl.js';
+import { heroImage, testimonials, showcaseSlides } from './data.js';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Honor user's motion preference — drives WebGL gating and animation skipping
 const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 /* ============================================================================
@@ -81,74 +79,6 @@ function initSmoothScroll() {
 }
 
 /* ============================================================================
-   PRELOADER
-   ============================================================================ */
-
-function runPreloader() {
-  return new Promise(resolve => {
-    const preloaderEl = document.getElementById('preloader');
-    const canvasEl = document.getElementById('pre-canvas');
-    const counterEl = document.getElementById('pc');
-    const barEl = document.getElementById('pre-bar-fill');
-
-    if (!preloaderEl) {
-      resolve();
-      return;
-    }
-
-    let settled = false;
-    const finish = () => {
-      if (settled) return;
-      settled = true;
-      preloaderEl.style.display = 'none';
-      resolve();
-    };
-
-    const failsafe = setTimeout(() => {
-      console.warn('Preloader failsafe triggered');
-      finish();
-    }, 2500);
-
-    let neural;
-    try {
-      neural = createNeuralField({
-        canvas: canvasEl,
-        nodeCount: 60,
-        linkThreshold: 2.0,
-        palette: { point: 0xC8A45A, line: 0xE2C06B }
-      });
-    } catch (e) {
-      neural = { state: {}, destroy: () => {} };
-    }
-
-    const counter = { val: 0 };
-    gsap.to(counter, {
-      val: 100,
-      duration: 0.8,
-      ease: 'power2.inOut',
-      onUpdate() {
-        const n = Math.floor(counter.val);
-        if (counterEl) counterEl.textContent = String(n).padStart(2, '0');
-        if (barEl) barEl.style.width = n + '%';
-      },
-      onComplete() {
-        if (neural.state) neural.state.opacity = 0;
-        gsap.to(preloaderEl, {
-          yPercent: -100,
-          duration: 0.6,
-          ease: 'expo.inOut',
-          onComplete() {
-            clearTimeout(failsafe);
-            if (neural.destroy) neural.destroy();
-            finish();
-          }
-        });
-      }
-    });
-  });
-}
-
-/* ============================================================================
    HERO REVEAL
    ============================================================================ */
 
@@ -214,13 +144,11 @@ function initMagneticCTAs() {
   });
 }
 
-// Lazy-load the 3D coin — only on desktop with motion enabled
-// Preloader has a guaranteed 3.2s minimum display so the stroke-draw +
-// bar fill animation reads fully, regardless of how fast the WebGL loads.
 function initCoinCenterpiece() {
+  // Preloader stays up for at least PRELOADER_MIN_MS so the stroke-draw +
+  // bar-fill CSS animation reads fully, even if the WebGL coin loads instantly.
   const PRELOADER_MIN_MS = 3200;
   const startedAt = performance.now();
-  let coinReady = false;
 
   const dismiss = () => {
     const pre = document.getElementById('preloader');
@@ -228,33 +156,20 @@ function initCoinCenterpiece() {
     pre.classList.add('is-out');
     setTimeout(() => pre.remove(), 1100);
   };
-
-  // Schedule dismissal: wait until BOTH (a) min display elapsed AND (b) coin ready
-  const tryDismiss = () => {
-    const elapsed = performance.now() - startedAt;
-    const wait = Math.max(0, PRELOADER_MIN_MS - elapsed);
-    if (coinReady || wait > 0) {
-      setTimeout(dismiss, wait);
-    } else {
-      dismiss();
-    }
+  const dismissWhenReady = () => {
+    const remaining = Math.max(0, PRELOADER_MIN_MS - (performance.now() - startedAt));
+    setTimeout(dismiss, remaining);
   };
 
-  // Always dismiss after min duration even if coin fails — keeps the page from
-  // ever getting stuck behind a stuck preloader
-  setTimeout(() => { coinReady = true; tryDismiss(); }, PRELOADER_MIN_MS);
+  // Failsafe: always dismiss after min duration so a stuck WebGL load never traps the page.
+  setTimeout(dismissWhenReady, PRELOADER_MIN_MS);
 
-  if (REDUCED_MOTION || window.matchMedia('(max-width: 900px)').matches) {
-    return;
-  }
+  if (REDUCED_MOTION || window.matchMedia('(max-width: 900px)').matches) return;
   const coinCanvas = document.getElementById('coin-canvas');
   if (!coinCanvas) return;
 
   import('./coin3d.js')
-    .then(m => m.initCoin3D({
-      canvas: coinCanvas,
-      onReady: () => { coinReady = true; tryDismiss(); }
-    }))
+    .then(m => m.initCoin3D({ canvas: coinCanvas, onReady: dismissWhenReady }))
     .catch(err => {
       console.warn('Coin3D init failed', err);
       coinCanvas.style.display = 'none';
@@ -264,10 +179,6 @@ function initCoinCenterpiece() {
 /* ============================================================================
    GALLERY
    ============================================================================ */
-
-function initFilters() {
-  // Filters not needed for testimonials
-}
 
 async function buildGallery() {
   const grid = document.getElementById('gallery-grid');
@@ -311,8 +222,6 @@ async function buildGallery() {
     });
   }
 }
-
-// Lightbox not needed for testimonials
 
 /* ============================================================================
    SHOWCASE / SCROLL-PINNED
@@ -397,47 +306,65 @@ function editorialReveals() {
   });
 }
 
-/* Scroll-driven parallax — elements with [data-parallax="N"] translate at N×scroll */
+/* Scroll-driven parallax — elements with [data-parallax="N"] translate at N×scroll.
+   Caches absolute element centers on init/resize; per-scroll math is pure arithmetic
+   (no getBoundingClientRect → no forced sync layout) and RAF-coalesced. */
 function initParallax() {
   if (REDUCED_MOTION) return;
   const els = Array.from(document.querySelectorAll('[data-parallax]'));
   if (!els.length) return;
 
-  const cache = els.map(el => ({
-    el,
-    factor: parseFloat(el.dataset.parallax) || 0.1,
-    base: 0
-  }));
-
-  const update = () => {
-    const sy = window.scrollY;
-    const vh = window.innerHeight;
-    cache.forEach(({ el, factor }) => {
+  let entries = [];
+  const measure = () => {
+    entries = els.map(el => {
       const rect = el.getBoundingClientRect();
-      // only animate while in/near viewport
-      if (rect.bottom < -200 || rect.top > vh + 200) return;
-      const fromCenter = (rect.top + rect.height / 2) - vh / 2;
+      return {
+        el,
+        factor: parseFloat(el.dataset.parallax) || 0.1,
+        center: rect.top + window.scrollY + rect.height / 2,
+        height: rect.height
+      };
+    });
+  };
+
+  let queued = false;
+  const update = () => {
+    queued = false;
+    const center = window.scrollY + window.innerHeight / 2;
+    const cull = window.innerHeight + 300;
+    entries.forEach(({ el, factor, center: c, height }) => {
+      const fromCenter = c - center;
+      if (Math.abs(fromCenter) > cull + height / 2) return;
       el.style.transform = `translate3d(0, ${-fromCenter * factor}px, 0)`;
     });
   };
-  window.addEventListener('scroll', update, { passive: true });
-  window.addEventListener('resize', update);
+  const onScroll = () => {
+    if (queued) return;
+    queued = true;
+    requestAnimationFrame(update);
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', () => { measure(); update(); });
+  measure();
   update();
 }
 
-/* 3D tilt cards — pointermove rotates element on perspective parent */
+/* 3D tilt cards — caches rect on enter, invalidates on scroll/resize. */
 function initTiltCards() {
   if (REDUCED_MOTION) return;
   document.querySelectorAll('[data-tilt]').forEach(card => {
-    const max = 8; // max degrees
+    const MAX_DEG = 8;
+    let rect = null;
     let raf = null;
 
+    const onEnter = () => { rect = card.getBoundingClientRect(); };
     const onMove = e => {
-      const rect = card.getBoundingClientRect();
-      const px = (e.clientX - rect.left) / rect.width;  // 0..1
+      if (!rect) rect = card.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width;
       const py = (e.clientY - rect.top)  / rect.height;
-      const rx = (0.5 - py) * max;   // tilt up when mouse low
-      const ry = (px - 0.5) * max;
+      const rx = (0.5 - py) * MAX_DEG;
+      const ry = (px - 0.5) * MAX_DEG;
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
         card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(8px)`;
@@ -445,8 +372,10 @@ function initTiltCards() {
     };
     const onLeave = () => {
       cancelAnimationFrame(raf);
+      rect = null;
       card.style.transform = '';
     };
+    card.addEventListener('pointerenter', onEnter);
     card.addEventListener('pointermove', onMove);
     card.addEventListener('pointerleave', onLeave);
   });
@@ -513,7 +442,6 @@ async function boot() {
 
   requestAnimationFrame(async () => {
     try {
-      initFilters();
       await buildGallery();
       await buildShowcase();
       editorialReveals();
@@ -532,7 +460,7 @@ async function boot() {
 
 function initKeyboardNavigation() {
   document.addEventListener('keydown', e => {
-    if ((e.key === 'Enter' || e.key === ' ') && document.activeElement?.closest('.gcard, .filter, .location-call')) {
+    if ((e.key === 'Enter' || e.key === ' ') && document.activeElement?.closest('.gcard, .location-call')) {
       e.preventDefault();
       document.activeElement?.click?.();
     }
