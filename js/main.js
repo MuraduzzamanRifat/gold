@@ -481,18 +481,28 @@ async function boot() {
 
   const heroCanvas = document.getElementById('hero-canvas');
   if (heroCanvas) {
-    // Reduced-motion users get a static cover image instead of the animated WebGL hero
-    if (REDUCED_MOTION || window.matchMedia('(max-width: 900px)').matches) {
-      const stage = document.querySelector('.hero__stage');
-      if (stage) stage.style.cssText = `background:url('${heroImage}') center/cover no-repeat;min-height:100vh;`;
-      heroCanvas.remove();
-    } else {
-      import('./webgl.js')
-        .then(({ initHero }) => initHero({ canvas: heroCanvas, imageUrl: heroImage }))
-        .catch(() => {
-          heroCanvas.style.cssText = `background:url('${heroImage}') center/cover;`;
-        });
-    }
+    // Resolve hero image URL: CMS first (admin-controlled), then hardcoded
+    // fallback. 800ms guard means we don't block the hero render if the
+    // CMS fetch is slow — falls back to data.js heroImage.
+    const cmsImageUrl = Promise.race([
+      (window.__cmsReady || Promise.resolve(null)).then(c => c?.hero?.backgroundImage || null),
+      new Promise(r => setTimeout(() => r(null), 800))
+    ]);
+    cmsImageUrl.then(url => {
+      const finalUrl = url || heroImage;
+      // Reduced-motion users get a static cover image instead of the animated WebGL hero
+      if (REDUCED_MOTION || window.matchMedia('(max-width: 900px)').matches) {
+        const stage = document.querySelector('.hero__stage');
+        if (stage) stage.style.cssText = `background:url('${finalUrl}') center/cover no-repeat;min-height:100vh;`;
+        heroCanvas.remove();
+      } else {
+        import('./webgl.js')
+          .then(({ initHero }) => initHero({ canvas: heroCanvas, imageUrl: finalUrl }))
+          .catch(() => {
+            heroCanvas.style.cssText = `background:url('${finalUrl}') center/cover;`;
+          });
+      }
+    });
   }
   // Reveal hero on any page that has one (including image-based hero on location pages)
   if (document.querySelector('.hero__title .line')) revealHero();

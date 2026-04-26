@@ -257,18 +257,30 @@
   // Expose content globally so main.js can use it (e.g. for testimonials)
   window.__cmsContent = null;
 
+  // Handshake for non-CMS scripts (e.g. main.js's WebGL hero loader) that
+  // need the CMS-resolved values. Resolves after applyContent — even on
+  // fetch failure so awaiters never hang. CustomEvent fires for code that
+  // can't await (e.g. running before this IIFE).
+  let resolveReady;
+  window.__cmsReady = new Promise(r => { resolveReady = r; });
+  function markReady(content) {
+    window.__cmsContent = content || null;
+    resolveReady(content || null);
+    document.dispatchEvent(new CustomEvent('cms:ready', { detail: content || null }));
+  }
+
   const cached = readCache();
   if (cached) {
-    window.__cmsContent = cached;
     applyContent(cached);
+    markReady(cached);
   } else {
     fetch(rawUrl())
       .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(c => {
-        window.__cmsContent = c;
         writeCache(c);
         applyContent(c);
+        markReady(c);
       })
-      .catch(() => { /* silent — hardcoded HTML stays */ });
+      .catch(() => { markReady(null); /* hardcoded HTML stays */ });
   }
 })();
