@@ -130,6 +130,11 @@
       });
     }
 
+    // ── Dynamic list containers (data-cms-list + <template data-cms-item>) ──
+    // Replaces static slots with one rendered item per JSON array entry.
+    // Lets admin add/remove items and have it reflect on public site.
+    renderListContainers(c);
+
     // ── Tracking codes (Meta Pixel, GTM, GA4, custom HEAD/BODY) ──────────────
     if (c.tracking) injectTracking(c.tracking);
   }
@@ -201,6 +206,66 @@
   const RE_ALT = /\.alt$/i;
   const RE_IMAGE = /\bimage\b|\bbackground\b|\.image$|\.bg$/i;
   const RE_HTML = /title|headline|line\d|\bsub\b|body|kicker|list/i;
+
+  // Resolve a dot-separated JSON path like 'page.whyChoose.reasons' against the
+  // CMS content object. Returns undefined if any segment is missing.
+  function resolvePath(content, path) {
+    return path.split('.').reduce((o, k) => (o && o[k] !== undefined ? o[k] : undefined), content);
+  }
+
+  // Apply a single field key→value pair to all [data-cms-field="key"] elements
+  // inside a container. Same routing rules as walkAndBind.
+  function fillTemplateFields(rootEl, item) {
+    rootEl.querySelectorAll('[data-cms-field]').forEach(el => {
+      const key = el.getAttribute('data-cms-field');
+      const val = item ? item[key] : '';
+      if (val == null) return;
+      if (el.tagName === 'META') { el.setAttribute('content', val); return; }
+      if (RE_IMAGE.test(key)) {
+        if (el.tagName === 'IMG') el.src = val;
+        else if (el.tagName === 'LINK') el.href = val;
+        return;
+      }
+      if (key === 'alt') {
+        if (el.tagName === 'IMG') el.alt = val;
+        return;
+      }
+      if (RE_HTML.test(key)) { el.innerHTML = val; return; }
+      el.textContent = val;
+    });
+  }
+
+  // For every [data-cms-list="path.to.array"] container: clone its inner
+  // <template data-cms-item> once per JSON item, fill placeholders, and
+  // replace existing children. The CMS path resolves against the special
+  // root that mirrors data-cms naming: 'page.X.Y' -> c.pages.X.Y, etc.
+  function renderListContainers(c) {
+    document.querySelectorAll('[data-cms-list]').forEach(container => {
+      const cmsPath = container.getAttribute('data-cms-list');
+      // Translate cms-path → JSON-path. Same rules as data-cms attributes:
+      // 'page.X.Y' → c.pages.X.Y; 'loc.0.X' → c.locations[0].X; etc.
+      let jsonPath = cmsPath
+        .replace(/^page\./, 'pages.')
+        .replace(/^loc\./, 'locations.')
+        .replace(/^ls\./, 'locationsSection.');
+      const arr = resolvePath(c, jsonPath);
+      if (!Array.isArray(arr)) return;
+      const template = container.querySelector('template[data-cms-item]');
+      if (!template) return;
+      // Remove old rendered children (everything except the template itself)
+      Array.from(container.children).forEach(child => {
+        if (child !== template) child.remove();
+      });
+      // Render fresh items
+      arr.forEach(item => {
+        const clone = template.content.cloneNode(true);
+        // fillTemplateFields needs an Element root, but DocumentFragment works
+        // with querySelectorAll. Wrap if needed.
+        if (clone.querySelectorAll) fillTemplateFields(clone, item);
+        container.appendChild(clone);
+      });
+    });
+  }
 
   function walkAndBind(obj, prefix) {
     if (obj == null) return;

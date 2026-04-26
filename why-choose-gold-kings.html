@@ -13,15 +13,15 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet"></noscript>
-  <link rel="stylesheet" href="./css/style.css?v=20260426N">
+  <link rel="stylesheet" href="./css/style.css?v=20260426O">
   <link rel="canonical" href="https://muraduzzamanrifat.github.io/gold/why-choose-gold-kings.html">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230A0804'/%3E%3Cpath d='M22 64 V44 L36 56 L50 26 L64 56 L78 44 V64 Z' fill='none' stroke='%23C8A45A' stroke-width='4' stroke-linejoin='round'/%3E%3Crect x='22' y='62' width='56' height='8' rx='2' fill='%23C8A45A'/%3E%3Ccircle cx='50' cy='30' r='4' fill='%23E2C06B'/%3E%3C/svg%3E">
 
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js" defer></script>
-  <script src="./js/cms.js?v=20260426N" defer></script>
-  <script type="module" src="./js/main.js?v=20260426N"></script>
+  <script src="./js/cms.js?v=20260426O" defer></script>
+  <script type="module" src="./js/main.js?v=20260426O"></script>
 </head>
 <body>
 
@@ -77,7 +77,12 @@
 
     <p class="legal__intro">Plenty of places will buy your gold. We work hard to be the place you'd recommend to your mother. Here's how we do that.</p>
 
-    <h2 data-cms="page.whyChoose.reasons.0.title">01 · <em>Transparent testing</em></h2>
+    <div data-cms-list="page.whyChoose.reasons">
+      <template data-cms-item>
+        <h2 data-cms-field="title"></h2>
+        <p data-cms-field="body"></p>
+      </template>
+      <h2 data-cms="page.whyChoose.reasons.0.title">01 · <em>Transparent testing</em></h2>
     <p data-cms="page.whyChoose.reasons.0.body">Your items never leave your sight. Testing and weighing happen openly on the counter using professional equipment. Watch the test happen. Read the scale. Ask any question at any stage. We'd rather take an extra minute to explain than have you wondering what just happened.</p>
 
     <h2 data-cms="page.whyChoose.reasons.1.title">02 · <em>No-pressure environment</em></h2>
@@ -94,6 +99,7 @@
 
     <h2 data-cms="page.whyChoose.reasons.5.title">06 · <em>Professional experience</em></h2>
     <p data-cms="page.whyChoose.reasons.5.body">Clear communication. Fair, market-based pricing. Respect for your time and the items you're bringing in. A calm, professional setting. The whole point is to build the kind of trust that makes you happy you came — and ready to come back.</p>
+    </div>
 
     <h2>What customers <em>actually say</em></h2>
     <p>Most of our business comes from repeat customers and referrals. People bring their gold once, see how the process works, then bring the next thing they have. That's the test we care about.</p>
