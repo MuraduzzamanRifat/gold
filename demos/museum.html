@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gold Kings — The Museum Direction</title>
+<meta name="color-scheme" content="light">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23FAFAF7'/%3E%3Cpath d='M22 64 V44 L36 56 L50 26 L64 56 L78 44 V64 Z' fill='none' stroke='%230A0A0A' stroke-width='4'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Tenor+Sans&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #FAFAF7;
+    --paper-2: #F2F1EB;
+    --ink: #0A0A0A;
+    --ink-2: #3A3A38;
+    --ink-3: #88867E;
+    --rule: #E5E3DB;
+    --gold: #B8860B;
+    --gold-2: #D4A017;
+    --serif: 'Cormorant Garamond', 'Times New Roman', serif;
+    --display: 'Tenor Sans', serif;
+    --label: 'Inter', system-ui, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  .label {
+    font-family: var(--label);
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    font-weight: 500;
+  }
+
+  /* Top — almost invisible */
+  .top {
+    padding: 32px 56px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 40px;
+    position: sticky;
+    top: 0;
+    background: var(--paper);
+    z-index: 50;
+  }
+  .top__brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--display);
+    font-size: 18px;
+    letter-spacing: 0.2em;
+    color: var(--ink);
+  }
+  .top__brand svg { width: 26px; height: 26px; }
+  .top__nav { display: flex; gap: 36px; justify-content: center; }
+  .top__nav a {
+    font-family: var(--label);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    padding-bottom: 3px;
+    transition: color 0.3s, border-color 0.3s;
+    border-bottom: 1px solid transparent;
+  }
+  .top__nav a:hover { color: var(--gold); border-bottom-color: var(--gold); }
+  .top__back { text-align: right; }
+  .top__back a {
+    font-family: var(--label);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  /* Hero — gallery exhibition card */
+  .hero {
+    padding: 80px 56px 100px;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 80px;
+    align-items: end;
+    min-height: 80vh;
+  }
+
+  .hero__left {
+    align-self: start;
+    padding-top: 40px;
+  }
+  .hero__exhibit {
+    margin-bottom: 32px;
+    display: inline-block;
+    padding: 6px 0;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+  }
+  .hero__exhibit-num {
+    font-family: var(--label);
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    margin-right: 18px;
+    color: var(--ink);
+  }
+  .hero__exhibit-name {
+    font-family: var(--display);
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .hero__title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(60px, 9vw, 140px);
+    line-height: 0.95;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    margin-bottom: 32px;
+  }
+  .hero__title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+  .hero__by {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--ink-2);
+    margin-bottom: 56px;
+    max-width: 480px;
+    line-height: 1.5;
+  }
+
+  .hero__caption {
+    border-top: 1px solid var(--rule);
+    padding-top: 24px;
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 24px;
+    max-width: 480px;
+    align-items: start;
+  }
+  .hero__caption + .hero__caption { margin-top: 14px; padding-top: 14px; }
+  .hero__caption-key {
+    font-family: var(--label);
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    padding-top: 4px;
+  }
+  .hero__caption-val {
+    font-family: var(--serif);
+    font-size: 17px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+  .hero__caption-val em { color: var(--gold); font-style: italic; }
+
+  .hero__visual {
+    aspect-ratio: 4 / 5;
+    background:
+      linear-gradient(135deg, rgba(184, 134, 11, 0.92), rgba(58, 38, 8, 0.96)),
+      url('https://images.pexels.com/photos/3945683/pexels-photo-3945683.jpeg?auto=compress&cs=tinysrgb&w=1200') center/cover;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero__visual::before {
+    content: '';
+    position: absolute;
+    top: 24px; left: 24px;
+    width: 60px; height: 60px;
+    border: 1px solid rgba(255,255,255,0.4);
+    border-bottom: none;
+    border-right: none;
+  }
+  .hero__visual::after {
+    content: '';
+    position: absolute;
+    bottom: 24px; right: 24px;
+    width: 60px; height: 60px;
+    border: 1px solid rgba(255,255,255,0.4);
+    border-top: none;
+    border-left: none;
+  }
+  .hero__visual-mark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--display);
+    font-size: clamp(60px, 8vw, 130px);
+    color: rgba(255,255,255,0.95);
+    letter-spacing: 0.08em;
+  }
+  .hero__visual-tag {
+    position: absolute;
+    bottom: 28px;
+    left: 28px;
+    color: rgba(255,255,255,0.9);
+    font-family: var(--label);
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+  }
+  .hero__visual-tag strong {
+    display: block;
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 18px;
+    text-transform: none;
+    letter-spacing: 0.02em;
+    margin-top: 4px;
+  }
+
+  /* Specimen grid — museum exhibits */
+  .specimens {
+    padding: 100px 56px;
+    border-top: 1px solid var(--ink);
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .specimens__head {
+    margin-bottom: 80px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: end;
+  }
+  .specimens__title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(40px, 5vw, 72px);
+    line-height: 1.0;
+    letter-spacing: -0.015em;
+  }
+  .specimens__title em { color: var(--gold); font-style: italic; }
+  .specimens__intro {
+    font-size: 17px;
+    color: var(--ink-2);
+    line-height: 1.7;
+    max-width: 460px;
+    justify-self: end;
+  }
+
+  .specimens__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+  .specimen {
+    background: var(--paper);
+    padding: 36px 28px;
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: 3/4;
+    transition: background 0.4s;
+  }
+  .specimen:hover { background: var(--paper-2); }
+
+  .specimen__image {
+    flex: 1;
+    margin-bottom: 24px;
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    display: grid;
+    place-items: center;
+    color: var(--gold);
+    font-size: 36px;
+    font-family: var(--display);
+    position: relative;
+  }
+  .specimen__image::before {
+    content: '';
+    position: absolute;
+    inset: 14px;
+    border: 1px solid rgba(184, 134, 11, 0.18);
+  }
+  .specimen__num {
+    font-family: var(--label);
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: var(--ink-3);
+    margin-bottom: 6px;
+  }
+  .specimen__name {
+    font-family: var(--serif);
+    font-size: 22px;
+    line-height: 1.15;
+    margin-bottom: 4px;
+    letter-spacing: -0.01em;
+  }
+  .specimen__name em { color: var(--gold); font-style: italic; }
+  .specimen__rate {
+    font-family: var(--label);
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 4px;
+  }
+
+  /* Editorial split */
+  .editorial {
+    padding: 120px 56px;
+    border-top: 1px solid var(--ink);
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.4fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .editorial__chap {
+    font-family: var(--label);
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--ink);
+  }
+  .editorial__title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(36px, 4.6vw, 64px);
+    line-height: 1.0;
+    margin-bottom: 28px;
+    letter-spacing: -0.015em;
+  }
+  .editorial__title em { color: var(--gold); font-style: italic; }
+  .editorial__body {
+    font-size: 18px;
+    color: var(--ink-2);
+    line-height: 1.8;
+    margin-bottom: 18px;
+  }
+  .editorial__body em { color: var(--ink); font-weight: 500; font-style: italic; }
+  .editorial__pullquote {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 32px;
+    line-height: 1.25;
+    color: var(--ink);
+    border-left: 1px solid var(--gold);
+    padding-left: 28px;
+    margin: 36px 0;
+  }
+
+  /* Visit — large sparse */
+  .visit {
+    padding: 140px 56px;
+    text-align: center;
+    border-top: 1px solid var(--ink);
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .visit__chap {
+    font-family: var(--label);
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+  }
+  .visit__title {
+    font-family: var(--serif);
+    font-weight: 300;
+    font-size: clamp(56px, 8vw, 120px);
+    line-height: 1.0;
+    margin-bottom: 32px;
+    letter-spacing: -0.025em;
+  }
+  .visit__title em { color: var(--gold); font-style: italic; }
+  .visit__hours {
+    font-family: var(--display);
+    font-size: 14px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--ink-2);
+    margin-bottom: 64px;
+  }
+  .visit__locs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    text-align: left;
+    max-width: 800px;
+    margin: 0 auto;
+    border-top: 1px solid var(--ink);
+    padding-top: 36px;
+  }
+  .visit__loc {
+    padding-right: 48px;
+    border-right: 1px solid var(--rule);
+  }
+  .visit__loc:last-child { border-right: none; }
+  .visit__loc-num {
+    font-family: var(--label);
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    margin-bottom: 6px;
+  }
+  .visit__loc-name {
+    font-family: var(--serif);
+    font-size: 36px;
+    margin-bottom: 16px;
+    letter-spacing: -0.015em;
+  }
+  .visit__loc-name em { color: var(--gold); font-style: italic; }
+  .visit__loc-phone {
+    display: block;
+    font-family: var(--display);
+    font-size: 22px;
+    color: var(--ink);
+    margin-bottom: 12px;
+    letter-spacing: 0.06em;
+  }
+  .visit__loc-addr {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 16px;
+    color: var(--ink-3);
+    line-height: 1.6;
+  }
+
+  footer {
+    padding: 40px 56px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--label);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  footer a { color: var(--gold); }
+
+  @media (max-width: 900px) {
+    .top { grid-template-columns: 1fr; gap: 14px; padding: 18px 24px; text-align: center; }
+    .top__nav { justify-content: center; flex-wrap: wrap; gap: 18px; }
+    .top__back { text-align: center; }
+    .hero { grid-template-columns: 1fr; gap: 40px; padding: 40px 24px 60px; }
+    .specimens { padding: 60px 24px; }
+    .specimens__head { grid-template-columns: 1fr; gap: 24px; }
+    .specimens__intro { justify-self: start; }
+    .specimens__grid { grid-template-columns: repeat(2, 1fr); }
+    .editorial { padding: 80px 24px; grid-template-columns: 1fr; gap: 40px; }
+    .visit { padding: 80px 24px; }
+    .visit__locs { grid-template-columns: 1fr; gap: 40px; }
+    .visit__loc { border-right: none; border-bottom: 1px solid var(--rule); padding: 0 0 32px 0; }
+    .visit__loc:last-child { border-bottom: none; padding-bottom: 0; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a href="index.html" class="top__brand">
+    <svg viewBox="0 0 100 100"><path d="M22 64 V44 L36 56 L50 26 L64 56 L78 44 V64 Z" fill="none" stroke="#0A0A0A" stroke-width="4"/></svg>
+    <span>GOLD KINGS</span>
+  </a>
+  <nav class="top__nav">
+    <a href="#specimens">Catalogue</a>
+    <a href="#editorial">Curators' Note</a>
+    <a href="#visit">Visit</a>
+  </nav>
+  <div class="top__back"><a href="index.html">← Demos</a></div>
+</header>
+
+<section class="hero">
+  <div class="hero__left">
+    <div class="hero__exhibit">
+      <span class="hero__exhibit-num">EXHIBIT 014/24</span>
+      <span class="hero__exhibit-name">— On Buying Gold</span>
+    </div>
+
+    <h1 class="hero__title">Gold,<br>brought to <em>weight.</em></h1>
+    <p class="hero__by">Walk in with metal. We test in front of you, calculate against today's spot price, and pay same-day.</p>
+
+    <div class="hero__caption">
+      <div class="hero__caption-key">Established</div>
+      <div class="hero__caption-val">Snellville, Georgia · <em>2008</em></div>
+    </div>
+    <div class="hero__caption">
+      <div class="hero__caption-key">Counters</div>
+      <div class="hero__caption-val">Snellville · Commerce, GA</div>
+    </div>
+    <div class="hero__caption">
+      <div class="hero__caption-key">Procedure</div>
+      <div class="hero__caption-val">Test → calculate → settle. <em>Ten minutes.</em></div>
+    </div>
+    <div class="hero__caption">
+      <div class="hero__caption-key">Settlement</div>
+      <div class="hero__caption-val">Cash, check, Zelle. Same day.</div>
+    </div>
+  </div>
+
+  <div class="hero__visual" aria-hidden="true">
+    <div class="hero__visual-mark">24K</div>
+    <div class="hero__visual-tag">— specimen<strong>Yellow gold, 24 karat</strong></div>
+  </div>
+</section>
+
+<section class="specimens" id="specimens">
+  <div class="specimens__head">
+    <h2 class="specimens__title">A catalogue of<br><em>accepted</em> specimens.</h2>
+    <p class="specimens__intro">Four broad categories of metal, certified gem, and luxury good. Each tested and weighed by hand. Each priced against a published, live spot benchmark.</p>
+  </div>
+
+  <div class="specimens__grid">
+    <div class="specimen">
+      <div class="specimen__image">★</div>
+      <div class="specimen__num">SPECIMEN 01</div>
+      <div class="specimen__name">Gold <em>jewelry</em></div>
+      <div class="specimen__rate">10K — 24K · 70-90% spot</div>
+    </div>
+    <div class="specimen">
+      <div class="specimen__image">◇</div>
+      <div class="specimen__num">SPECIMEN 02</div>
+      <div class="specimen__name">Silver &amp; <em>coins</em></div>
+      <div class="specimen__rate">.925+ · live spot</div>
+    </div>
+    <div class="specimen">
+      <div class="specimen__image">◈</div>
+      <div class="specimen__num">SPECIMEN 03</div>
+      <div class="specimen__name">Estate &amp; <em>antique</em></div>
+      <div class="specimen__rate">By on-site appraisal</div>
+    </div>
+    <div class="specimen">
+      <div class="specimen__image">⌘</div>
+      <div class="specimen__num">SPECIMEN 04</div>
+      <div class="specimen__name">Watches &amp; <em>luxury</em></div>
+      <div class="specimen__rate">Brand premium</div>
+    </div>
+  </div>
+</section>
+
+<section class="editorial" id="editorial">
+  <div>
+    <p class="editorial__chap">— Curators' Note</p>
+  </div>
+  <div>
+    <h2 class="editorial__title">Why we weigh<br>in front of you.</h2>
+    <p class="editorial__body">Every gold buyer in the country quotes the same spot price. The difference between honest dealers and the rest is what happens between <em>quote</em> and <em>cash</em>.</p>
+    <p class="editorial__body">We test in front of you. We weigh on a calibrated scale you can read. We do the math out loud, against the published live price for the day. The number we write down is the number you walk out with.</p>
+    <blockquote class="editorial__pullquote">"The metal is worth what it's worth. Our job is to be honest about it, and quick."</blockquote>
+    <p class="editorial__body">No quotes-by-phone. No mailing-it-in. No surprise deductions. Walk in with what you have, walk out with cash — usually inside ten minutes.</p>
+  </div>
+</section>
+
+<section class="visit" id="visit">
+  <p class="visit__chap">— Visit a counter</p>
+  <h2 class="visit__title">Two doors,<br><em>same handshake.</em></h2>
+  <p class="visit__hours">Mon — Sat &nbsp;·&nbsp; 10AM — 6PM &nbsp;·&nbsp; Sunday Closed</p>
+
+  <div class="visit__locs">
+    <div class="visit__loc">
+      <p class="visit__loc-num">COUNTER 01</p>
+      <h3 class="visit__loc-name"><em>Snellville</em></h3>
+      <a href="tel:+17707714650" class="visit__loc-phone">770 · 771 · 4650</a>
+      <p class="visit__loc-addr">3635 Stone Mountain Hwy<br>Snellville, GA 30039</p>
+    </div>
+    <div class="visit__loc">
+      <p class="visit__loc-num">COUNTER 02</p>
+      <h3 class="visit__loc-name"><em>Commerce</em></h3>
+      <a href="tel:+17063360043" class="visit__loc-phone">706 · 336 · 0043</a>
+      <p class="visit__loc-addr">480 Banks Crossing Dr<br>Commerce, GA 30529</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© Gold Kings · Direction 04 / The Museum</span>
+  <a href="index.html">← Compare directions</a>
+</footer>
+
+</body>
+</html>

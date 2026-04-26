@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gold Kings — Cinematic Direction</title>
+<meta name="color-scheme" content="dark">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230A0608'/%3E%3Cpath d='M22 64 V44 L36 56 L50 26 L64 56 L78 44 V64 Z' fill='none' stroke='%23E2C06B' stroke-width='4'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Oswald:wght@300;400;500;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0A0608;
+    --bg-2: #14080C;
+    --bg-3: #1F1014;
+    --gold: #E2C06B;
+    --gold-2: #FFE9A8;
+    --red: #E63946;
+    --red-2: #C8202C;
+    --fg: #F5EFE6;
+    --fg-2: rgba(245, 239, 230, 0.72);
+    --fg-3: rgba(245, 239, 230, 0.48);
+    --rule: rgba(226, 192, 107, 0.22);
+    --rule-2: rgba(245, 239, 230, 0.10);
+    --display: 'Playfair Display', serif;
+    --condensed: 'Oswald', sans-serif;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: var(--sans);
+    font-weight: 300;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  /* Issue ribbon */
+  .ribbon {
+    background: var(--red);
+    color: var(--bg);
+    padding: 8px 56px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--condensed);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+  }
+  .ribbon strong { font-weight: 700; }
+
+  /* Masthead */
+  .mast {
+    padding: 24px 56px 18px;
+    border-bottom: 2px solid var(--gold);
+    display: grid;
+    grid-template-columns: 220px 1fr 220px;
+    align-items: end;
+    gap: 40px;
+    background: var(--bg);
+  }
+  .mast__date {
+    font-family: var(--condensed);
+    font-size: 11px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+    line-height: 1.6;
+  }
+  .mast__date strong {
+    display: block;
+    color: var(--gold);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.3em;
+  }
+  .mast__brand {
+    text-align: center;
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: clamp(40px, 7vw, 88px);
+    line-height: 0.9;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+  }
+  .mast__brand em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold);
+  }
+  .mast__brand small {
+    display: block;
+    font-family: var(--condensed);
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+    margin-top: 4px;
+    font-weight: 400;
+  }
+  .mast__nav {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-family: var(--condensed);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .mast__nav a {
+    color: var(--fg-2);
+    transition: color 0.3s;
+    padding-bottom: 2px;
+    border-bottom: 1px solid transparent;
+  }
+  .mast__nav a:hover { color: var(--red); border-bottom-color: var(--red); }
+
+  /* Hero — magazine cover */
+  .hero {
+    position: relative;
+    min-height: 90vh;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, transparent 30%, rgba(10, 6, 8, 0.55) 60%, var(--bg) 100%),
+      linear-gradient(120deg, rgba(10, 6, 8, 0.4), transparent 50%),
+      url('https://images.pexels.com/photos/5632390/pexels-photo-5632390.jpeg?auto=compress&cs=tinysrgb&w=1920') center/cover;
+    z-index: -1;
+  }
+  .hero__bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 80% 30%, rgba(212, 160, 23, 0.18), transparent 50%),
+      radial-gradient(circle at 20% 70%, rgba(230, 57, 70, 0.12), transparent 60%);
+  }
+
+  .hero__content {
+    padding: 100px 56px 80px;
+    max-width: 1320px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 60px;
+    align-items: end;
+    min-height: 80vh;
+  }
+
+  .hero__badges {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .badge {
+    font-family: var(--condensed);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+  }
+  .badge--red { border-color: var(--red); color: var(--red); }
+  .badge--solid { background: var(--gold); color: var(--bg); border-color: var(--gold); }
+
+  .hero__title {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: clamp(64px, 12vw, 200px);
+    line-height: 0.86;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    color: var(--fg);
+  }
+  .hero__title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold);
+    text-transform: none;
+    letter-spacing: -0.02em;
+  }
+
+  .hero__deck {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: clamp(20px, 2vw, 28px);
+    color: var(--fg-2);
+    line-height: 1.4;
+    max-width: 540px;
+    margin-bottom: 36px;
+    border-left: 3px solid var(--red);
+    padding-left: 20px;
+  }
+  .hero__byline {
+    font-family: var(--condensed);
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+    margin-bottom: 32px;
+  }
+  .hero__byline em { font-style: normal; color: var(--gold); font-weight: 500; }
+
+  .hero__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 32px;
+    background: var(--red);
+    color: var(--fg);
+    font-family: var(--condensed);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    border: 2px solid var(--red);
+    transition: all 0.3s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .hero__cta:hover {
+    background: var(--bg);
+    color: var(--red);
+    transform: translateY(-2px);
+  }
+  .hero__cta::after { content: '→'; font-size: 18px; }
+
+  /* Sidebar — table of contents */
+  .hero__toc {
+    background: rgba(10, 6, 8, 0.85);
+    border: 1px solid var(--rule);
+    backdrop-filter: blur(12px);
+    padding: 32px 28px;
+    align-self: end;
+  }
+  .hero__toc-head {
+    font-family: var(--condensed);
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--red);
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .hero__toc-row {
+    display: grid;
+    grid-template-columns: 32px 1fr 40px;
+    gap: 14px;
+    align-items: baseline;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule-2);
+  }
+  .hero__toc-row:last-child { border: none; }
+  .hero__toc-row .num {
+    font-family: var(--condensed);
+    color: var(--gold);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+  }
+  .hero__toc-row .name {
+    font-family: var(--display);
+    font-size: 18px;
+    color: var(--fg);
+    line-height: 1.2;
+  }
+  .hero__toc-row .name em { font-style: italic; color: var(--gold); }
+  .hero__toc-row .pg {
+    text-align: right;
+    font-family: var(--condensed);
+    color: var(--fg-3);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+  }
+
+  /* Ticker bar */
+  .ticker {
+    background: var(--gold);
+    color: var(--bg);
+    padding: 14px 0;
+    overflow: hidden;
+    border-top: 1px solid var(--bg);
+    border-bottom: 2px solid var(--bg);
+    font-family: var(--condensed);
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+  }
+  .ticker__track {
+    display: flex;
+    gap: 60px;
+    white-space: nowrap;
+    animation: tickr 32s linear infinite;
+  }
+  .ticker__track i { font-style: normal; color: var(--red); }
+  @keyframes tickr { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* Editorial spread — feature article */
+  .feature {
+    padding: 100px 56px;
+    max-width: 1320px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 80px;
+  }
+  .feature__sidebar {
+    border-right: 1px solid var(--rule);
+    padding-right: 32px;
+  }
+  .feature__chap {
+    font-family: var(--condensed);
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 18px;
+  }
+  .feature__pgnum {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 96px;
+    line-height: 0.9;
+    color: var(--gold);
+    margin-bottom: 18px;
+  }
+  .feature__keywords {
+    font-family: var(--condensed);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+    line-height: 2;
+  }
+  .feature__keywords strong {
+    display: block;
+    font-family: var(--sans);
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: 0.04em;
+    color: var(--fg);
+    font-size: 14px;
+    margin-top: 6px;
+    margin-bottom: 18px;
+  }
+
+  .feature__body {
+    column-count: 2;
+    column-gap: 56px;
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--fg-2);
+  }
+  .feature__body p { margin-bottom: 20px; break-inside: avoid; }
+  .feature__body p:first-child::first-letter {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 84px;
+    float: left;
+    line-height: 0.85;
+    margin-right: 14px;
+    margin-top: 6px;
+    color: var(--gold);
+  }
+  .feature__body em { color: var(--fg); font-style: italic; font-weight: 700; }
+
+  /* Spec cards — magazine product feature */
+  .specs {
+    padding: 100px 56px;
+    max-width: 1320px;
+    margin: 0 auto;
+    border-top: 1px solid var(--rule);
+  }
+  .specs__head {
+    margin-bottom: 60px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 40px;
+  }
+  .specs__title {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: clamp(40px, 5.5vw, 80px);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+  .specs__title em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold);
+    text-transform: none;
+  }
+  .specs__head-meta {
+    text-align: right;
+    font-family: var(--condensed);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+  }
+  .specs__head-meta strong {
+    display: block;
+    color: var(--red);
+    font-size: 14px;
+    margin-top: 4px;
+  }
+
+  .specs__grid {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1fr;
+    gap: 24px;
+  }
+  .speccard {
+    background: var(--bg-2);
+    border: 1px solid var(--rule);
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 380px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1), border-color 0.4s;
+  }
+  .speccard:hover {
+    transform: translateY(-4px);
+    border-color: var(--gold);
+  }
+  .speccard--big {
+    background: linear-gradient(160deg, var(--bg-3), var(--bg-2));
+    border-color: var(--gold);
+  }
+  .speccard__num {
+    font-family: var(--condensed);
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 14px;
+  }
+  .speccard__name {
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 32px;
+    line-height: 0.95;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+  }
+  .speccard--big .speccard__name { font-size: 48px; }
+  .speccard__name em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold);
+    text-transform: none;
+  }
+  .speccard__desc {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--fg-2);
+    margin-bottom: 24px;
+  }
+  .speccard__rate {
+    font-family: var(--condensed);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    padding-top: 16px;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* CTA — full bleed */
+  .visit {
+    padding: 140px 56px;
+    background:
+      linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+    border-top: 1px solid var(--rule);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .visit::before {
+    content: 'WE BUY GOLD';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: 24vw;
+    color: rgba(226, 192, 107, 0.04);
+    letter-spacing: -0.04em;
+    line-height: 1;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .visit__chap {
+    position: relative;
+    font-family: var(--condensed);
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 24px;
+  }
+  .visit__title {
+    position: relative;
+    font-family: var(--display);
+    font-weight: 900;
+    font-size: clamp(56px, 9vw, 140px);
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+  .visit__title em { font-style: italic; font-weight: 400; color: var(--gold); text-transform: none; }
+  .visit__sub {
+    position: relative;
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--fg-2);
+    max-width: 600px;
+    margin: 0 auto 60px;
+  }
+  .visit__locs {
+    position: relative;
+    display: inline-grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--gold);
+    border: 1px solid var(--gold);
+  }
+  .visit__loc {
+    background: var(--bg);
+    padding: 36px 48px;
+    text-align: left;
+    min-width: 280px;
+  }
+  .visit__loc-num {
+    font-family: var(--condensed);
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    color: var(--red);
+    margin-bottom: 8px;
+  }
+  .visit__loc-name {
+    font-family: var(--display);
+    font-weight: 900;
+    text-transform: uppercase;
+    font-size: 32px;
+    margin-bottom: 14px;
+    letter-spacing: -0.02em;
+  }
+  .visit__loc-name em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--gold);
+    text-transform: none;
+  }
+  .visit__loc-phone {
+    display: block;
+    font-family: var(--display);
+    color: var(--gold);
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    letter-spacing: 0.02em;
+  }
+  .visit__loc-addr {
+    font-family: var(--display);
+    font-style: italic;
+    color: var(--fg-3);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  footer {
+    background: var(--bg);
+    padding: 36px 56px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--condensed);
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+  }
+  footer a { color: var(--gold); }
+
+  @media (max-width: 900px) {
+    .ribbon { padding: 8px 20px; flex-direction: column; gap: 4px; text-align: center; }
+    .mast { grid-template-columns: 1fr; gap: 14px; padding: 18px 20px; text-align: center; }
+    .mast__date, .mast__nav { text-align: center; }
+    .mast__nav { flex-direction: row; justify-content: center; gap: 18px; flex-wrap: wrap; }
+    .hero__content { grid-template-columns: 1fr; padding: 60px 24px; }
+    .feature { grid-template-columns: 1fr; padding: 60px 24px; gap: 32px; }
+    .feature__sidebar { border: none; padding: 0; }
+    .feature__body { column-count: 1; }
+    .specs { padding: 60px 24px; }
+    .specs__grid { grid-template-columns: 1fr; }
+    .specs__head { grid-template-columns: 1fr; }
+    .specs__head-meta { text-align: left; }
+    .visit { padding: 80px 24px; }
+    .visit__locs { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ticker__track { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ribbon">
+  <span><strong>BREAKING</strong> · GOLD AT $2,634/OZ · LIVE</span>
+  <span>ISSUE Nº 47 · APRIL 2026</span>
+  <a href="index.html" style="color: var(--bg);">← BACK TO DEMOS</a>
+</div>
+
+<header class="mast">
+  <div class="mast__date">
+    APRIL 2026<br>
+    <strong>ISSUE Nº 47</strong>
+    VOL. XVIII
+  </div>
+  <h1 class="mast__brand">Gold <em>Kings</em><small>The Quarterly · Snellville · Commerce, GA</small></h1>
+  <nav class="mast__nav">
+    <a href="#feature">FEATURE</a>
+    <a href="#specs">CATALOGUE</a>
+    <a href="#visit">VISIT</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="hero__bg" aria-hidden="true"></div>
+  <div class="hero__content">
+
+    <div>
+      <div class="hero__badges">
+        <span class="badge badge--red">COVER STORY</span>
+        <span class="badge">DIRECTION 05 / 05</span>
+        <span class="badge badge--solid">CINEMATIC</span>
+      </div>
+
+      <h2 class="hero__title">We Buy<br><em>Gold.</em></h2>
+      <p class="hero__deck">"You walk in with metal, you walk out with money — usually inside ten minutes. The number we write down is the number you take home."</p>
+      <p class="hero__byline">By <em>Adam · Proprietor</em> &nbsp;·&nbsp; Snellville, GA &nbsp;·&nbsp; Cover photo: Pexels</p>
+      <a href="tel:+17707714650" class="hero__cta">Get a Quote · 770-771-4650</a>
+    </div>
+
+    <aside class="hero__toc">
+      <div class="hero__toc-head"><span>IN THIS ISSUE</span><span>PG.</span></div>
+      <div class="hero__toc-row">
+        <span class="num">01</span>
+        <span class="name">We Buy <em>Gold</em></span>
+        <span class="pg">001</span>
+      </div>
+      <div class="hero__toc-row">
+        <span class="num">02</span>
+        <span class="name">A note from <em>the proprietor</em></span>
+        <span class="pg">012</span>
+      </div>
+      <div class="hero__toc-row">
+        <span class="num">03</span>
+        <span class="name">The full <em>catalogue</em></span>
+        <span class="pg">024</span>
+      </div>
+      <div class="hero__toc-row">
+        <span class="num">04</span>
+        <span class="name">Visit <em>two counters</em></span>
+        <span class="pg">036</span>
+      </div>
+    </aside>
+
+  </div>
+</section>
+
+<div class="ticker" aria-hidden="true">
+  <div class="ticker__track">
+    <span>GOLD $2,634 <i>▲</i> SILVER $31.04 <i>▲</i> SAME-DAY PAYMENT <i>◆</i> NO APPOINTMENT <i>◆</i> LICENSED DEALER <i>◆</i> EST. 2008 <i>◆</i></span>
+    <span>GOLD $2,634 <i>▲</i> SILVER $31.04 <i>▲</i> SAME-DAY PAYMENT <i>◆</i> NO APPOINTMENT <i>◆</i> LICENSED DEALER <i>◆</i> EST. 2008 <i>◆</i></span>
+  </div>
+</div>
+
+<section class="feature" id="feature">
+  <aside class="feature__sidebar">
+    <p class="feature__chap">FEATURE / 02</p>
+    <div class="feature__pgnum">012</div>
+    <div class="feature__keywords">
+      WORDS<strong>Adam, the proprietor</strong>
+      LOCATION<strong>Snellville, GA</strong>
+      ESTABLISHED<strong>2008</strong>
+      LICENSE<strong>Georgia precious-metals dealer</strong>
+    </div>
+  </aside>
+
+  <div class="feature__body">
+    <p>For the seventeen years we've held a license, the deal hasn't changed. You walk in with metal — broken chain, grandmother's coins, a watch you never wore — and we test it on the counter, in front of you. We weigh it on a calibrated scale you can read. We do the math out loud, against the published spot price for the day.</p>
+
+    <p>The number we write down is the number you walk out with. <em>No quotes-by-phone, no mailing-it-in, no surprise deductions.</em> Cash, check, Zelle, CashApp, Venmo, PayPal, or wire — your choice, settled the same day.</p>
+
+    <p>We pay seventy to ninety percent of spot, depending on karat and current refining premiums. On certified numismatic coins and brand-name luxury watches, we go beyond melt value when condition and provenance support it.</p>
+
+    <p>Two doors. Same handshake. Mondays through Saturdays, ten to six. The metal is worth what it's worth — our job is to be honest about it, and quick.</p>
+  </div>
+</section>
+
+<section class="specs" id="specs">
+  <div class="specs__head">
+    <h2 class="specs__title">The full<br><em>catalogue.</em></h2>
+    <div class="specs__head-meta">PAGE 024<strong>4 categories accepted</strong></div>
+  </div>
+
+  <div class="specs__grid">
+    <div class="speccard speccard--big">
+      <div>
+        <div class="speccard__num">01 · FEATURED</div>
+        <div class="speccard__name">Gold &amp; <em>Silver Jewelry</em></div>
+        <div class="speccard__desc">Every karat from 10K through 24K. Yellow, white, rose. Sterling .925 and above. Chains, rings, bracelets, broken pieces. Condition does not reduce metal weight value.</div>
+      </div>
+      <div class="speccard__rate">10K — 24K · 70-90% of spot</div>
+    </div>
+    <div class="speccard">
+      <div>
+        <div class="speccard__num">02</div>
+        <div class="speccard__name">Numismatic <em>coins</em></div>
+        <div class="speccard__desc">Krugerrand, Maple Leaf, Eagle, French 20-Franc, vintage US silver. Premium for certified rare pieces.</div>
+      </div>
+      <div class="speccard__rate">Live spot + premium</div>
+    </div>
+    <div class="speccard">
+      <div>
+        <div class="speccard__num">03</div>
+        <div class="speccard__name">Estate &amp; <em>luxury</em></div>
+        <div class="speccard__desc">Diamond pieces, signed designer, Swiss watches. Brand premium where condition and provenance allow.</div>
+      </div>
+      <div class="speccard__rate">By on-site appraisal</div>
+    </div>
+  </div>
+</section>
+
+<section class="visit" id="visit">
+  <p class="visit__chap">DEPARTMENTS · VISIT US</p>
+  <h2 class="visit__title">Walk In.<br><em>Walk Out.</em></h2>
+  <p class="visit__sub">No appointment. Mon–Sat, 10AM–6PM. Two Georgia counters welcome walk-ins.</p>
+
+  <div class="visit__locs">
+    <div class="visit__loc">
+      <p class="visit__loc-num">COUNTER 01 · GA</p>
+      <h3 class="visit__loc-name"><em>Snellville</em></h3>
+      <a href="tel:+17707714650" class="visit__loc-phone">770-771-4650</a>
+      <p class="visit__loc-addr">3635 Stone Mountain Hwy<br>Snellville, GA 30039</p>
+    </div>
+    <div class="visit__loc">
+      <p class="visit__loc-num">COUNTER 02 · GA</p>
+      <h3 class="visit__loc-name"><em>Commerce</em></h3>
+      <a href="tel:+17063360043" class="visit__loc-phone">(706) 336-0043</a>
+      <p class="visit__loc-addr">480 Banks Crossing Dr<br>Commerce, GA 30529</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© Gold Kings · Direction 05 / Cinematic</span>
+  <a href="index.html">← Compare directions</a>
+</footer>
+
+</body>
+</html>

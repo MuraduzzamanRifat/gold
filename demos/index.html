@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gold Kings — Design Direction Demos</title>
+<meta name="description" content="Five distinct design directions for the Gold Kings landing page. Choose the one that fits the brand best.">
+<meta name="color-scheme" content="dark">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230A0804'/%3E%3Cpath d='M22 64 V44 L36 56 L50 26 L64 56 L78 44 V64 Z' fill='none' stroke='%23C8A45A' stroke-width='4' stroke-linejoin='round'/%3E%3Crect x='22' y='62' width='56' height='8' rx='2' fill='%23C8A45A'/%3E%3Ccircle cx='50' cy='30' r='4' fill='%23E2C06B'/%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=Inter:wght@300;400;500;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07060A;
+    --bg-2: #0F0E12;
+    --gold: #C8A45A;
+    --gold-light: #E2C06B;
+    --fg: #F5F1EA;
+    --fg-2: rgba(245, 241, 234, 0.65);
+    --fg-3: rgba(245, 241, 234, 0.40);
+    --rule: rgba(200, 164, 90, 0.18);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+  a { color: inherit; text-decoration: none; }
+
+  .topbar {
+    border-bottom: 1px solid var(--rule);
+    padding: 14px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+  }
+  .topbar__brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--gold);
+  }
+  .topbar__brand svg { width: 22px; height: 22px; }
+
+  .hero {
+    padding: clamp(60px, 10vh, 120px) clamp(20px, 5vw, 80px);
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .hero__eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .hero__eyebrow::before {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+  }
+  .hero__title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(48px, 8vw, 110px);
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    max-width: 900px;
+  }
+  .hero__title em {
+    color: var(--gold-light);
+    font-style: italic;
+  }
+  .hero__sub {
+    font-size: clamp(15px, 1.4vw, 18px);
+    color: var(--fg-2);
+    max-width: 620px;
+    line-height: 1.7;
+  }
+
+  .meta {
+    margin-top: 56px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 48px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+  }
+  .meta strong {
+    display: block;
+    color: var(--fg);
+    font-weight: 400;
+    margin-top: 6px;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: none;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .grid {
+    padding: clamp(40px, 6vh, 80px) clamp(20px, 5vw, 80px) 120px;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    gap: clamp(20px, 2vw, 32px);
+  }
+
+  .card {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--rule);
+    background: var(--bg-2);
+    aspect-ratio: 4 / 5;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: clamp(24px, 3vw, 36px);
+    transition: border-color 0.4s cubic-bezier(0.65, 0, 0.35, 1),
+                transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+    isolation: isolate;
+  }
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 100%, var(--card-glow, rgba(200,164,90,0.15)), transparent 65%);
+    opacity: 0.5;
+    z-index: -1;
+    transition: opacity 0.5s;
+  }
+  .card:hover {
+    border-color: var(--gold);
+    transform: translateY(-6px);
+  }
+  .card:hover::before { opacity: 1; }
+
+  .card__num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.4em;
+    color: var(--fg-3);
+  }
+  .card__hero {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 24px 0;
+    min-height: 140px;
+  }
+  .card__name {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(32px, 3.2vw, 44px);
+    line-height: 1.0;
+    letter-spacing: -0.01em;
+    margin-bottom: 8px;
+  }
+  .card__name em { color: var(--gold-light); font-style: italic; }
+  .card__mood {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+  }
+  .card__desc {
+    font-size: 14px;
+    color: var(--fg-2);
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .card__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--rule);
+    align-self: flex-start;
+    transition: border-color 0.3s, color 0.3s, gap 0.3s;
+  }
+  .card__cta::after {
+    content: '→';
+    transition: transform 0.3s;
+  }
+  .card:hover .card__cta {
+    border-color: var(--gold);
+    color: var(--gold-light);
+    gap: 16px;
+  }
+  .card:hover .card__cta::after { transform: translateX(4px); }
+
+  /* Each card's preview hero (mini visual identity) */
+  .preview-vault {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #000;
+    border: 1px solid #2a2a2a;
+    display: grid;
+    place-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .preview-vault::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(200,164,90,0.06) 19px, rgba(200,164,90,0.06) 20px);
+  }
+  .preview-vault span {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 32px;
+    letter-spacing: -0.02em;
+    color: #fff;
+    z-index: 1;
+  }
+  .preview-vault span em { color: var(--gold-light); font-style: normal; }
+
+  .preview-liquid {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background:
+      radial-gradient(circle at 30% 40%, rgba(212,160,23,0.4), transparent 50%),
+      radial-gradient(circle at 70% 60%, rgba(140,200,255,0.25), transparent 55%),
+      #08111E;
+    border-radius: 16px;
+    backdrop-filter: blur(20px);
+    display: grid;
+    place-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .preview-liquid::after {
+    content: '';
+    position: absolute;
+    inset: 8px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.10);
+    backdrop-filter: blur(8px);
+  }
+  .preview-liquid span {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 28px;
+    color: #fff;
+    z-index: 1;
+    text-shadow: 0 0 20px rgba(212,160,23,0.5);
+  }
+
+  .preview-heritage {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #FAF6EE;
+    color: #2A1810;
+    display: grid;
+    place-items: center;
+    position: relative;
+    border: 1px solid #E8DDC8;
+  }
+  .preview-heritage::before, .preview-heritage::after {
+    content: '◆';
+    position: absolute;
+    color: #8B0000;
+    font-size: 12px;
+  }
+  .preview-heritage::before { top: 12px; left: 50%; transform: translateX(-50%); }
+  .preview-heritage::after { bottom: 12px; left: 50%; transform: translateX(-50%); }
+  .preview-heritage span {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 28px;
+    text-align: center;
+  }
+  .preview-heritage span small {
+    display: block;
+    font-style: normal;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: #8B7240;
+    margin-top: 4px;
+  }
+
+  .preview-museum {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #FAFAF7;
+    color: #0A0A0A;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    border: 1px solid #E5E5E0;
+  }
+  .preview-museum > div:first-child {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .preview-museum > div:last-child {
+    background: linear-gradient(135deg, #B8860B, #5A3F0A);
+  }
+  .preview-museum h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 22px;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+  .preview-museum small {
+    font-family: 'Inter', sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #888;
+  }
+
+  .preview-cinematic {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background:
+      linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.85)),
+      linear-gradient(135deg, #2A1810, #0A0608);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 12px;
+    border: 1px solid #1a1410;
+    position: relative;
+  }
+  .preview-cinematic::before {
+    content: 'Nº 47';
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: #E63946;
+  }
+  .preview-cinematic h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 26px;
+    line-height: 0.95;
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+  }
+  .preview-cinematic h3 em {
+    color: var(--gold-light);
+    font-style: italic;
+    text-transform: none;
+  }
+  .preview-cinematic small {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #E63946;
+  }
+
+  footer {
+    border-top: 1px solid var(--rule);
+    padding: 32px 48px;
+    text-align: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+  }
+  footer a { color: var(--gold); }
+
+  @media (max-width: 768px) {
+    .topbar { padding: 12px 20px; flex-direction: column; gap: 8px; align-items: flex-start; }
+    .meta { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar__brand">
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <path d="M22 64 V44 L36 56 L50 26 L64 56 L78 44 V64 Z" fill="none" stroke="#C8A45A" stroke-width="4" stroke-linejoin="round"/>
+      <rect x="22" y="62" width="56" height="8" rx="2" fill="#C8A45A"/>
+      <circle cx="50" cy="30" r="4" fill="#E2C06B"/>
+    </svg>
+    <span>Gold Kings — Design Studio</span>
+  </div>
+  <div>5 directions / 1 brand / pick one</div>
+</header>
+
+<section class="hero">
+  <p class="hero__eyebrow">Demo Selection · For Client Review</p>
+  <h1 class="hero__title">Five directions.<br>One <em>Gold Kings</em>.</h1>
+  <p class="hero__sub">Each demo below is a complete creative direction for the Gold Kings landing page — same brand, same content, fundamentally different visual language. Open them side by side and pick the one that feels right.</p>
+
+  <div class="meta">
+    <div>Brand <strong>Gold Kings</strong></div>
+    <div>Locations <strong>Snellville · Commerce, GA</strong></div>
+    <div>Status <strong>5 of 5 ready</strong></div>
+    <div>Updated <strong>Apr 2026</strong></div>
+  </div>
+</section>
+
+<section class="grid">
+
+  <a href="vault.html" class="card" style="--card-glow: rgba(212,160,23,0.18);">
+    <div class="card__num">01 / 05</div>
+    <div class="card__hero">
+      <div class="preview-vault">
+        <span>WE BUY <em>GOLD</em></span>
+      </div>
+    </div>
+    <div>
+      <p class="card__mood">Brutalist · Industrial · Bank Vault</p>
+      <h2 class="card__name">The <em>Vault</em></h2>
+      <p class="card__desc">Heavy display sans, asymmetric grid, vault-number aesthetic. For clients who want gravitas and trust signal over warmth.</p>
+      <span class="card__cta">View Demo</span>
+    </div>
+  </a>
+
+  <a href="liquid.html" class="card" style="--card-glow: rgba(140,200,255,0.20);">
+    <div class="card__num">02 / 05</div>
+    <div class="card__hero">
+      <div class="preview-liquid">
+        <span>Fluid Worth</span>
+      </div>
+    </div>
+    <div>
+      <p class="card__mood">Glassmorphism · Iridescent · Premium</p>
+      <h2 class="card__name">Liquid <em>Gold</em></h2>
+      <p class="card__desc">Animated blob backgrounds, glass cards, chromatic gold accents. Feels closer to premium fintech than traditional jeweler.</p>
+      <span class="card__cta">View Demo</span>
+    </div>
+  </a>
+
+  <a href="heritage.html" class="card" style="--card-glow: rgba(139,0,0,0.18);">
+    <div class="card__num">03 / 05</div>
+    <div class="card__hero">
+      <div class="preview-heritage">
+        <span>Estd. 2008<small>Snellville · Commerce</small></span>
+      </div>
+    </div>
+    <div>
+      <p class="card__mood">Old-World · Antique · Establishment</p>
+      <h2 class="card__name">Heritage <em>Atelier</em></h2>
+      <p class="card__desc">Cream + burgundy + antique gold. Ornamental dividers, classical type, "Established 2008" badge. Tiffany-era heritage feel.</p>
+      <span class="card__cta">View Demo</span>
+    </div>
+  </a>
+
+  <a href="museum.html" class="card" style="--card-glow: rgba(184,134,11,0.18);">
+    <div class="card__num">04 / 05</div>
+    <div class="card__hero">
+      <div class="preview-museum">
+        <div>
+          <h3>Specimen<br>014/24</h3>
+          <small>Gallery — Karat 24</small>
+        </div>
+        <div></div>
+      </div>
+    </div>
+    <div>
+      <p class="card__mood">Minimal · Museum · White Space</p>
+      <h2 class="card__name">The <em>Museum</em></h2>
+      <p class="card__desc">Off-white, massive serif, single warm-gold accent. Museum-label captions. Sparse, confident, MoMA-grade restraint.</p>
+      <span class="card__cta">View Demo</span>
+    </div>
+  </a>
+
+  <a href="cinematic.html" class="card" style="--card-glow: rgba(230,57,70,0.18);">
+    <div class="card__num">05 / 05</div>
+    <div class="card__hero">
+      <div class="preview-cinematic">
+        <h3>WE BUY<br><em>GOLD</em></h3>
+        <small>Issue 47 · Apr 2026</small>
+      </div>
+    </div>
+    <div>
+      <p class="card__mood">Magazine · Editorial · Cinematic</p>
+      <h2 class="card__name"><em>Cinematic</em></h2>
+      <p class="card__desc">Magazine cover style hero, issue number, ticker bar, signal-red accent against rich blacks. Vogue Atelier energy.</p>
+      <span class="card__cta">View Demo</span>
+    </div>
+  </a>
+
+</section>
+
+<footer>
+  Gold Kings &nbsp;·&nbsp; Design direction selection &nbsp;·&nbsp; <a href="../index.html">← Current site</a>
+</footer>
+
+</body>
+</html>
